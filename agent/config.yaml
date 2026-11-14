@@ -1,0 +1,112 @@
+# Every model, threshold, budget and rule lives here, never in code.
+# The policy section is what the change request edits.
+
+marketplace:
+  mode: gigsim            # gigsim | upwork_live
+  max_requests_per_minute: 40
+  scout_interval_minutes: 30          # GigSim. Live mode uses live_scout_interval_minutes.
+  live_scout_interval_minutes: 240    # see docs/RUNBOOK.md for the justification
+  timeout_seconds: 20
+  max_retries: 3
+
+models:
+  profile: open           # open | paid
+  profiles:
+    open:
+      small: {provider: groq, model: openai/gpt-oss-20b, temperature: 0.0, reasoning_effort: low}
+      strong: {provider: groq, model: openai/gpt-oss-120b, temperature: 0.4, reasoning_effort: medium}
+      fallback_small: {provider: cerebras, model: gpt-oss-120b, temperature: 0.0, reasoning_effort: low}
+      judge: {provider: anthropic, model: claude-haiku-5-5, effort: low, max_tokens: 8000}   # eval-only; different family from the gpt-oss writer
+    open_alt:             # second open configuration for the required comparison
+      small: {provider: groq, model: qwen/qwen3.8-27b, temperature: 0.0, max_tokens: 900}
+      strong: {provider: groq, model: qwen/qwen3.8-27b, temperature: 0.4, max_tokens: 900}
+      fallback_small: {provider: groq, model: openai/gpt-oss-20b, temperature: 0.0, reasoning_effort: low}
+      judge: {provider: groq, model: openai/gpt-oss-120b, temperature: 0.0, reasoning_effort: low}
+    paid:                 # optional; used only where it beats open enough to justify its cost
+      small: {provider: anthropic, model: claude-haiku-5-5, effort: low, max_tokens: 8000}
+      strong: {provider: anthropic, model: claude-haiku-5-5, effort: medium, max_tokens: 16000}
+      fallback_small: {provider: groq, model: openai/gpt-oss-20b, temperature: 0.0, reasoning_effort: low}
+      judge: {provider: anthropic, model: claude-haiku-5-5, effort: low, max_tokens: 8000}
+  injection_classifier: meta-llama/llama-prompt-guard-2-86m
+  # node -> tier. Cheap, frequent nodes on the small model; Writer and Critic on the strong one.
+  nodes:
+    scout: small
+    analyst: small
+    risk_assessor: small
+    fit_matcher: small
+    pricing: small
+    writer: strong
+    verifier: small
+    critic: strong
+    compliance: small
+    liaison_intent: small
+    liaison: strong
+  embeddings: BAAI/bge-small-en-v1.5
+  embeddings_alt: nomic-ai/nomic-embed-text-v1.5
+  reranker: Xenova/ms-marco-MiniLM-L-6-v2
+  prices:   # USD per 1M tokens (input, output); Groq list prices, verify before reporting
+    openai/gpt-oss-20b: [0.075, 0.30]
+    openai/gpt-oss-120b: [0.15, 0.60]
+    qwen/qwen3.8-27b: [0.29, 0.59]
+    meta-llama/llama-prompt-guard-2-86m: [0.04, 0.04]
+    claude-haiku-5-5: [0.10, 0.50]
+    gpt-oss-120b: [0.35, 0.75]   # Cerebras list price
+
+rag:
+  variant: v3_rerank           # provisional; set from evals/results/rag_variants.json
+  k: 5
+  chunk_size: 600
+  chunk_overlap: 80
+  rrf_k: 60
+  rerank_candidates: 30
+  outcome_boost: {won: 0.25, replied: 0.12, ignored: -0.05}
+  corrective_min_score: 0.35
+  corrective_max_requeries: 1
+
+budgets:
+  max_graph_steps: 40
+  max_revisions: 2
+  max_tokens_per_job: 60000
+  declared_p95_latency_s: {job_analysis: 25, proposal: 60}
+  declared_cost_usd: {job_analysis: 0.002, proposal: 0.01}
+
+thresholds:
+  minimum_fit_score: 0.55
+  watch_fit_score: 0.40
+  maximum_risk_score: 0.60
+  max_proposal_words: 280
+  min_proposal_words: 90
+
+autonomy:
+  default: manual          # manual | auto_skip_low_fit  (never auto-send)
+
+memory:
+  style_promotion_min_occurrences: 2
+  style_max_rules: 12
+  outcome_min_samples: 3
+
+policy:
+  version: v1
+  # rules the Compliance Guard enforces (from data/policy_pack + GigSim /v1/policy)
+  forbidden_patterns:
+    - name: off_platform_contact
+      regex: "(?i)(whats\\s?app|telegram|skype|signal app|wechat|text me at|call me at|my (personal )?email)"
+    - name: email_address
+      regex: "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+    - name: phone_number
+      regex: '(?<![\w-])\+?\d(?:[ ().-]?\d){8,}(?![\w-])'
+    - name: guarantee
+      regex: "(?i)\\b(guarantee[ds]?|100% (success|satisfaction)|risk[- ]free|money[- ]back)\\b"
+    - name: off_platform_payment
+      regex: "(?i)(pay (me )?(via|through|by) (paypal|crypto|bitcoin|wire|western union|bank transfer)|outside (of )?(the )?platform)"
+  required_disclosure: null     # v2 sets this to a required sentence
+  connects_extra_if_proposals_over: null   # v2: {threshold: 20, extra: 4}
+  max_connects_per_job: 16
+
+scam_signals:
+  - unpaid trial or test work
+  - request to move communication off the platform
+  - request for payment, deposit or purchase from the freelancer
+  - request for personal financial details or credentials
+  - budget wildly inconsistent with the scope
+  - instructions addressed to an AI or automated tool

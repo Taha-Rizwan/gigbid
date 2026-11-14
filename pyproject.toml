@@ -1,0 +1,75 @@
+[project]
+name = "gigbid"
+version = "0.2.0"
+description = "GigBid: a multi-agent freelancer copilot (AI-4016)"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  # web + api
+  "fastapi>=0.115",
+  "uvicorn[standard]>=0.32",
+  "sse-starlette>=2.1",
+  "pydantic[email]>=2.9",
+  "python-multipart>=0.0.12",
+  "pydantic-settings>=2.6",
+  "python-dotenv>=1.0",
+  "pyyaml>=6.0",
+  "httpx>=0.27",
+  "tenacity>=9.0",
+  # auth + crypto
+  "argon2-cffi>=23.1",
+  "pyjwt>=2.9",
+  "cryptography>=43",
+  # agents
+  "langgraph>=0.6",
+  "langgraph-checkpoint-postgres>=2.0",
+  "langgraph-checkpoint-sqlite>=2.0",
+  "langgraph-supervisor>=0.0.27",
+  "langchain>=0.3",
+  "langchain-core>=0.3",
+  "langchain-groq>=0.3",
+  "langchain-openai>=0.3",
+  "anthropic>=0.70",
+  "langchain-mcp-adapters>=0.1",
+  "langsmith>=0.3",
+  "mcp>=1.12",
+  # storage + queue
+  "psycopg[binary,pool]>=3.2",
+  "pgvector>=0.3",
+  "arq>=0.26",
+  "redis>=5.0",
+  # rag
+  "fastembed>=0.5",
+  "bm25s>=0.2",
+  "numpy>=1.26",
+  "pandas>=2.2",
+  "pyarrow>=17",
+  "pypdf>=5.0",
+  "fpdf2>=2.8",
+  # eval
+  "scikit-learn>=1.5",
+  "scipy>=1.14",
+  # data
+  "kaggle>=1.6",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "pytest-asyncio>=0.24", "ruff>=0.7", "mypy>=1.13"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["agent", "rag", "mcp_servers", "apps", "worker", "gigsim", "evals", "common"]
+
+[tool.ruff]
+line-length = 100
+extend-exclude = ["apps/web", "data"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["E501", "B008"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests", "mcp_servers", "gigsim/tests"]

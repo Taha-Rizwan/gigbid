@@ -1,0 +1,33 @@
+.env
+.env.*
+!.env.example
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+node_modules/
+.next/
+dist/
+build/
+*.egg-info/
+
+# data: raw downloads and generated artefacts are never committed
+data/raw/
+data/processed/
+data/cache/
+*.sqlite
+*.sqlite3
+*.db
+
+# local model caches
+.fastembed_cache/
+models/
+
+# playwright
+apps/web/test-results/
+apps/web/playwright-report/
+
+# build info
+*.tsbuildinfo
