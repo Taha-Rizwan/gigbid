@@ -1,0 +1,50 @@
+---
+config:
+  flowchart:
+    curve: linear
+---
+graph TD;
+	__start__([<p>__start__</p>]):::first
+	intake(intake)
+	job_analyst(job_analyst)
+	risk_assessor(risk_assessor)
+	fit_matcher(fit_matcher)
+	decide(decide<hr/><small><em>defer = True</em></small>)
+	pricing_strategist(pricing_strategist)
+	proposal_writer(proposal_writer)
+	claim_verifier(claim_verifier)
+	critic(critic)
+	compliance_guard(compliance_guard)
+	prepare_submission(prepare_submission)
+	approval(approval)
+	recheck(recheck)
+	submit(submit)
+	rejected(rejected)
+	__end__([<p>__end__</p>]):::last
+	__start__ --> intake;
+	approval -.-> recheck;
+	approval -.-> rejected;
+	approval -.-> submit;
+	claim_verifier --> critic;
+	compliance_guard -.-> __end__;
+	compliance_guard -.-> prepare_submission;
+	critic -.-> compliance_guard;
+	critic -.-> proposal_writer;
+	decide -.-> __end__;
+	decide -.-> pricing_strategist;
+	fit_matcher --> decide;
+	intake -.-> fit_matcher;
+	intake -.-> job_analyst;
+	intake -.-> risk_assessor;
+	job_analyst --> decide;
+	prepare_submission --> approval;
+	pricing_strategist --> proposal_writer;
+	proposal_writer --> claim_verifier;
+	recheck -.-> prepare_submission;
+	recheck -.-> submit;
+	risk_assessor --> decide;
+	rejected --> __end__;
+	submit --> __end__;
+	classDef default fill:#f2f0ff,line-height:1.2
+	classDef first fill-opacity:0
+	classDef last fill:#bfb6fc
