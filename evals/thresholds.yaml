@@ -1,0 +1,5 @@
+# CI gate for the 30-job smoke eval (evals/results/smoke.json). check_thresholds.py exits non-zero
+# when a measured value crosses a limit. A missing measurement fails too (nothing is assumed).
+smoke:
+  max_unsupported_claims_per_proposal: 0.5
+  min_bid_skip_f1: 0.5
