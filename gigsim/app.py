@@ -231,6 +231,11 @@ def create_app(config: Config | None = None) -> FastAPI:
     def set_policy(body: PolicyIn) -> dict[str, Any]:
         return sim.set_policy(body.version)
 
+    @admin.post("/import")
+    def import_jobs(body: dict[str, Any]) -> dict[str, Any]:
+        """Add jobs/clients at runtime: {"jobs": [...], "clients": [...]} in seed format."""
+        return sim.admin_import(body)
+
     @admin.get("/jobs/{job_id}/truth")
     def job_truth(job_id: str) -> dict[str, Any]:
         return sim.job_truth(job_id)

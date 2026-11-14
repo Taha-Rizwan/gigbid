@@ -617,6 +617,48 @@ class Simulator:
         with self.store.tx() as conn:
             return clock.advance(conn, self.cfg.start, minutes)
 
+    def admin_import(self, body: dict[str, Any]) -> dict[str, Any]:
+        """Add new jobs and clients at runtime (e.g. an examiner's hidden test set). Jobs release at
+        now + release_minute (default 0, i.e. immediately) and emit job_posted events."""
+        from gigsim.seed import normalise_client, normalise_job
+
+        self.ensure_ready()
+        clients = [normalise_client(c) for c in body.get("clients", [])]
+        jobs = [normalise_job(j) for j in body.get("jobs", [])]
+        with self.store.tx() as conn:
+            now = clock.now_minute(conn)
+            known = {r[0] for r in conn.execute("SELECT client_id FROM clients")}
+            known |= {c["client_id"] for c in clients}
+            for j in jobs:
+                if j["client_id"] not in known:
+                    raise ApiError(422, "unknown_client", f"job {j['job_id']} references unknown client {j['client_id']}")
+                j["release_minute"] = now + int(j.get("release_minute") or 0)
+            existing = {r[0] for r in conn.execute("SELECT job_id FROM jobs")}
+            dupes = [j["job_id"] for j in jobs if j["job_id"] in existing]
+            if dupes:
+                raise ApiError(409, "duplicate_job_id", f"already exist: {', '.join(dupes[:5])}")
+            for c in clients:
+                conn.execute(
+                    "INSERT OR REPLACE INTO clients(client_id, name, country, member_since, total_spent, jobs_posted,"
+                    " hires, avg_rating, payment_verified, reviews, hidden) VALUES (?,?,?,?,?,?,?,?,?,?,?)",
+                    (c["client_id"], c["name"], c["country"], c["member_since"], c["total_spent"], c["jobs_posted"],
+                     c["hires"], c["avg_rating"], int(c["payment_verified"]), dumps(c["reviews"]), dumps(c["hidden"])),
+                )
+            for j in jobs:
+                conn.execute(
+                    "INSERT INTO jobs(job_id, title, description, category, skills, is_hourly, hourly_low,"
+                    " hourly_high, budget, country, client_id, release_minute, base_proposals,"
+                    " screening_questions, experience_level, is_scam, has_injection, duplicate_of, source)"
+                    " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                    (j["job_id"], j["title"], j["description"], j["category"], dumps(j["skills"]),
+                     int(j["is_hourly"]), j["hourly_low"], j["hourly_high"], j["budget"], j["country"],
+                     j["client_id"], j["release_minute"], j["proposals_count"], dumps(j["screening_questions"]),
+                     j["experience_level"], int(j["is_scam"]), int(j["has_injection"]), j["duplicate_of"],
+                     j.get("source") or "admin_import"),
+                )
+            released = clock.advance(conn, self.cfg.start, 0)
+        return {"imported_jobs": len(jobs), "imported_clients": len(clients), **released}
+
     def set_policy(self, version: str) -> dict[str, Any]:
         if version not in self.policies.versions:
             raise ApiError(422, "unknown_policy_version",
