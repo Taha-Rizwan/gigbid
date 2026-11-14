@@ -15,13 +15,19 @@ models:
     open:
       small: {provider: groq, model: openai/gpt-oss-20b, temperature: 0.0, reasoning_effort: low}
       strong: {provider: groq, model: openai/gpt-oss-120b, temperature: 0.4, reasoning_effort: medium}
-      fallback_small: {provider: cerebras, model: gpt-oss-120b, temperature: 0.0, reasoning_effort: low}
+      fallback_small: {provider: groq, model: openai/gpt-oss-120b, temperature: 0.0, reasoning_effort: low}   # separate Groq rate-limit bucket
+      fallback_strong: {provider: groq, model: openai/gpt-oss-20b, temperature: 0.4, reasoning_effort: medium}
       judge: {provider: anthropic, model: claude-haiku-5-5, effort: low, max_tokens: 8000}   # eval-only; different family from the gpt-oss writer
     open_alt:             # second open configuration for the required comparison
       small: {provider: groq, model: qwen/qwen3.8-27b, temperature: 0.0, max_tokens: 900}
       strong: {provider: groq, model: qwen/qwen3.8-27b, temperature: 0.4, max_tokens: 900}
       fallback_small: {provider: groq, model: openai/gpt-oss-20b, temperature: 0.0, reasoning_effort: low}
       judge: {provider: groq, model: openai/gpt-oss-120b, temperature: 0.0, reasoning_effort: low}
+    open_local:           # fully local open-weight models via the compose `ollama` service (CPU/GPU)
+      small: {provider: ollama, model: qwen3:4b, temperature: 0.0}
+      strong: {provider: ollama, model: qwen3:8b, temperature: 0.4}
+      fallback_small: {provider: ollama, model: qwen3:4b, temperature: 0.0}
+      judge: {provider: anthropic, model: claude-haiku-5-5, effort: low, max_tokens: 8000}
     paid:                 # optional; used only where it beats open enough to justify its cost
       small: {provider: anthropic, model: claude-haiku-5-5, effort: low, max_tokens: 8000}
       strong: {provider: anthropic, model: claude-haiku-5-5, effort: medium, max_tokens: 16000}

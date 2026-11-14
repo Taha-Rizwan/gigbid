@@ -128,6 +128,13 @@ def get_model(node: str, profile: str | None = None) -> tuple[BaseChatModel, str
             common["max_tokens"] = spec["max_tokens"]
         if provider == "anthropic":  # paid profile + LLM judge; official Anthropic SDK
             _models[key] = AnthropicModel(spec)
+        elif provider == "ollama":  # local open-weight models (docker compose `ollama` service)
+            import os
+
+            from langchain_openai import ChatOpenAI
+
+            _models[key] = ChatOpenAI(model=spec["model"], api_key="ollama",
+                                      base_url=os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434/v1"), **common)
         elif provider == "cerebras":  # OpenAI-compatible; open-weight models
             import os
 
@@ -182,18 +189,20 @@ async def _invoke_with_fallback(node: str, call) -> Any:
     except BudgetExceeded:
         raise
     except Exception as exc:  # noqa: BLE001
-        tier = config()["models"]["nodes"].get(node)
-        if tier != "small":
+        tier = config()["models"]["nodes"].get(node, node)
+        fb_tier = {"small": "fallback_small", "strong": "fallback_strong"}.get(tier)
+        profile = config()["models"]["profiles"][current_profile.get() or config()["models"]["profile"]]
+        if not fb_tier or fb_tier not in profile:
             raise
         log.warning("node %s model %s failed (%s: %s); trying fallback", node, name, type(exc).__name__, str(exc)[:200])
         try:
-            fb, fb_name = get_model("fallback_small")
+            fb, fb_name = get_model(fb_tier)
         except Exception:  # noqa: BLE001 - no fallback configured: surface the original error
             raise exc from None
         return await call(fb, fb_name)
 
 
-async def structured(node: str, schema: type[T], messages: list[BaseMessage]) -> T:
+async def structured[T: BaseModel](node: str, schema: type[T], messages: list[BaseMessage]) -> T:
     async def call(model: BaseChatModel, name: str) -> T:
         t0 = time.perf_counter()
         if isinstance(model, AnthropicModel):
@@ -219,7 +228,7 @@ async def structured(node: str, schema: type[T], messages: list[BaseMessage]) ->
     return await _invoke_with_fallback(node, call)
 
 
-async def _json_mode(model: BaseChatModel, schema: type[T], messages: list[BaseMessage]) -> dict:
+async def _json_mode[T: BaseModel](model: BaseChatModel, schema: type[T], messages: list[BaseMessage]) -> dict:
     import json
 
     hint = SystemMessage(
