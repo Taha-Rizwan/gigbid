@@ -1,0 +1,19 @@
+name: attribution_models
+version: "1.0"
+config-version: 2
+
+profile: default
+
+model-paths: ["models"]
+analysis-paths: ["analysis"]
+test-paths: ["tests"]
+seed-paths: ["data"]
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  attribution_models:
+    +materialized: view
+    +schema: analytics

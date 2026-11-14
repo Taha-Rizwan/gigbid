@@ -1,0 +1,11 @@
+{
+  "evidence_id": "data_analyst:repo:retention-notebooks",
+  "project_slug": "cohort-retention-study",
+  "vague_readme": true,
+  "synthetic": true,
+  "generator": {
+    "model": "openai/gpt-oss-120b",
+    "prompt_version": "persona_v1",
+    "seed": 623916599
+  }
+}

@@ -1,0 +1,201 @@
+# GigBid job taxonomy (v1). Used by scripts/build_dataset.py to categorise K1/K2/K3/K4 rows and by
+# the agent's Analyst node. Rules: each keyword is a case-insensitive whole-word/phrase regex.
+# score(category) = 3 * (#distinct title keyword hits) + 1 * (#distinct description keyword hits, capped at 4).
+# The top-scoring category wins if its score >= 2; ties go to the category listed first (priority order);
+# otherwise the job is `other`. `description` is the short text used for embedding fallback.
+version: 1
+min_score: 2
+title_weight: 3
+description_cap: 4
+categories:
+  ml_ai:
+    description: Machine learning, AI and LLM work - model training, NLP, computer vision, chatbots, RAG, AI agents, prompt engineering.
+    keywords: ['machine learning', 'deep learning', 'ml engineer', 'ai engineer', 'ai developer', 'artificial intelligence', 'llm', 'llms', 'large language model',
+               'gpt', 'chatgpt', 'openai', 'langchain', 'llamaindex', 'rag', 'retrieval augmented', 'vector database', 'embeddings', 'fine[- ]?tun\w*', 'nlp',
+               'natural language processing', 'computer vision', 'object detection', 'image classification', 'neural network', 'pytorch', 'tensorflow',
+               'keras', 'hugging ?face', 'transformers?', 'ai chatbot', 'chatbot', 'ai agent', 'ai agents', 'prompt engineer\w*', 'generative ai', 'genai',
+               'stable diffusion', 'yolo', 'opencv', 'predictive model\w*', 'classification model', 'recommendation system', 'recommender', 'data scientist',
+               'data science', 'ml model', 'ai model', 'ai integration', 'ai-powered', 'ai powered']
+  data_engineering:
+    description: Data pipelines, ETL/ELT, data warehouses, orchestration, streaming and database engineering.
+    keywords: ['data engineer\w*', 'etl', 'elt', 'data pipelines?', 'airflow', 'dbt', 'snowflake', 'bigquery', 'redshift', 'databricks', 'spark', 'pyspark', 'kafka',
+               'data warehouse', 'data lake', 'fivetran', 'airbyte', 'data migration', 'data integration', 'database design', 'data modell?ing', 'dagster']
+  data_analysis:
+    description: Data analysis, BI dashboards, reporting, statistics, spreadsheets and visualisation.
+    keywords: ['data analys[ti]\w*', 'data analytics', 'power ?bi', 'tableau', 'looker', 'looker studio', 'google data studio', 'dashboards?', 'kpi', 'reporting',
+               'statistic\w*', 'statistical analysis', 'spss', 'stata', 'r programming', 'excel', 'spreadsheets?', 'google sheets', 'pivot tables?',
+               'data visuali[sz]ation', 'sql', 'a/b test\w*', 'survey analysis', 'financial model\w*', 'vba', 'forecast\w*', 'regression']
+  web_fullstack:
+    description: Web application development - front end, back end, full stack, APIs, SaaS products, web frameworks.
+    keywords: ['full[- ]?stack', 'front[- ]?end', 'back[- ]?end', 'web app\w*', 'web developer', 'web development', 'website development', 'react(?:\.?js)?',
+               'next\.?js', 'vue(?:\.?js)?', 'angular', 'node(?:\.?js)?', 'express(?:\.?js)?', 'typescript', 'javascript', 'django', 'flask', 'fastapi', 'laravel',
+               'php', 'ruby on rails', 'rails', 'rest api', 'api development', 'graphql', 'saas', 'mern', 'mean stack', 'supabase', 'firebase',
+               'tailwind', 'html', 'css', 'bubble', 'webflow', 'wordpress developer', 'web application', 'mvp']
+  mobile:
+    description: Mobile app development for iOS and Android, cross-platform frameworks.
+    keywords: ['mobile app\w*', 'ios', 'android', 'flutter', 'react native', 'swift(?:ui)?', 'kotlin', 'xcode', 'app store', 'play store', 'iphone app',
+               'ipad', 'cross[- ]platform app', 'expo']
+  ecommerce:
+    description: E-commerce store setup and management - Shopify, WooCommerce, Amazon and marketplace listings.
+    keywords: ['shopify', 'woocommerce', 'e-?commerce', 'amazon seller', 'amazon fba', 'fba', 'product listings?', 'etsy', 'ebay', 'magento', 'bigcommerce',
+               'online store', 'dropshipping', 'walmart', 'product upload', 'store setup', 'listing optimi[sz]ation']
+  devops_cloud:
+    description: DevOps, cloud infrastructure, CI/CD, containers, Linux administration and security.
+    keywords: ['devops', 'aws', 'azure', 'gcp', 'google cloud', 'kubernetes', 'k8s', 'docker', 'terraform', 'ansible', 'ci/?cd', 'jenkins', 'github actions',
+               'linux', 'server admin\w*', 'sysadmin', 'cloud infrastructure', 'nginx', 'cybersecurity', 'penetration test\w*', 'network security',
+               'site reliability', 'vps', 'hosting']
+  automation_scraping:
+    description: Web scraping, crawling, bots and workflow automation (Zapier, Make, n8n, RPA, browser automation).
+    keywords: ['scrap\w*', 'crawl\w*', 'web scraping', 'data extraction', 'zapier', 'make\.com', 'integromat', 'n8n', 'automation', 'automate', 'workflow automation',
+               'rpa', 'selenium', 'puppeteer', 'playwright', 'bot', 'bots', 'apps script', 'google apps script', 'api integration', 'airtable']
+  design_3d:
+    description: Graphic, UI/UX, brand, illustration, 3D modelling, CAD and animation design work.
+    keywords: ['graphic design\w*', 'logo', 'branding', 'brand identity', 'ui/?ux', 'ux', 'ui design', 'figma', 'illustrat\w*', '3d', 'blender', 'cad',
+               'autocad', 'solidworks', 'rendering', 'render', 'photoshop', 'canva', 'packaging design', 'poster', 'flyer', 'infographic',
+               'character design', 'animation', 'animator', 'product design', 'interior design', 'architectural', 'nft art']
+  video_audio:
+    description: Video editing, motion graphics, audio, voice-over, podcast and music production.
+    keywords: ['video edit\w*', 'video editor', 'youtube', 'tiktok video', 'motion graphics', 'after effects', 'premiere pro', 'reels', 'shorts',
+               'voice[- ]?over', 'podcast', 'audio edit\w*', 'music', 'mixing', 'mastering', 'sound design', 'videographer', 'ugc', 'explainer video']
+  marketing:
+    description: Digital marketing, SEO, paid ads, social media management, email marketing, lead generation and sales.
+    keywords: ['seo', 'search engine optimi[sz]ation', 'google ads', 'facebook ads', 'meta ads', 'ppc', 'paid ads', 'social media', 'instagram', 'tiktok',
+               'linkedin', 'digital marketing', 'marketing strategy', 'email marketing', 'klaviyo', 'mailchimp', 'lead generation', 'leads',
+               'cold calling', 'appointment setter', 'appointment setting', 'sales', 'affiliate', 'influencer', 'media buyer', 'growth hacking',
+               'marketing manager', 'gohighlevel', 'go high level', 'crm']
+  writing:
+    description: Content writing, copywriting, blogging, editing, proofreading, technical writing and translation.
+    keywords: ['writer', 'writing', 'copywrit\w*', 'content writ\w*', 'blog posts?', 'articles?', 'ghostwrit\w*', 'proofread\w*', 'editing', 'editor',
+               'technical writ\w*', 'translat\w*', 'transcri\w*', 'ebook', 'script writer', 'scriptwriter', 'resume', 'grant writ\w*', 'seo content']
+  finance_accounting:
+    description: Bookkeeping, accounting, tax, financial analysis, payroll and legal/compliance support.
+    keywords: ['bookkeep\w*', 'accounting', 'accountant', 'quickbooks', 'xero', 'tax', 'taxes', 'payroll', 'financial statements?', 'cpa', 'invoic\w*',
+               'budgeting', 'financial analyst', 'legal', 'lawyer', 'attorney', 'compliance', 'contract drafting']
+  admin_support:
+    description: Virtual assistance, data entry, customer support, project management and research tasks.
+    keywords: ['virtual assistant', 'va', 'data entry', 'admin\w* (?:assistant|support)', 'customer (?:service|support)', 'chat support',
+               'executive assistant', 'project manager', 'project management', 'research assistant', 'online research', 'email management',
+               'calendar management', 'typing', 'copy paste', 'personal assistant', 'customer success', 'operations assistant']
+  other:
+    description: Anything that does not match a more specific category (engineering, education, games, hardware, consulting, etc.).
+    keywords: []
+
+# Persona -> categories (used to build the dev/held-out mixes: ~50% core, 30% adjacent, 20% unrelated).
+personas:
+  ai_ml: {core: [ml_ai], adjacent: [data_analysis, data_engineering, automation_scraping]}
+  fullstack: {core: [web_fullstack], adjacent: [ecommerce, mobile, devops_cloud]}
+  data_analyst: {core: [data_analysis], adjacent: [data_engineering, ml_ai, admin_support]}
+
+# Skill lexicon: canonical skill -> regex alternatives (case-insensitive, whole word). Used to fill
+# `skills[]` for K1 jobs (K1 has no tags) and for GigSim client must-have skills.
+skills:
+  Python: ['python']
+  JavaScript: ['javascript', 'js']
+  TypeScript: ['typescript']
+  React: ['react(?:\.?js)?']
+  Next.js: ['next\.?js']
+  Vue.js: ['vue(?:\.?js)?']
+  Angular: ['angular']
+  Node.js: ['node(?:\.?js)?']
+  Express: ['express(?:\.?js)?']
+  Django: ['django']
+  Flask: ['flask']
+  FastAPI: ['fastapi']
+  PHP: ['php']
+  Laravel: ['laravel']
+  Ruby on Rails: ['ruby on rails', 'rails']
+  WordPress: ['wordpress']
+  Shopify: ['shopify']
+  WooCommerce: ['woocommerce']
+  HTML/CSS: ['html5?', 'css3?']
+  Tailwind CSS: ['tailwind']
+  GraphQL: ['graphql']
+  REST API: ['rest(?:ful)? apis?', 'api development', 'api integration']
+  PostgreSQL: ['postgres(?:ql)?']
+  MySQL: ['mysql']
+  MongoDB: ['mongo(?:db)?']
+  Supabase: ['supabase']
+  Firebase: ['firebase']
+  Stripe: ['stripe']
+  Docker: ['docker']
+  Kubernetes: ['kubernetes', 'k8s']
+  AWS: ['aws', 'amazon web services']
+  Azure: ['azure']
+  Google Cloud: ['gcp', 'google cloud']
+  Terraform: ['terraform']
+  CI/CD: ['ci/?cd', 'github actions', 'jenkins']
+  Linux: ['linux']
+  Flutter: ['flutter']
+  React Native: ['react native']
+  Swift: ['swift(?:ui)?']
+  Kotlin: ['kotlin']
+  iOS: ['ios']
+  Android: ['android']
+  Machine Learning: ['machine learning', 'ml']
+  Deep Learning: ['deep learning', 'neural networks?']
+  NLP: ['nlp', 'natural language processing']
+  Computer Vision: ['computer vision', 'object detection', 'opencv', 'yolo']
+  LLM: ['llms?', 'large language models?', 'gpt-?4?o?', 'chatgpt', 'openai']
+  LangChain: ['langchain', 'llamaindex']
+  RAG: ['rag', 'retrieval[- ]augmented']
+  Vector Database: ['vector (?:database|db|store)s?', 'pinecone', 'weaviate', 'chroma(?:db)?', 'pgvector', 'qdrant']
+  Fine-tuning: ['fine[- ]?tun\w*']
+  PyTorch: ['pytorch']
+  TensorFlow: ['tensorflow', 'keras']
+  Hugging Face: ['hugging ?face']
+  scikit-learn: ['scikit[- ]learn', 'sklearn']
+  Prompt Engineering: ['prompt engineering', 'prompts?']
+  AI Chatbot: ['chatbots?', 'ai assistant', 'conversational ai']
+  AI Agents: ['ai agents?', 'agentic', 'autonomous agents?']
+  Data Science: ['data scien\w*']
+  Statistics: ['statistic\w*', 'regression', 'hypothesis test\w*']
+  A/B Testing: ['a/b test\w*', 'experiment\w*']
+  Forecasting: ['forecast\w*', 'time series']
+  pandas: ['pandas', 'numpy']
+  SQL: ['sql']
+  Excel: ['excel', 'spreadsheets?', 'vba', 'pivot tables?']
+  Google Sheets: ['google sheets', 'apps script']
+  Power BI: ['power ?bi', 'dax']
+  Tableau: ['tableau']
+  Looker Studio: ['looker(?: studio)?', 'google data studio', 'data studio']
+  Data Visualization: ['data visuali[sz]ation', 'dashboards?', 'charts?']
+  Data Analysis: ['data analys[ti]\w*', 'analytics']
+  Data Cleaning: ['data cleaning', 'clean(?:ing)? data', 'data cleansing']
+  ETL: ['etl', 'elt', 'data pipelines?']
+  Airflow: ['airflow']
+  dbt: ['dbt']
+  Snowflake: ['snowflake']
+  BigQuery: ['bigquery']
+  Spark: ['spark', 'pyspark', 'databricks']
+  Web Scraping: ['scrap(?:e|er|ers|ing)']
+  Selenium: ['selenium', 'puppeteer', 'playwright']
+  Zapier: ['zapier']
+  Make.com: ['make\.com', 'integromat']
+  n8n: ['n8n']
+  Automation: ['automation', 'automate']
+  Airtable: ['airtable']
+  Figma: ['figma']
+  UI/UX Design: ['ui/?ux', 'user experience', 'user interface']
+  Graphic Design: ['graphic design', 'logo', 'branding']
+  3D Modeling: ['3d model\w*', 'blender', '3ds max', 'maya']
+  CAD: ['cad', 'autocad', 'solidworks', 'fusion 360']
+  Video Editing: ['video edit\w*', 'premiere pro', 'final cut', 'davinci']
+  Motion Graphics: ['motion graphics', 'after effects']
+  SEO: ['seo']
+  Google Ads: ['google ads', 'adwords', 'ppc']
+  Facebook Ads: ['facebook ads', 'meta ads']
+  Social Media Marketing: ['social media']
+  Email Marketing: ['email marketing', 'klaviyo', 'mailchimp']
+  Lead Generation: ['lead generation', 'leads']
+  Copywriting: ['copywrit\w*']
+  Content Writing: ['content writ\w*', 'blog posts?', 'articles?']
+  Translation: ['translat\w*']
+  Bookkeeping: ['bookkeep\w*', 'quickbooks', 'xero']
+  Data Entry: ['data entry']
+  Customer Support: ['customer (?:service|support)']
+  Virtual Assistant: ['virtual assistant']
+  Project Management: ['project manage\w*']
+  GoHighLevel: ['gohighlevel', 'go high level', 'ghl']
+  Bubble: ['bubble(?:\.io)?']
+  Webflow: ['webflow']
+  Unity: ['unity']

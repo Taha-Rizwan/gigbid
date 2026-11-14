@@ -1,0 +1,11 @@
+{
+  "evidence_id": "data_analyst:repo:kpi-sql-library",
+  "project_slug": "kpi-sql-library",
+  "vague_readme": false,
+  "synthetic": true,
+  "generator": {
+    "model": "openai/gpt-oss-120b",
+    "prompt_version": "persona_v1",
+    "seed": 1666071630
+  }
+}

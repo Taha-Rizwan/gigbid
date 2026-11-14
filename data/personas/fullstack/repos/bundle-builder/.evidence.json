@@ -1,0 +1,11 @@
+{
+  "evidence_id": "fullstack:repo:bundle-builder",
+  "project_slug": "shopify-bundles-app",
+  "vague_readme": true,
+  "synthetic": true,
+  "generator": {
+    "model": "openai/gpt-oss-120b",
+    "prompt_version": "persona_v1",
+    "seed": 1599000320
+  }
+}

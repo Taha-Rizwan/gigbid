@@ -17,18 +17,24 @@ import math
 import random
 import re
 import urllib.parse
-from datetime import datetime, timezone
-from pathlib import Path
+from datetime import UTC, datetime
 
 import numpy as np
 import pandas as pd
 
-from rag.ingest.common import (EVALS_DIR, PERSONA_IDS, PROCESSED, RAW, load_specs, read_jsonl,
-                               stable_int, write_jsonl)
+from rag.ingest.common import (
+    EVALS_DIR,
+    PERSONA_IDS,
+    PROCESSED,
+    RAW,
+    load_specs,
+    stable_int,
+    write_jsonl,
+)
 from rag.ingest.taxonomy import categorize, category_names, extract_skills, persona_categories
 
 SEED = 4016
-GIGSIM_START = datetime(2024, 2, 20, 9, 0, tzinfo=timezone.utc)
+GIGSIM_START = datetime(2024, 2, 20, 9, 0, tzinfo=UTC)
 DEV_DAYS = ("2024-02-11", "2024-02-19")
 HELDOUT_DAYS = ("2024-02-20", "2024-02-23")
 SEED_DIR = PROCESSED / "gigsim_seed"
@@ -102,7 +108,7 @@ def clean_k1() -> pd.DataFrame:
     k1 = k1.drop_duplicates("job_id", keep="first").copy()
     STATS["k1_exact_dup_ids_removed"] = before - len(k1)
     STATS["k1_after_id_dedup"] = len(k1)
-    k1["norm_key"] = [norm_key(a, b) for a, b in zip(k1.title, k1.description)]
+    k1["norm_key"] = [norm_key(a, b) for a, b in zip(k1.title, k1.description, strict=False)]
     first = k1.groupby("norm_key")["job_id"].transform("first")
     k1["near_dup_of"] = np.where(first != k1.job_id, first, None)
     k1["is_near_dup"] = k1["near_dup_of"].notna()
@@ -115,10 +121,10 @@ def clean_k1() -> pd.DataFrame:
     k1.loc[k1.is_hourly.isna() & k1.budget.notna(), "is_hourly"] = False
     k1["country"] = k1["country"].where(k1["country"].notna(), None)
     log("  categorising K1 ...")
-    cats = [categorize(a, b) for a, b in zip(k1.title, k1.description)]
+    cats = [categorize(a, b) for a, b in zip(k1.title, k1.description, strict=False)]
     k1["category"] = [c for c, _ in cats]
     k1["category_score"] = [s for _, s in cats]
-    k1["skills"] = [extract_skills(f"{a}\n{b}") for a, b in zip(k1.title, k1.description)]
+    k1["skills"] = [extract_skills(f"{a}\n{b}") for a, b in zip(k1.title, k1.description, strict=False)]
     day = k1.published.dt.strftime("%Y-%m-%d")
     k1["window"] = np.select([(day >= DEV_DAYS[0]) & (day <= DEV_DAYS[1]),
                               (day >= HELDOUT_DAYS[0]) & (day <= HELDOUT_DAYS[1])],
@@ -246,7 +252,7 @@ def load_k3() -> pd.DataFrame:
     k3 = k3[(k3.title.str.len() > 0) & (k3.description.str.len() >= 200)].copy()
     tag_cols = [f"Category_{i}" for i in range(1, 10)]
     k3["skill_tags"] = k3[tag_cols].apply(lambda r: [fix_text(x) for x in r if isinstance(x, str) and x.strip()], axis=1)
-    k3["category"] = [categorize(t, d + "\n" + ", ".join(s))[0] for t, d, s in zip(k3.title, k3.description, k3.skill_tags)]
+    k3["category"] = [categorize(t, d + "\n" + ", ".join(s))[0] for t, d, s in zip(k3.title, k3.description, k3.skill_tags, strict=False)]
     prices = k3.apply(lambda r: _k3_price(r), axis=1)
     k3["is_hourly"] = [p[0] for p in prices]
     k3["hourly_low"] = [p[1] for p in prices]
@@ -517,7 +523,7 @@ def release_minute(job: dict, rng: random.Random) -> int:
 
 # ============================================================================ main build
 def build(label: bool = True, label_limit: int | None = None) -> None:
-    rng = random.Random(SEED)
+    random.Random(SEED)
     specs = load_specs()
     log("[1] cleaning K1")
     k1 = clean_k1()

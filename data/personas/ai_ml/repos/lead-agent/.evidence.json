@@ -1,0 +1,11 @@
+{
+  "evidence_id": "ai_ml:repo:lead-agent",
+  "project_slug": "crm-lead-agent",
+  "vague_readme": false,
+  "synthetic": true,
+  "generator": {
+    "model": "openai/gpt-oss-120b",
+    "prompt_version": "persona_v1",
+    "seed": 1631446019
+  }
+}

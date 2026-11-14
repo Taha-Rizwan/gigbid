@@ -1,0 +1,17 @@
+{
+  "name": "subscription-kit",
+  "version": "1.0.0",
+  "main": "src/subscription.ts",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "test": "node test.js"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.0.0",
+    "stripe": "^12.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.0"
+  }
+}

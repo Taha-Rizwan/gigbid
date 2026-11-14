@@ -1,0 +1,48 @@
+{
+  "persona_id": "data_analyst",
+  "name": "Hannah Kowalski",
+  "title": "Data Analyst and Analytics Engineer - SQL, dashboards, pipelines",
+  "hourly_rate": 45,
+  "skills": [
+    "SQL",
+    "Excel",
+    "Power BI",
+    "Tableau",
+    "Looker Studio",
+    "Python",
+    "pandas",
+    "data modelling",
+    "A/B testing",
+    "statistics",
+    "data pipelines",
+    "data visualisation",
+    "Google Sheets",
+    "KPI reporting",
+    "data cleaning"
+  ],
+  "years_experience": 6,
+  "industries": [
+    "e-commerce",
+    "insurance",
+    "consumer apps",
+    "professional services",
+    "non-profit",
+    "retail"
+  ],
+  "bio": "I’m Hannah Kowalski, a Data Analyst and Analytics Engineer specialising in SQL, dashboards and data pipelines. With a background in economics and statistics, I help businesses turn raw data into clear, actionable insights – from building automated reporting for online retailers to uncovering claim leakage for insurers. Over the past five years I’ve delivered 50+ freelance contracts, creating end‑to‑end solutions that save time and drive growth. I enjoy explaining complex analysis in plain language so that every stakeholder, technical or not, can make confident decisions.",
+  "location": "Remote (UTC+0)",
+  "niches": [
+    "KPI dashboards",
+    "analytics engineering for small companies",
+    "experiment analysis",
+    "spreadsheet automation",
+    "retention and cohort analysis"
+  ],
+  "gigsim_account_id": "acct_data",
+  "synthetic": true,
+  "generator": {
+    "model": "openai/gpt-oss-120b",
+    "prompt_version": "persona_v1",
+    "seed": 1377520142
+  }
+}

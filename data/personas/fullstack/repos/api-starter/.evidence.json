@@ -1,0 +1,11 @@
+{
+  "evidence_id": "fullstack:repo:api-starter",
+  "project_slug": "api-starter",
+  "vague_readme": false,
+  "synthetic": true,
+  "generator": {
+    "model": "openai/gpt-oss-120b",
+    "prompt_version": "persona_v1",
+    "seed": 1911841594
+  }
+}

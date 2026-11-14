@@ -6,8 +6,8 @@ from __future__ import annotations
 
 import re
 import zipfile
+from collections.abc import Iterator
 from pathlib import Path
-from typing import Iterator
 from xml.etree.ElementTree import iterparse
 
 NS = "{http://schemas.openxmlformats.org/spreadsheetml/2006/main}"

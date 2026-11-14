@@ -31,6 +31,7 @@ _lock = threading.Lock()
 SESSION_USAGE: dict[str, dict[str, int]] = {}  # model -> {calls, cached, prompt, completion, total}
 _model_sems: dict[str, threading.Semaphore] = {}
 _exhausted: set[str] = set()
+HARD_DEADLINE: float | None = None   # epoch seconds; set by callers that must finish on time
 _client: httpx.Client | None = None
 
 
@@ -110,6 +111,8 @@ def build_payload(model: str, messages: list[dict], *, json_mode: bool = False, 
         reasoning_effort = "low"
     if reasoning_effort is None and model.startswith("qwen/"):
         reasoning_effort = "none"
+    if model.startswith("qwen/") and max_tokens and max_tokens > 1000:
+        max_tokens = 1000   # this tier caps qwen at 1,000 output tokens per minute; larger requests are rejected
     payload: dict[str, Any] = {"model": model, "messages": messages, "temperature": temperature, "seed": seed}
     if json_mode:
         payload["response_format"] = {"type": "json_object"}
@@ -137,8 +140,16 @@ def chat(model: str, messages: list[dict], *, json_mode: bool = False, temperatu
     path = CACHE_DIR / f"{key}.json"
     if path.exists():
         data = json.loads(path.read_text(encoding="utf-8"))
-        _record(model, data.get("usage"), cached=True)
-        return {"content": data["content"], "usage": data.get("usage"), "model": model, "cached": True}
+        valid = True
+        if validate is not None:   # a tightened validator also applies to cached outputs
+            try:
+                valid = bool(validate(data["content"]))
+            except Exception:  # noqa: BLE001
+                valid = False
+        if valid:
+            _record(model, data.get("usage"), cached=True)
+            return {"content": data["content"], "usage": data.get("usage"), "model": model, "cached": True}
+        path.unlink()
     if model in _exhausted:
         raise DailyLimitError(f"{model}: daily limit reached earlier in this run")
 
@@ -190,6 +201,8 @@ def chat(model: str, messages: list[dict], *, json_mode: bool = False, temperatu
                 err = {"message": r.text[:300]}
             msg = str(err.get("message", ""))
             if r.status_code == 429:
+                if HARD_DEADLINE and time.time() > HARD_DEADLINE:
+                    raise LLMError(f"{model}: still rate limited at the build deadline")
                 if re.search(r"per day|\(RPD\)|\(TPD\)", msg):
                     _exhausted.add(model)
                     raise DailyLimitError(f"{model}: daily limit reached ({msg[:160]})")
@@ -223,7 +236,10 @@ def chat_fallback(models: list[str], messages: list[dict], **kw) -> dict:
     for m in models:
         kw2 = {k: v for k, v in kw.items() if k not in ("validate", "max_attempts")}
         if is_cached(m, messages, **kw2):
-            return chat(m, messages, **kw)
+            try:
+                return chat(m, messages, **kw)
+            except DailyLimitError:   # cached output failed a tightened validator and m is capped
+                break
     last: Exception | None = None
     for m in models:
         try:
@@ -305,3 +321,85 @@ def spend_totals() -> dict[str, dict[str, int]]:
 def print_session_usage() -> None:
     for m, u in sorted(SESSION_USAGE.items()):
         print(f"  {m:24s} calls={u['calls']:5d} cached={u['cached']:5d} tokens={u['total']:8d}")
+
+
+# ===================================================================================== Claude (Anthropic SDK)
+# Used for the remaining LLM work once the Groq free tier was saturated (daily token caps).
+CLAUDE_MODEL = "claude-haiku-5-5"
+CLAUDE_PRICES = {"claude-haiku-5-5": (0.10, 0.50)}   # USD per 1M tokens (input, output)
+_anthropic_client = None
+
+
+def _claude():
+    global _anthropic_client
+    if _anthropic_client is None:
+        import anthropic
+
+        if not os.environ.get("ANTHROPIC_API_KEY"):
+            raise LLMError("ANTHROPIC_API_KEY missing (set it in .env)")
+        _anthropic_client = anthropic.Anthropic(max_retries=6)
+    return _anthropic_client
+
+
+def _claude_key(system: str, user: str, schema, model: str, max_tokens: int, effort: str) -> dict:
+    return {"provider": "anthropic", "model": model, "system": system, "user": user,
+            "schema": schema.__name__, "schema_json": schema.model_json_schema(),
+            "max_tokens": max_tokens, "effort": effort}
+
+
+def claude_is_cached(system: str, user: str, schema, *, model: str = CLAUDE_MODEL, max_tokens: int = 8000,
+                     effort: str = "low") -> bool:
+    return (CACHE_DIR / f"{cache_key(_claude_key(system, user, schema, model, max_tokens, effort))}.json").exists()
+
+
+def claude_parse(system: str, user: str, schema, *, model: str = CLAUDE_MODEL, max_tokens: int = 8000,
+                 effort: str = "low", validate=None, max_attempts: int = 3) -> tuple[dict, dict]:
+    """Structured output via client.messages.parse; cached on disk like the Groq calls.
+
+    Returns (parsed_dict, {"model", "cached"}). `validate(parsed_dict) -> bool` rejects an output
+    (retried with a nudge appended to the user turn; never cached)."""
+    key_payload = _claude_key(system, user, schema, model, max_tokens, effort)
+    path = CACHE_DIR / f"{cache_key(key_payload)}.json"
+    if path.exists():
+        data = json.loads(path.read_text(encoding="utf-8"))
+        if validate is None or validate(data["parsed"]):
+            _record(model, data.get("usage"), cached=True)
+            return data["parsed"], {"model": model, "cached": True}
+    client = _claude()
+    last_err = "no attempt"
+    for attempt in range(max_attempts):
+        u = user if attempt == 0 else user + "\n\n(Previous answer was incomplete or malformed - follow every instruction exactly.)"
+        resp = client.messages.parse(model=model, max_tokens=max_tokens, system=system,
+                                     messages=[{"role": "user", "content": u}], output_format=schema,
+                                     output_config={"effort": effort})
+        usage = {"prompt_tokens": resp.usage.input_tokens, "completion_tokens": resp.usage.output_tokens,
+                 "total_tokens": resp.usage.input_tokens + resp.usage.output_tokens}
+        _record(model, usage, cached=False)
+        if resp.stop_reason == "refusal":
+            last_err = "refusal"
+            continue
+        if resp.stop_reason == "max_tokens" or resp.parsed_output is None:
+            last_err = f"stop_reason={resp.stop_reason}"
+            continue
+        parsed = resp.parsed_output.model_dump()
+        if validate is not None and not validate(parsed):
+            last_err = "validation"
+            continue
+        CACHE_DIR.mkdir(parents=True, exist_ok=True)
+        tmp = path.with_suffix(f".{threading.get_ident()}.tmp")
+        tmp.write_text(json.dumps({"request": {"model": model, **{k: v for k, v in key_payload.items() if k != "model"}},
+                                   "parsed": parsed, "content": json.dumps(parsed, ensure_ascii=False),
+                                   "usage": usage, "created": time.strftime("%Y-%m-%dT%H:%M:%S")},
+                                  ensure_ascii=False), encoding="utf-8")
+        os.replace(tmp, path)
+        return parsed, {"model": model, "cached": False}
+    raise LLMError(f"{model}: failed after {max_attempts} attempts ({last_err})")
+
+
+def cost_usd(totals: dict[str, dict[str, int]]) -> dict[str, float]:
+    out = {}
+    for m, u in totals.items():
+        if m in CLAUDE_PRICES:
+            pi, po = CLAUDE_PRICES[m]
+            out[m] = round(u["prompt"] / 1e6 * pi + u["completion"] / 1e6 * po, 4)
+    return out

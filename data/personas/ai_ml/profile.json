@@ -1,0 +1,49 @@
+{
+  "persona_id": "ai_ml",
+  "name": "Nadia Rahman",
+  "title": "Machine Learning Engineer - LLM apps, RAG and NLP",
+  "hourly_rate": 65,
+  "skills": [
+    "Python",
+    "machine learning",
+    "NLP",
+    "LLM applications",
+    "retrieval-augmented generation",
+    "text classification",
+    "model evaluation",
+    "pandas",
+    "scikit-learn",
+    "PyTorch",
+    "MLOps",
+    "FastAPI",
+    "SQL",
+    "prompt engineering",
+    "document AI"
+  ],
+  "years_experience": 7,
+  "industries": [
+    "telecom",
+    "legal tech",
+    "SaaS",
+    "logistics",
+    "e-commerce",
+    "real estate",
+    "fintech"
+  ],
+  "bio": "I am a Machine Learning Engineer specialising in large‑language‑model applications, retrieval‑augmented generation and NLP. Over the past seven years I have built churn‑reduction models, intent classifiers and end‑to‑end production pipelines for telecom, fintech and SaaS firms, and I have delivered more than 60 freelance contracts across legal tech, logistics and e‑commerce. I work remotely (UTC+5), write production‑grade Python, and focus on measurable impact – typically improving accuracy by 20‑30% and cutting manual effort by up to 80%.",
+  "location": "Remote (UTC+5)",
+  "niches": [
+    "RAG systems with evaluation",
+    "NLP classification and extraction",
+    "LLM agents with tools",
+    "churn and propensity models",
+    "getting models into production"
+  ],
+  "gigsim_account_id": "acct_ai",
+  "synthetic": true,
+  "generator": {
+    "model": "openai/gpt-oss-120b",
+    "prompt_version": "persona_v1",
+    "seed": 1153407263
+  }
+}

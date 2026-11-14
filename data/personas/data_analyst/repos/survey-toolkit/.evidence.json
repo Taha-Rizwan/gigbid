@@ -1,0 +1,11 @@
+{
+  "evidence_id": "data_analyst:repo:survey-toolkit",
+  "project_slug": "nonprofit-survey-analysis",
+  "vague_readme": false,
+  "synthetic": true,
+  "generator": {
+    "model": "openai/gpt-oss-120b",
+    "prompt_version": "persona_v1",
+    "seed": 1500926976
+  }
+}

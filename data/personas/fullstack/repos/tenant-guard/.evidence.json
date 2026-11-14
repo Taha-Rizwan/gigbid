@@ -1,0 +1,11 @@
+{
+  "evidence_id": "fullstack:repo:tenant-guard",
+  "project_slug": "tenant-auth-service",
+  "vague_readme": false,
+  "synthetic": true,
+  "generator": {
+    "model": "openai/gpt-oss-120b",
+    "prompt_version": "persona_v1",
+    "seed": 1165207850
+  }
+}

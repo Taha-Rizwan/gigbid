@@ -1,0 +1,11 @@
+{
+  "evidence_id": "ai_ml:repo:ticket-router",
+  "project_slug": "support-ticket-triage",
+  "vague_readme": true,
+  "synthetic": true,
+  "generator": {
+    "model": "openai/gpt-oss-120b",
+    "prompt_version": "persona_v1",
+    "seed": 432932926
+  }
+}

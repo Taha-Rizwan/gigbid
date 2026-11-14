@@ -1,0 +1,11 @@
+{
+  "evidence_id": "fullstack:repo:subscription-kit",
+  "project_slug": "tallyhub-billing",
+  "vague_readme": false,
+  "synthetic": true,
+  "generator": {
+    "model": "openai/gpt-oss-120b",
+    "prompt_version": "persona_v1",
+    "seed": 211681175
+  }
+}

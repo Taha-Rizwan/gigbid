@@ -9,6 +9,7 @@ from __future__ import annotations
 import json
 import os
 import random
+import re
 import subprocess
 import sys
 import time
@@ -18,8 +19,19 @@ from datetime import datetime, timedelta
 
 import httpx
 
-from rag.ingest.common import (GEN_MODELS, PERSONA_IDS, PERSONAS_DIR, PROCESSED, ROOT, generator, load_specs,
-                               read_jsonl, stable_int, word_count, write_jsonl)
+from rag.ingest.common import (
+    GEN_MODELS,
+    PERSONA_IDS,
+    PERSONAS_DIR,
+    PROCESSED,
+    ROOT,
+    generator,
+    load_specs,
+    read_jsonl,
+    stable_int,
+    word_count,
+    write_jsonl,
+)
 from rag.ingest.llm import chat_json, parse_json, print_session_usage
 
 PV = "proposal_v1"
@@ -52,7 +64,7 @@ SYSTEM = ("You write freelancer proposals (cover letters) for a SYNTHETIC datase
 def assign_styles(n: int, rng: random.Random) -> list[str]:
     counts = [round(n * s) for _, s in STYLE_SHARES]
     counts[0] += n - sum(counts)
-    styles = [st for (st, _), c in zip(STYLE_SHARES, counts) for _ in range(c)]
+    styles = [st for (st, _), c in zip(STYLE_SHARES, counts, strict=False) for _ in range(c)]
     rng.shuffle(styles)
     return styles
 
@@ -102,7 +114,7 @@ def write_batch(pid: str, p: dict, style: str, jobs: list[dict], ev_text: str) -
     def ok(content: str) -> bool:
         d = parse_json(content)
         got = {key(x): x for x in d.get("proposals", [])}
-        for jid, nq in want.items():
+        for jid, _nq in want.items():
             x = got.get(jid)
             if not x or not isinstance(x.get("cover_letter"), str):
                 return False
@@ -120,6 +132,76 @@ def write_batch(pid: str, p: dict, style: str, jobs: list[dict], ev_text: str) -
     return {alias[key(x)]: x for x in data["proposals"] if key(x) in alias}, res["model"], seed
 
 
+# ------------------------------------------------------------------------------------- templates
+# Generic and short proposals are assembled from templates (deterministic, no LLM). Generic proposals
+# are copy-pasted boilerplate in real marketplaces too; short ones cite the persona's best-matching
+# real project. LLM-written styles: specific and long.
+LLM_STYLES = ("specific", "long")
+TEMPLATE_STYLES = ("generic", "short")
+TPV = "proposal_template_v1"
+GEN_OPEN = ["I am writing to apply for your job posting.", "Dear Hiring Manager,", "I am a highly skilled professional "
+            "with a passion for quality work.", "I have read your job description carefully and I am confident I can help.",
+            "I am excited to apply for this opportunity.", "Hello sir, I hope you are doing well."]
+GEN_SELF = ["I have {years} years of experience in {s1}, {s2} and {s3}.",
+            "Over the last {years} years I have worked with many clients around the world on similar tasks.",
+            "My main skills are {s1}, {s2} and {s3}, and I always keep learning new technologies.",
+            "I have completed many projects like this one and my clients are always happy with the results."]
+GEN_VALUE = ["I always deliver high quality work on time and within budget.",
+             "Customer satisfaction is my top priority and I offer unlimited revisions until you are happy.",
+             "I am a fast learner, very detail oriented and I communicate clearly.",
+             "I understand what you need for your project and I can start right away.",
+             "I work in an organised way and keep you updated at every step.",
+             "I can adapt to your time zone and I am available for calls whenever needed."]
+GEN_CLOSE = ["Please feel free to message me so we can discuss the details.",
+             "Looking forward to working with you on this project.",
+             "Thank you for your time and consideration.",
+             "Let me know when you are free for a quick chat."]
+GEN_ANS = ["I can discuss this in detail once we start.", "Yes, I have done this many times before.",
+           "It depends on the details, we can talk about it.", "I am flexible and can adapt to your needs."]
+SHORT_ANS = ["Yes - happy to share details on a call.", "About a week, depending on scope.", "Available from Monday.",
+             "Yes, done this before."]
+
+
+def _best_project(job: dict, p: dict) -> dict:
+    words = set(re.findall(r"[a-z]{4,}", (job["title"] + " " + job["description"][:600]).lower()))
+    items = list(p["projects"]) + list(p["minor_gigs"])
+    def overlap(x):
+        text = " ".join([x["title"], " ".join(x.get("skills", [])), " ".join(x.get("stack", [])), x.get("outcome", "")]).lower()
+        return len(words & set(re.findall(r"[a-z]{4,}", text)))
+    return max(items, key=lambda x: (overlap(x), -items.index(x)))
+
+
+def template_proposal(job: dict, p: dict, style: str) -> dict:
+    seed = stable_int(p["name"], job["job_id"], style, TPV)
+    rng = random.Random(seed)
+    first = p["name"].split()[0]
+    nq = len(job.get("screening_questions") or [])
+    sk = rng.sample(p["skills"], 3)
+    if style == "generic":
+        parts = [rng.choice(GEN_OPEN)]
+        parts += [s.format(years=p["years_experience"], s1=sk[0], s2=sk[1], s3=sk[2]) for s in rng.sample(GEN_SELF, 2)]
+        parts += rng.sample(GEN_VALUE, rng.randint(4, 6))
+        if rng.random() < 0.5:
+            parts.insert(2, f"I am very interested in your project \"{job['title'].strip()}\".")
+        parts += [rng.choice(GEN_CLOSE), f"Best regards, {first}"]
+        letter = " ".join(parts[:1]) + "\n\n" + " ".join(parts[1:-1]) + "\n\n" + parts[-1]
+        answers = [rng.choice(GEN_ANS) for _ in range(nq)]
+    else:
+        proj = _best_project(job, p)
+        outcome = proj["outcome"].split(";")[0].strip()
+        lines = [rng.choice([f"Recently delivered: {proj['title'].lower()} - {outcome}.",
+                             f"Did something close to this before ({proj['title'].lower()}): {outcome}.",
+                             f"Relevant: {proj['title'].lower()}, {outcome}."]),
+                 rng.choice([f"Can take on \"{job['title'].strip()[:60]}\" and start this week.",
+                             "Happy to start this week.", "Available now, can share details on a call."])]
+        lines.insert(1, rng.choice([f"{p['years_experience']} years in {sk[0]} and {sk[1]}.",
+                                    f"Mostly working with {sk[0]}, {sk[1]} and {sk[2]}."]))
+        lines.append(f"- {first}")
+        letter = " ".join(lines)
+        answers = [rng.choice(SHORT_ANS) for _ in range(nq)]
+    return {"cover_letter": letter, "screening_answers": answers, "_model": "template", "_seed": seed, "_pv": TPV}
+
+
 # ------------------------------------------------------------------------------------- GigSim
 def gigsim_up() -> bool:
     try:
@@ -130,11 +212,19 @@ def gigsim_up() -> bool:
 
 def start_gigsim() -> subprocess.Popen | None:
     if gigsim_up():
-        print("  using the GigSim already running at", GIGSIM_URL)
-        return None
+        if os.environ.get("GIGSIM_ADMIN_URL"):   # caller explicitly pointed us at their own instance
+            print("  using the GigSim already running at", GIGSIM_URL)
+            return None
+        raise SystemExit(f"something is already listening at {GIGSIM_URL}; stop it (it may hold a stale seed) "
+                         "or set GIGSIM_ADMIN_URL to use it deliberately")
     env = dict(os.environ)
-    env.setdefault("GIGSIM_SEED_DIR", str(PROCESSED / "gigsim_seed"))
-    env.setdefault("GIGSIM_DB", str(ROOT / "data" / "cache" / "gigsim_labels.sqlite"))
+    env["GIGSIM_SEED_DIR"] = str(PROCESSED / "gigsim_seed")
+    db = ROOT / "data" / "cache" / "gigsim_labels.sqlite"
+    for suffix in ("", "-wal", "-shm"):   # always re-seed from the current seed files
+        p = db.with_name(db.name + suffix)
+        if p.exists():
+            p.unlink()
+    env["GIGSIM_DB"] = str(db)
     env.setdefault("GIGSIM_ERROR_RATE", "0")
     # Score with GigSim's deterministic heuristic personalisation (no LLM): reproducible labels and no
     # contention with the Groq daily token caps. Set GIGSIM_LABEL_USE_LLM=1 to use the LLM rating instead.
@@ -180,21 +270,28 @@ def build(workers: int = 3) -> None:
         raise SystemExit("data/processed/past_proposal_jobs.jsonl missing: run scripts/build_dataset.py first")
     plan = []   # (pid, style, [jobs])
     per_pid: dict[str, list[dict]] = {}
+    written: dict[str, dict] = {}
     for pid in PERSONA_IDS:
         p = specs[pid]
         rng = random.Random(stable_int("proposals", pid))
         jobs = [j for j in jobs_all if j["persona_id"] == pid]
         styles = assign_styles(len(jobs), rng)
-        for j, st in zip(jobs, styles):
+        for j, st in zip(jobs, styles, strict=False):
             j["_style"] = st
             j["_bid"], j["_rate_type"] = bid_for(j, p, st, rng)
+        # evidence numbers are fixed over the full planned list, so ids stay stable when gaps are filled later
+        for n, j in enumerate(sorted(jobs, key=lambda j: (j.get("published_date") or "", j["job_id"])), start=1):
+            j["_eid"] = f"{pid}:proposal:{n:03d}"
         per_pid[pid] = jobs
-        for st in BATCH:
+        for st in LLM_STYLES:
             sj = [j for j in jobs if j["_style"] == st]
             for i in range(0, len(sj), BATCH[st]):
                 plan.append((pid, st, sj[i:i + BATCH[st]]))
-    print(f"proposal generation: {sum(len(b) for _, _, b in plan)} proposals in {len(plan)} LLM calls", flush=True)
-    written: dict[str, dict] = {}
+        for j in jobs:
+            if j["_style"] in TEMPLATE_STYLES:
+                written[f"{pid}|{j['job_id']}"] = template_proposal(j, p, j["_style"])
+    print(f"proposal generation: {len(written)} template proposals; "
+          f"{sum(len(b) for _, _, b in plan)} LLM proposals in {len(plan)} calls", flush=True)
     failed = 0
     with ThreadPoolExecutor(max_workers=workers) as ex:
         futs = {ex.submit(write_batch, pid, specs[pid], st, b, persona_evidence_text(specs[pid])): (pid, st, b)
@@ -211,6 +308,7 @@ def build(workers: int = 3) -> None:
             if n % 10 == 0:
                 print(f"  {n}/{len(plan)} batches", flush=True)
     print_session_usage()
+    per_pid_all = {pid: list(v) for pid, v in per_pid.items()}
     if failed:
         # keep going with what exists (daily token caps); a rerun fills the gaps from the cache
         print(f"WARNING: {failed} proposal batches failed; writing the {len(written)} proposals that exist. "
@@ -252,14 +350,14 @@ def build(workers: int = 3) -> None:
 
     for pid in PERSONA_IDS:
         rows = []
-        tasks_p = sorted([t for t in tasks if t[0] == pid], key=lambda t: (t[1].get("published_date") or "", t[1]["job_id"]))
-        for n, (_, j, w, prop) in enumerate(tasks_p, start=1):
+        tasks_p = sorted([t for t in tasks if t[0] == pid], key=lambda t: t[1]["_eid"])
+        for _, j, w, prop in tasks_p:
             s = results[(pid, j["job_id"])]
             pub = datetime.fromisoformat(j["published_date"])
             date = pub + timedelta(hours=1 + stable_int(pid, j["job_id"]) % 30)
             date = min(date, datetime.fromisoformat("2024-02-20T08:00:00+00:00"))
             rows.append({
-                "evidence_id": f"{pid}:proposal:{n:03d}", "job_ref": j["job_id"], "job_title": j["title"],
+                "evidence_id": j["_eid"], "job_ref": j["job_id"], "job_title": j["title"],
                 "job_excerpt": " ".join(j["description"].split())[:600], "cover_letter": prop["cover_letter"],
                 "screening_questions": j.get("screening_questions") or [],
                 "screening_answers": prop["screening_answers"], "bid_amount": prop["bid_amount"],
@@ -268,8 +366,11 @@ def build(workers: int = 3) -> None:
                 "outcome_source": "gigsim_admin_score", "p_reply": s.get("p_reply"), "p_hire": s.get("p_hire"),
                 "score_components": s.get("components"), "style": j["_style"], "category": j["category"],
                 "word_count": word_count(prop["cover_letter"]), "synthetic": True,
-                "generator": generator(w["_model"], PV, w["_seed"]),
+                "generator": generator(w["_model"], w.get("_pv", PV), w["_seed"]),
             })
+        missing = len(per_pid_all[pid]) - len(rows)
+        if missing:
+            print(f"  {pid}: {missing} planned proposals still missing (daily LLM caps); rerun later to fill them")
         write_jsonl(PERSONAS_DIR / pid / "proposals.jsonl", rows)
         # refresh the proposal rows of the persona index
         idx_path = PERSONAS_DIR / pid / "index.jsonl"

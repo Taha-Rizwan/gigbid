@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: channel_assignments
+    description: "Tests for channel assignment logic"
+    columns:
+      - name: channel
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Facebook', 'Google Search', 'Paid Search', 'Twitter', 'Other']

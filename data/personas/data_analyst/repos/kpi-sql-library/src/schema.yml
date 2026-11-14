@@ -1,0 +1,51 @@
+# schema.yml
+# ----------
+# Documentation and tests for the KPI views.
+
+version: 2
+
+models:
+  - name: kpi_revenue
+    description: "Daily total revenue and cumulative revenue."
+    columns:
+      - name: day
+        description: "Date of the sales day."
+        tests:
+          - not_null
+          - unique
+      - name: daily_revenue
+        description: "Revenue generated on that day."
+        tests:
+          - not_null
+      - name: cumulative_revenue
+        description: "Running total of revenue up to the day."
+        tests:
+          - not_null
+
+  - name: kpi_aov
+    description: "Average Order Value per day."
+    columns:
+      - name: day
+        description: "Date of the sales day."
+        tests:
+          - not_null
+          - unique
+      - name: aov
+        description: "Average order value (revenue per order)."
+        tests:
+          - not_null
+
+  - name: kpi_repeat_rate
+    description: "Daily repeat purchase rate."
+    columns:
+      - name: day
+        description: "Date of the measurement."
+        tests:
+          - not_null
+          - unique
+      - name: repeat_rate
+        description: "Proportion of customers with more than one purchase in the prior 30 days."
+        tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1]   # rate expressed as a decimal between 0 and 1.

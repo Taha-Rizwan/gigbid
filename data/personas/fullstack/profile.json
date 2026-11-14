@@ -1,0 +1,49 @@
+{
+  "persona_id": "fullstack",
+  "name": "Mateo Alvarez",
+  "title": "Full-Stack Developer - React, Next.js, Node and Postgres",
+  "hourly_rate": 55,
+  "skills": [
+    "JavaScript",
+    "TypeScript",
+    "React",
+    "Next.js",
+    "Node.js",
+    "REST APIs",
+    "GraphQL",
+    "PostgreSQL",
+    "payments integration",
+    "authentication",
+    "web performance",
+    "testing",
+    "Shopify apps",
+    "headless CMS",
+    "Docker"
+  ],
+  "years_experience": 9,
+  "industries": [
+    "healthcare",
+    "SaaS",
+    "logistics",
+    "e-commerce",
+    "media",
+    "real estate",
+    "fintech"
+  ],
+  "bio": "I’m Mateo Alvarez, a full‑stack developer who loves turning ideas into fast, reliable web products. With a background in React, Next.js, Node and Postgres, I’ve built patient portals, component libraries, and a range of freelance solutions—from CRM systems to headless e‑commerce. I work remotely (UTC+1) and focus on clean code, performance, and delivering measurable results. When I’m not coding, I’m tweaking UI accessibility or automating dev workflows so my clients can ship faster and scale smarter.",
+  "location": "Remote (UTC+1)",
+  "niches": [
+    "SaaS products with subscription billing",
+    "real-time dashboards",
+    "Shopify apps",
+    "migrations off legacy WordPress",
+    "auth and multi-tenant back ends"
+  ],
+  "gigsim_account_id": "acct_web",
+  "synthetic": true,
+  "generator": {
+    "model": "openai/gpt-oss-120b",
+    "prompt_version": "persona_v1",
+    "seed": 2034970905
+  }
+}

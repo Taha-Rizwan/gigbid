@@ -4,8 +4,9 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 import yaml
 
@@ -44,7 +45,8 @@ def write_jsonl(path: Path, rows: Iterable[dict]) -> int:
 def read_jsonl(path: Path) -> list[dict]:
     if not path.exists():
         return []
-    return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+    # split on "\n" only: str.splitlines() also breaks on U+2028/U+0085, which appear inside job texts
+    return [json.loads(line) for line in path.read_text(encoding="utf-8").split("\n") if line.strip()]
 
 
 def word_count(text: str) -> int:

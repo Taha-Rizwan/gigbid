@@ -1,0 +1,436 @@
+# Hand-crafted persona specs (synthetic people). Every generated persona artefact
+# (profile, CV, case studies, repos, reviews, past proposals) is derived from this file so the
+# three personas stay internally consistent: dates, employers, clients and project names.
+#
+# Shared world (deliberate cross-links between personas):
+#   * Brightcart (e-commerce retailer): Hannah worked there 2018-2021; Nadia did a freelance
+#     review-mining project for them in 2023.
+#   * Keystone Realty: Mateo built their internal CRM in 2021; Nadia built an LLM lead agent on
+#     top of that CRM in 2024.
+#   * Cargoline Freight: Mateo built their live dispatch board (2022); Nadia built their invoice
+#     extraction (2023).
+#   * Lumio Apps: Hannah's analytics client (2023).
+#   * pandas: both Nadia and Hannah use it heavily.
+#
+# Field notes
+#   stack      exact tool names. Per the data spec these should appear only in code or in ONE line
+#              of prose, never repeatedly.
+#   implied    phrases that describe the skill without naming the tool.
+#   skills     generic skill words used in front matter (no product names).
+#   repo       optional {slug, vague_readme, lang}. vague_readme=true -> README says little, code is clear.
+#   review     optional {client_name, rating}.
+
+personas:
+  ai_ml:
+    name: Nadia Rahman
+    title: Machine Learning Engineer - LLM apps, RAG and NLP
+    location: Remote (UTC+5)
+    hourly_rate: 65
+    floor_rate: 40
+    years_experience: 7
+    success_score: 0.93
+    gigsim_account_id: acct_ai
+    gigsim_token: gigsim-token-ai
+    industries: [telecom, legal tech, SaaS, logistics, e-commerce, real estate, fintech]
+    education: "BSc Computer Science, 2017; online specialisation in deep learning, 2019"
+    voice: "precise, calm, slightly dry; likes numbers; British spelling"
+    core_categories: [ml_ai]
+    adjacent_categories: [data_analysis, data_engineering, automation_scraping]
+    skills: [Python, machine learning, NLP, LLM applications, retrieval-augmented generation,
+             text classification, model evaluation, pandas, scikit-learn, PyTorch, MLOps,
+             FastAPI, SQL, prompt engineering, document AI]
+    niches: [RAG systems with evaluation, NLP classification and extraction, LLM agents with tools,
+             churn and propensity models, getting models into production]
+    employers:
+      - {name: Tessellate Analytics, role: Data Scientist, start: 2017-07, end: 2019-08,
+         summary: "consultancy; forecasting and segmentation for retail and media clients"}
+      - {name: Northwind Telecom, role: Machine Learning Engineer, start: 2019-09, end: 2021-06,
+         summary: "in-house ML team of 6; churn, call-centre NLP"}
+      - {name: Independent (freelance), role: ML / LLM Engineer, start: 2021-07, end: present,
+         summary: "freelance through the marketplace; 60+ contracts"}
+    projects:
+      - slug: churn-uplift-telco
+        title: Churn uplift model for prepaid subscribers
+        client: Northwind Telecom
+        client_industry: telecom
+        date: 2020-11
+        stack: [Python, pandas, LightGBM, scikit-learn, causalml, Teradata SQL]
+        implied: ["two-model approach that targets only the customers a retention offer would actually persuade",
+                  "weekly scoring job over 4 million subscribers"]
+        skills: [uplift modelling, churn prediction, gradient boosting, experiment design]
+        outcome: "churn in the targeted cohort fell 11%; retention offer spend down 30%"
+      - slug: call-intent-classifier
+        title: Intent classification for call-centre transcripts
+        client: Northwind Telecom
+        client_industry: telecom
+        date: 2021-03
+        stack: [Python, spaCy, Hugging Face transformers, PyTorch]
+        implied: ["fine-tuned a pretrained language model on 40k labelled call summaries",
+                  "14 caller intents, active learning to label the long tail"]
+        skills: [NLP, text classification, active learning]
+        outcome: "macro-F1 0.87 across 14 intents; routing errors halved"
+      - slug: contract-qa-rag
+        title: Contract question-answering assistant with an evaluation harness
+        client: Briefwell
+        client_industry: legal tech
+        date: 2023-05
+        stack: [Python, FastAPI, Pinecone, OpenAI embeddings, BM25, cross-encoder reranker, pytest]
+        implied: ["the assistant only answers from clauses it can point to",
+                  "graded every answer against a lawyer-written answer key of 120 questions",
+                  "keyword and vector search blended, then a second-stage model re-orders the shortlist"]
+        skills: [retrieval-augmented generation, search relevance, LLM evaluation, API development]
+        outcome: "answer accuracy 61% -> 86% on the answer key; unsupported citations close to zero"
+        repo: {slug: rag-eval-kit, vague_readme: false, lang: python}
+        review: {client_name: Daniel Osei, rating: 5}
+      - slug: support-ticket-triage
+        title: Automatic support-ticket routing
+        client: Quillstack
+        client_industry: SaaS (helpdesk software)
+        date: 2022-06
+        stack: [Python, DistilBERT, Hugging Face Trainer, ONNX Runtime, Celery, Redis]
+        implied: ["a small distilled language model, exported to a fast CPU runtime",
+                  "tickets queued and classified in background workers so the inbox never blocks"]
+        skills: [text classification, model compression, background processing]
+        outcome: "72% of tickets routed automatically; first-response time down 40%"
+        repo: {slug: ticket-router, vague_readme: true, lang: python}
+        review: {client_name: Marta Lindqvist, rating: 5}
+      - slug: invoice-field-extraction
+        title: Invoice and bill-of-lading field extraction
+        client: Cargoline Freight
+        client_industry: logistics
+        date: 2023-01
+        stack: [Python, Tesseract, pdfplumber, OpenAI function calling, pydantic]
+        implied: ["read scanned and digital PDFs, pulled 18 fields with a language model and validated every field against a schema",
+                  "low-confidence documents go to a human queue"]
+        skills: [document AI, OCR, information extraction, data validation]
+        outcome: "9,000 documents a month processed; manual keying down 80%"
+        repo: {slug: docparse-lite, vague_readme: true, lang: python}
+        review: {client_name: Tom Akers, rating: 4}
+      - slug: review-topic-mining
+        title: Voice-of-customer topic mining on product reviews
+        client: Brightcart
+        client_industry: e-commerce
+        date: 2023-09
+        stack: [Python, BERTopic, sentence-transformers, UMAP, HDBSCAN, Streamlit]
+        implied: ["clustered 210k reviews by meaning rather than keywords",
+                  "a small internal web app for the merchandising team to browse themes"]
+        skills: [topic modelling, embeddings, clustering, data apps]
+        outcome: "surfaced 3 recurring product defects; returns on those SKUs down 6%"
+        review: {client_name: Priya Nair, rating: 5}
+      - slug: crm-lead-agent
+        title: LLM lead-qualification agent inside a real-estate CRM
+        client: Keystone Realty
+        client_industry: real estate
+        date: 2024-04
+        stack: [Python, LangGraph, tool calling, PostgreSQL, Twilio]
+        implied: ["an agent that reads inbound enquiries, asks the missing questions by SMS and writes a qualified lead back to the CRM",
+                  "a graph of steps with a human approval before any message goes out"]
+        skills: [LLM agents, workflow automation, CRM integration]
+        outcome: "lead qualification time from 2 days to 3 hours; agents reclaimed ~6 hours a week each"
+        repo: {slug: lead-agent, vague_readme: false, lang: python}
+        review: {client_name: Grace Whitfield, rating: 5}
+      - slug: credit-model-mlops
+        title: Production pipeline for a credit-scoring model
+        client: Finchly
+        client_industry: fintech
+        date: 2021-10
+        stack: [Python, MLflow, Docker, GitHub Actions, FastAPI, Evidently]
+        implied: ["every model version tracked and promotable with one click",
+                  "alerts when incoming applications drift from the training data"]
+        skills: [MLOps, model serving, CI/CD, monitoring]
+        outcome: "model releases from monthly and manual to weekly and automated; two drift incidents caught early"
+        repo: {slug: scoring-service, vague_readme: false, lang: python}
+        review: {client_name: Leo Brandt, rating: 4}
+    minor_gigs:
+      - {slug: bakery-demand-forecast, title: Daily demand forecast for a bakery chain, client_industry: food retail, date: 2022-01, skills: [time series forecasting], outcome: "waste down 12% across 9 shops", review: {client_name: Ana Sousa, rating: 5}}
+      - {slug: resume-parser-ner, title: CV parsing for an HR start-up, client_industry: HR tech, date: 2022-09, skills: [named entity recognition, information extraction], outcome: "field accuracy 91% on 500 CVs", review: {client_name: Ibrahim Haddad, rating: 4}}
+      - {slug: hotel-review-sentiment, title: Guest review sentiment dashboard, client_industry: hospitality, date: 2022-11, skills: [sentiment analysis, dashboards], outcome: "weekly sentiment report for 14 hotels"}
+      - {slug: defect-image-classifier, title: Surface-defect image classifier, client_industry: manufacturing, date: 2023-07, skills: [computer vision, transfer learning], outcome: "recall 0.94 on cracked parts; replaced a manual spot check", review: {client_name: Karl Weber, rating: 5}}
+      - {slug: research-data-cleaning, title: Cleaning a messy survey dataset for a PhD researcher, client_industry: academia, date: 2022-03, skills: [data cleaning, pandas], outcome: "18 files merged into one tidy table with a data dictionary", review: {client_name: Dr. Ellen Park, rating: 5}}
+      - {slug: shopify-faq-bot, title: FAQ chatbot for a small online store, client_industry: e-commerce, date: 2023-11, skills: [embeddings, chatbots], outcome: "answered 60% of chat questions without staff", review: {client_name: Jade Collins, rating: 4}}
+      - {slug: prompt-audit-copy-tool, title: Prompt and output audit for a marketing copy generator, client_industry: SaaS, date: 2024-02, skills: [prompt engineering, LLM evaluation], outcome: "off-brand outputs down from 1 in 5 to 1 in 25"}
+      - {slug: podcast-transcription-pipeline, title: Batch transcription and chaptering for a podcast network, client_industry: media, date: 2024-06, skills: [speech-to-text, batch processing], outcome: "400 back-catalogue episodes transcribed and chaptered in a week", review: {client_name: Sam Rivera, rating: 5}}
+      - {slug: cold-start-recommender, title: Cold-start recommendations for a reading app, client_industry: media, date: 2023-03, skills: [recommender systems, matrix factorisation], outcome: "day-1 click-through up 9%"}
+      - {slug: wordpress-plugin-fix, title: Fixing a broken WordPress plugin for a friend's travel blog, client_industry: travel blog, date: 2021-08, skills: [PHP, debugging], outcome: "site back up in an afternoon", off_niche: true, review: {client_name: Omar Farouk, rating: 5}}
+      - {slug: translation-qa-urdu, title: Reviewing machine-translated Urdu product copy, client_industry: e-commerce, date: 2022-05, skills: [translation review], outcome: "1,200 strings corrected", off_niche: true, review: {client_name: Bilal Qureshi, rating: 3}}
+
+  fullstack:
+    name: Mateo Alvarez
+    title: Full-Stack Developer - React, Next.js, Node and Postgres
+    location: Remote (UTC+1)
+    hourly_rate: 55
+    floor_rate: 35
+    years_experience: 9
+    success_score: 0.90
+    gigsim_account_id: acct_web
+    gigsim_token: gigsim-token-web
+    industries: [healthcare, SaaS, logistics, e-commerce, media, real estate, fintech]
+    education: "BEng Software Engineering, 2015"
+    voice: "friendly, direct, a little informal; short paragraphs; American spelling"
+    core_categories: [web_fullstack]
+    adjacent_categories: [ecommerce, mobile, devops_cloud]
+    skills: [JavaScript, TypeScript, React, Next.js, Node.js, REST APIs, GraphQL, PostgreSQL,
+             payments integration, authentication, web performance, testing, Shopify apps,
+             headless CMS, Docker]
+    niches: [SaaS products with subscription billing, real-time dashboards, Shopify apps,
+             migrations off legacy WordPress, auth and multi-tenant back ends]
+    employers:
+      - {name: Pixelforge Agency, role: Front-End Developer, start: 2015-06, end: 2018-04,
+         summary: "digital agency; marketing sites and web apps for 30+ clients"}
+      - {name: Lumen Health, role: Senior Software Engineer, start: 2018-05, end: 2021-04,
+         summary: "patient-facing web products for a network of 40 clinics"}
+      - {name: Independent (freelance), role: Full-Stack Developer, start: 2021-05, end: present,
+         summary: "freelance through the marketplace; 70+ contracts"}
+    projects:
+      - slug: patient-booking-portal
+        title: Online booking portal for a clinic network
+        client: Lumen Health
+        client_industry: healthcare
+        date: 2019-10
+        stack: [React, Node.js, Express, PostgreSQL, Redis, Twilio]
+        implied: ["patients pick a slot, get a text reminder the day before",
+                  "slot locking so two people can never book the same appointment"]
+        skills: [web applications, booking systems, API design]
+        outcome: "40% of bookings moved online in six months; no-shows down 18%"
+      - slug: lumen-design-system
+        title: Shared component library and accessibility pass
+        client: Lumen Health
+        client_industry: healthcare
+        date: 2020-08
+        stack: [TypeScript, React, Storybook, axe-core]
+        implied: ["one set of buttons, forms and tables shared by four product teams",
+                  "every component checked for screen readers and keyboard use"]
+        skills: [design systems, accessibility, front-end architecture]
+        outcome: "WCAG 2.1 AA across the patient app; UI bugs down a third"
+      - slug: keystone-crm
+        title: Internal CRM replacing spreadsheets for an estate agency
+        client: Keystone Realty
+        client_industry: real estate
+        date: 2021-06
+        stack: [Python, Django, Celery, PostgreSQL, React]
+        implied: ["nightly jobs that pull listings from portals and nudge agents about stale leads",
+                  "role-based views for agents, managers and admin staff"]
+        skills: [CRM development, background jobs, back-end development]
+        outcome: "35 agents off spreadsheets in 8 weeks; lead response time down 50%"
+        review: {client_name: Grace Whitfield, rating: 5}
+      - slug: tallyhub-billing
+        title: Subscription billing and plan management for a B2B SaaS
+        client: Tallyhub
+        client_industry: SaaS
+        date: 2022-03
+        stack: [Next.js, TypeScript, Stripe Billing, Stripe webhooks, Prisma, PostgreSQL]
+        implied: ["plan upgrades and downgrades charged pro rata mid-cycle",
+                  "every payment event handled exactly once even when the provider retries"]
+        skills: [payments integration, SaaS billing, full-stack development]
+        outcome: "failed-payment recovery up 22%; finance stopped reconciling by hand"
+        repo: {slug: subscription-kit, vague_readme: false, lang: typescript}
+        review: {client_name: Hugo Martel, rating: 5}
+      - slug: dispatch-live-board
+        title: Live dispatch board for a freight company
+        client: Cargoline Freight
+        client_industry: logistics
+        date: 2022-10
+        stack: [Node.js, Socket.IO, React, Mapbox GL, Redis pub/sub]
+        implied: ["trucks and loads move on the map the moment a driver updates",
+                  "several server instances share updates through a message channel"]
+        skills: [real-time applications, maps, websockets-style push updates]
+        outcome: "dispatchers handle twice the loads per shift; phone calls to drivers down 60%"
+        repo: {slug: live-board, vague_readme: true, lang: typescript}
+        review: {client_name: Tom Akers, rating: 5}
+      - slug: shopify-bundles-app
+        title: Product-bundle builder app for a Shopify store
+        client: Oak & Ember
+        client_industry: e-commerce (home goods)
+        date: 2023-04
+        stack: [Shopify Remix app template, Shopify GraphQL Admin API, Polaris, Prisma, SQLite]
+        implied: ["shoppers build their own gift box and the price updates live",
+                  "an embedded admin screen in the store dashboard where staff set bundle rules"]
+        skills: [Shopify app development, e-commerce, GraphQL]
+        outcome: "average order value up 14% in the first quarter"
+        repo: {slug: bundle-builder, vague_readme: true, lang: typescript}
+        review: {client_name: Chloe Bennett, rating: 4}
+      - slug: magazine-headless-migration
+        title: Moving a magazine off WordPress to a headless stack
+        client: Northbound Magazine
+        client_industry: media
+        date: 2023-08
+        stack: [Next.js, Sanity, incremental static regeneration, Vercel]
+        implied: ["editors kept a familiar writing screen while pages are pre-built and refreshed in the background",
+                  "4,000 old URLs redirected so search rankings survived"]
+        skills: [CMS migration, web performance, SEO]
+        outcome: "page load (LCP) 4.1s -> 1.6s; organic traffic up 19% in three months"
+        review: {client_name: Isla Morgan, rating: 5}
+      - slug: tenant-auth-service
+        title: Multi-tenant authentication and permissions service
+        client: Ledgerly
+        client_industry: fintech SaaS
+        date: 2024-02
+        stack: [NestJS, TypeScript, OAuth 2.0 / OpenID Connect, PostgreSQL row-level security, Jest]
+        implied: ["each customer's data walled off at the database level, not just in code",
+                  "single sign-on with the customers' own identity providers"]
+        skills: [authentication, authorisation, multi-tenancy, security]
+        outcome: "passed the SOC 2 Type I audit with no auth findings; enterprise SSO deals unblocked"
+        repo: {slug: tenant-guard, vague_readme: false, lang: typescript}
+        review: {client_name: Ravi Menon, rating: 5}
+      - slug: api-starter
+        title: Reusable API starter used across freelance projects
+        client: personal
+        client_industry: internal tooling
+        date: 2021-09
+        stack: [TypeScript, Express, Prisma, Zod, Vitest]
+        implied: ["request validation, error handling and database access wired up from day one"]
+        skills: [API design, testing]
+        outcome: "cuts the first week of a new back end to about a day"
+        repo: {slug: api-starter, vague_readme: false, lang: typescript}
+        case_study: false
+    minor_gigs:
+      - {slug: core-web-vitals-rescue, title: Performance rescue for a slow online store, client_industry: e-commerce, date: 2021-11, skills: [web performance], outcome: "Lighthouse mobile score 38 -> 91", review: {client_name: Nina Petrova, rating: 5}}
+      - {slug: habit-tracker-mobile, title: Habit-tracker mobile app MVP, client_industry: consumer apps, date: 2022-07, skills: [cross-platform mobile development], outcome: "shipped to both app stores in 6 weeks", review: {client_name: Jordan Blake, rating: 4}}
+      - {slug: price-tracker-extension, title: Browser extension that tracks price drops, client_industry: consumer tools, date: 2022-12, skills: [browser extensions, scraping], outcome: "3,000 installs in the first month"}
+      - {slug: marketplace-payouts-fix, title: Fixing split payouts on a two-sided marketplace, client_industry: marketplaces, date: 2023-02, skills: [payments integration, debugging], outcome: "payout errors from 4% to zero", review: {client_name: Ade Okonkwo, rating: 5}}
+      - {slug: gym-chain-graphql-api, title: GraphQL API for a gym chain's member app, client_industry: fitness, date: 2023-10, skills: [GraphQL, API design], outcome: "one API serving web and mobile for 22 gyms"}
+      - {slug: figma-to-tailwind-landing, title: Landing page from a Figma design, client_industry: SaaS, date: 2021-09, skills: [front-end development, responsive design], outcome: "pixel-accurate page delivered in 3 days", review: {client_name: Mia Thompson, rating: 5}}
+      - {slug: firebase-to-supabase, title: Migrating an app from Firebase to Supabase, client_industry: education, date: 2024-05, skills: [database migration], outcome: "hosting bill down 45%, zero data loss"}
+      - {slug: e2e-test-suite, title: End-to-end test suite for a booking app, client_industry: travel, date: 2024-07, skills: [automated testing, QA], outcome: "regressions caught before release went from rare to routine", review: {client_name: Lucas Ferreira, rating: 4}}
+      - {slug: bakery-logo-refresh, title: Logo refresh for a neighbourhood bakery, client_industry: food retail, date: 2021-07, skills: [graphic design], outcome: "new logo on the shop sign and boxes", off_niche: true, review: {client_name: Rosa Delgado, rating: 4}}
+      - {slug: inventory-excel-macro, title: Excel macro for stock counts, client_industry: retail, date: 2022-01, skills: [spreadsheet automation], outcome: "weekly stock count from 3 hours to 20 minutes", off_niche: true, review: {client_name: Peter Novak, rating: 3}}
+      - {slug: woocommerce-tweaks, title: WooCommerce checkout tweaks, client_industry: e-commerce, date: 2022-04, skills: [WordPress, PHP], outcome: "checkout abandonment down 8%"}
+
+  data_analyst:
+    name: Hannah Kowalski
+    title: Data Analyst and Analytics Engineer - SQL, dashboards, pipelines
+    location: Remote (UTC+0)
+    hourly_rate: 45
+    floor_rate: 28
+    years_experience: 6
+    success_score: 0.88
+    gigsim_account_id: acct_data
+    gigsim_token: gigsim-token-data
+    industries: [e-commerce, insurance, consumer apps, professional services, non-profit, retail]
+    education: "BSc Economics and Statistics, 2017"
+    voice: "warm, practical, plain English; explains things for non-technical clients; British spelling"
+    core_categories: [data_analysis]
+    adjacent_categories: [data_engineering, ml_ai, admin_support]
+    skills: [SQL, Excel, Power BI, Tableau, Looker Studio, Python, pandas, data modelling,
+             A/B testing, statistics, data pipelines, data visualisation, Google Sheets,
+             KPI reporting, data cleaning]
+    niches: [KPI dashboards, analytics engineering for small companies, experiment analysis,
+             spreadsheet automation, retention and cohort analysis]
+    employers:
+      - {name: Brightcart, role: BI Analyst, start: 2018-03, end: 2021-02,
+         summary: "online retailer; reporting and experimentation for trading and marketing"}
+      - {name: Meridian Mutual, role: Senior Data Analyst, start: 2021-03, end: 2022-05,
+         summary: "insurer; claims analytics"}
+      - {name: Independent (freelance), role: Data Analyst / Analytics Engineer, start: 2022-06, end: present,
+         summary: "freelance through the marketplace; 50+ contracts"}
+    projects:
+      - slug: brightcart-kpi-dashboard
+        title: Trading KPI dashboard for an online retailer
+        client: Brightcart
+        client_industry: e-commerce
+        date: 2019-05
+        stack: [Power BI, DAX, SQL Server]
+        implied: ["one page every trader opens on Monday morning",
+                  "measures for margin, sell-through and stock cover built once and reused"]
+        skills: [dashboards, KPI design, data modelling]
+        outcome: "weekly reporting went from two days of spreadsheets to automatic; 120 regular users"
+      - slug: checkout-ab-test
+        title: Checkout redesign experiment analysis
+        client: Brightcart
+        client_industry: e-commerce
+        date: 2020-07
+        stack: [Python, statsmodels, SQL, CUPED]
+        implied: ["used pre-experiment behaviour to cut the noise so the test needed fewer weeks",
+                  "caught a peeking problem that would have shipped a losing variant"]
+        skills: [A/B testing, statistics, experiment design]
+        outcome: "+3.1% conversion confirmed; a false-positive launch avoided"
+      - slug: claims-leakage-analysis
+        title: Claims leakage analysis
+        client: Meridian Mutual
+        client_industry: insurance
+        date: 2021-11
+        stack: [SQL, Python, Tableau]
+        implied: ["compared what was paid with what the policy wording allowed, claim by claim"]
+        skills: [data analysis, insurance analytics, root-cause analysis]
+        outcome: "GBP 1.2M a year of leakage flagged; two process fixes adopted"
+      - slug: fernway-nightly-pipeline
+        title: Nightly data loads for a direct-to-consumer brand
+        client: Fernway
+        client_industry: e-commerce (apparel)
+        date: 2022-09
+        stack: [Apache Airflow, Snowflake, Shopify API, Klaviyo API, Python]
+        implied: ["scheduled nightly loads with retries and backfills",
+                  "orders, customers and email engagement landed in one warehouse by 6am"]
+        skills: [data pipelines, data warehousing, API integration]
+        outcome: "one source of truth for sales and email; morning report ready before stand-up"
+        repo: {slug: fernway-loads, vague_readme: true, lang: python}
+        review: {client_name: Ella Hughes, rating: 5}
+      - slug: attribution-dbt-models
+        title: Marketing attribution models for a subscription app
+        client: Lumio Apps
+        client_industry: consumer apps
+        date: 2023-02
+        stack: [dbt, BigQuery, GA4 export, Looker Studio]
+        implied: ["tested, documented SQL transformations from raw events to a tidy channel table",
+                  "acquisition cost per channel recalculated every morning"]
+        skills: [analytics engineering, marketing attribution, SQL modelling]
+        outcome: "18% of ad spend moved to cheaper channels; CAC down 11%"
+        repo: {slug: attribution-models, vague_readme: false, lang: sql}
+        review: {client_name: Noah Fischer, rating: 5}
+      - slug: cohort-retention-study
+        title: Retention and onboarding drop-off study
+        client: Lumio Apps
+        client_industry: consumer apps
+        date: 2023-06
+        stack: [Python, pandas, lifelines, matplotlib]
+        implied: ["curves of how many sign-ups are still active each week after joining",
+                  "time-to-churn modelling to compare onboarding variants"]
+        skills: [cohort analysis, survival analysis, product analytics]
+        outcome: "found a day-3 drop-off; week-4 retention up 5 points after the onboarding change"
+        repo: {slug: retention-notebooks, vague_readme: true, lang: python}
+        review: {client_name: Noah Fischer, rating: 4}
+      - slug: accountancy-excel-automation
+        title: Automating monthly client packs for an accountancy firm
+        client: Hartley & Moss Accountants
+        client_industry: professional services
+        date: 2022-04
+        stack: [Excel, Power Query, VBA]
+        implied: ["one button refreshes every client's monthly figures from the ledger exports"]
+        skills: [spreadsheet automation, reporting]
+        outcome: "30 staff hours a month saved; errors in packs dropped to near zero"
+        review: {client_name: Margaret Hartley, rating: 5}
+      - slug: nonprofit-survey-analysis
+        title: Beneficiary survey analysis for a food charity
+        client: Riverbank Food Trust
+        client_industry: non-profit
+        date: 2023-11
+        stack: [Python, pandas, plotly, survey weighting]
+        implied: ["weighted responses so small neighbourhoods were not drowned out",
+                  "agree/disagree questions turned into clear charts for trustees"]
+        skills: [survey analysis, data visualisation, reporting]
+        outcome: "findings went into the grant report; funding renewed for three years"
+        repo: {slug: survey-toolkit, vague_readme: false, lang: python}
+        review: {client_name: Joseph Adeyemi, rating: 5}
+      - slug: kpi-sql-library
+        title: Reusable SQL views for e-commerce KPIs
+        client: personal
+        client_industry: internal tooling
+        date: 2022-08
+        stack: [PostgreSQL, SQL window functions]
+        implied: ["the same definitions of revenue, AOV and repeat rate on every engagement"]
+        skills: [SQL, KPI definitions]
+        outcome: "first dashboard for a new store in a day instead of a week"
+        repo: {slug: kpi-sql-library, vague_readme: false, lang: sql}
+        case_study: false
+    minor_gigs:
+      - {slug: looker-studio-ads-report, title: Paid-ads report for a small agency, client_industry: marketing agency, date: 2024-03, skills: [marketing reporting, dashboards], outcome: "client reports now auto-refresh daily", review: {client_name: Olivia Grant, rating: 5}}
+      - {slug: shopify-sales-forecast, title: Simple sales forecast for a Shopify store, client_industry: e-commerce, date: 2023-08, skills: [forecasting], outcome: "stock orders planned 8 weeks ahead"}
+      - {slug: competitor-price-scrape, title: Weekly competitor price collection, client_industry: retail, date: 2022-08, skills: [web scraping, scheduling], outcome: "1,500 prices collected every Monday", review: {client_name: Daniel Cho, rating: 4}}
+      - {slug: sheets-apps-script-crm, title: Google Sheets CRM with automatic reminders, client_industry: professional services, date: 2022-11, skills: [spreadsheet automation], outcome: "follow-ups no longer missed", review: {client_name: Sophie Laurent, rating: 5}}
+      - {slug: hr-attrition-dashboard, title: Staff attrition dashboard, client_industry: healthcare staffing, date: 2023-04, skills: [dashboards, HR analytics], outcome: "attrition hotspots visible by site and manager"}
+      - {slug: research-dataset-cleanup, title: Cleaning a research dataset before publication, client_industry: academia, date: 2024-01, skills: [data cleaning, pandas], outcome: "dataset passed the journal's reproducibility check", review: {client_name: Dr. Rui Costa, rating: 5}}
+      - {slug: sql-tutoring, title: SQL tutoring for a career changer, client_industry: education, date: 2023-09, skills: [teaching, SQL], outcome: "student passed two technical interviews", review: {client_name: Aisha Bello, rating: 5}}
+      - {slug: restaurant-group-power-bi, title: Sales and labour dashboard for a restaurant group, client_industry: hospitality, date: 2024-06, skills: [dashboards], outcome: "labour cost as % of sales tracked daily across 6 sites"}
+      - {slug: podcast-transcription, title: Transcribing interviews for a podcast, client_industry: media, date: 2022-07, skills: [transcription], outcome: "12 episodes transcribed", off_niche: true, review: {client_name: Ben Carter, rating: 4}}
+      - {slug: wix-site-update, title: Updating a Wix site for a yoga studio, client_industry: wellness, date: 2023-01, skills: [website editing], outcome: "new timetable and booking links live", off_niche: true, review: {client_name: Lily Evans, rating: 3}}
+      - {slug: market-sizing-model, title: Market sizing spreadsheet for a start-up pitch, client_industry: start-up, date: 2024-08, skills: [financial modelling, research], outcome: "bottom-up TAM model used in the seed deck"}

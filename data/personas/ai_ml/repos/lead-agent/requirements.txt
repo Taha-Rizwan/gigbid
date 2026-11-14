@@ -1,0 +1,5 @@
+langgraph
+langchain-openai
+twilio
+psycopg2-binary
+asyncio  # built‑in, listed for completeness

@@ -1,0 +1,11 @@
+{
+  "evidence_id": "ai_ml:repo:rag-eval-kit",
+  "project_slug": "contract-qa-rag",
+  "vague_readme": false,
+  "synthetic": true,
+  "generator": {
+    "model": "openai/gpt-oss-120b",
+    "prompt_version": "persona_v1",
+    "seed": 1320169202
+  }
+}

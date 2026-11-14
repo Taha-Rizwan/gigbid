@@ -1,0 +1,11 @@
+{
+  "evidence_id": "data_analyst:repo:fernway-loads",
+  "project_slug": "fernway-nightly-pipeline",
+  "vague_readme": true,
+  "synthetic": true,
+  "generator": {
+    "model": "openai/gpt-oss-120b",
+    "prompt_version": "persona_v1",
+    "seed": 262687140
+  }
+}

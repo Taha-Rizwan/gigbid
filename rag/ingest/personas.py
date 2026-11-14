@@ -14,8 +14,17 @@ from pathlib import Path
 
 import yaml
 
-from rag.ingest.common import (GEN_MODELS, PERSONAS_DIR, generator, load_specs, stable_int,
-                               word_count, write_jsonl)
+from rag.ingest.common import (
+    GEN_MODELS,
+    LABEL_MODELS,
+    PERSONAS_DIR,
+    generator,
+    load_specs,
+    read_jsonl,
+    stable_int,
+    word_count,
+    write_jsonl,
+)
 from rag.ingest.llm import chat_fallback, chat_json, parse_json, print_session_usage
 
 PV = "persona_v1"
@@ -87,11 +96,12 @@ def case_study_task(pid: str, p: dict, item: dict, minor: bool) -> dict:
 
     def ok(content: str) -> bool:
         d = parse_json(content)
-        if not (isinstance(d.get("body"), str) and lo - 60 <= word_count(d["body"]) <= hi + 150 and d.get("summary")):
+        if not (isinstance(d.get("body"), str) and max(250, lo - 60) <= word_count(d["body"]) <= min(700, hi + 150) and d.get("summary")):
             return False
         return minor or len(named_tools(d["body"], item["stack"])) <= 2
 
-    data, res = chat_json(GEN_MODELS, [{"role": "system", "content": SYSTEM}, {"role": "user", "content": user}],
+    # qwen is a last resort, used only when both gpt-oss models are at their daily caps (recorded in generator)
+    data, res = chat_json(GEN_MODELS + LABEL_MODELS, [{"role": "system", "content": SYSTEM}, {"role": "user", "content": user}],
                           temperature=0.8, seed=seed, max_tokens=3000, validate=ok)
     return {"kind": "case", "pid": pid, "item": item, "minor": minor, "eid": eid, "seed": seed,
             "model": res["model"], "data": data}
@@ -128,7 +138,7 @@ SYSTEM_TEXT = SYSTEM.replace("Reply with a single JSON object only.", "Follow th
 def parse_repo(text: str) -> dict:
     parts = re.split(r"^=== (SUMMARY|FILE: [^=\n]+?) ===[ \t]*$", text.strip(), flags=re.M)
     out: dict = {"summary": "", "readme": "", "files": []}
-    for tag, body in zip(parts[1::2], parts[2::2]):
+    for tag, body in zip(parts[1::2], parts[2::2], strict=False):
         body = body.strip("\n")
         body = re.sub(r"^```[\w-]*\n", "", body)
         body = re.sub(r"\n```\s*$", "", body).strip("\n")
@@ -441,8 +451,7 @@ def build(only: list[str] | None = None, workers: int = 3) -> None:
         # keep any proposal rows that label_proposals.py appended earlier
         old = PERSONAS_DIR / pid / "index.jsonl"
         if old.exists():
-            index.extend(json.loads(line) for line in old.read_text(encoding="utf-8").splitlines()
-                         if line.strip() and json.loads(line).get("type") == "proposal")
+            index.extend(x for x in read_jsonl(old) if x.get("type") == "proposal")
         write_jsonl(out / "index.jsonl", index)
         counts = {t: sum(1 for x in index if x["type"] == t) for t in ("cv", "case", "repo", "review", "proposal")}
         print(f"{pid}: {counts}")

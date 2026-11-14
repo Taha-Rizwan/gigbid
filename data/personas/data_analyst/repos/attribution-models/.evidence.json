@@ -1,0 +1,11 @@
+{
+  "evidence_id": "data_analyst:repo:attribution-models",
+  "project_slug": "attribution-dbt-models",
+  "vague_readme": false,
+  "synthetic": true,
+  "generator": {
+    "model": "openai/gpt-oss-120b",
+    "prompt_version": "persona_v1",
+    "seed": 861462478
+  }
+}

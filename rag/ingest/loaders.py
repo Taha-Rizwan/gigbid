@@ -46,7 +46,7 @@ def load_cv(pdir: Path, persona_id: str) -> Doc | None:
         text, src = md.read_text(encoding="utf-8"), _rel(md)
     else:
         return None
-    return Doc(f"{persona_id}:cv", persona_id, "cv", "Curriculum vitae", text, source=src)
+    return Doc(f"{persona_id}:cv:main", persona_id, "cv", "Curriculum vitae", text, source=src)
 
 
 def load_case_studies(pdir: Path, persona_id: str) -> list[Doc]:
