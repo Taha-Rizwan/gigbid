@@ -1,0 +1,21 @@
+active: v1
+versions:
+  v1:
+    rules:
+      - no off-platform contact or payment
+      - no fabricated experience
+      - no guarantees
+      - fair use of automation
+    connects: {base: 2, per_100_usd: 1, max: 16, hourly_equiv_hours: 20}
+    required_disclosure: null
+    extra_connects_if_proposals_over: null
+  v2:   # the "platform policy update" (change request)
+    rules:
+      - no off-platform contact or payment
+      - no fabricated experience
+      - no guarantees
+      - fair use of automation
+      - proposals must include the AI-assistance disclosure sentence
+    connects: {base: 2, per_100_usd: 1, max: 16, hourly_equiv_hours: 20}
+    required_disclosure: "This proposal was drafted with AI assistance and reviewed by me."
+    extra_connects_if_proposals_over: {threshold: 20, extra: 4}
