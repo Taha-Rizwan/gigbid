@@ -9,8 +9,8 @@ from typing import Any
 
 from agent.handoffs import Job
 from agent.marketplace_port import MarketplaceUnavailable
-from agent.memory.promotion_rules import record_outcome
 from agent.mcp_client import ToolBox
+from agent.memory.promotion_rules import record_outcome
 from agent.nodes.scout import fingerprint, scout
 from agent.settings import config
 from apps.api import runs

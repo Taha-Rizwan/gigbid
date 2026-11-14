@@ -5,8 +5,6 @@ from __future__ import annotations
 import hashlib
 import json
 
-from langchain_core.messages import HumanMessage
-
 from agent import llm
 from agent.settings import ROOT
 from rag.types import Chunk, Doc

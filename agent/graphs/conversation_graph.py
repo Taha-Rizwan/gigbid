@@ -12,12 +12,11 @@ import re
 from langgraph.graph import END, START, StateGraph
 from langgraph.runtime import Runtime
 from langgraph.types import interrupt
-
-from agent.graphs.bid_graph import RETRY
 from pydantic import BaseModel, Field
 
 from agent import llm
 from agent.context import RunContext
+from agent.graphs.bid_graph import RETRY
 from agent.guardrails import injection_signal, wrap
 from agent.handoffs import ApprovalRequest, ApprovalResponse, MessageIntent, ReplyDraft
 from agent.memory.promotion_rules import observe_edit, observe_rejection, style_rules

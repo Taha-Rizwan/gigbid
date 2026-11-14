@@ -2,8 +2,7 @@
 
 import os
 
-from common import serve
-
 from apps.api.main import app
+from common import serve
 
 serve(app, os.environ.get("API_HOST", "127.0.0.1"), int(os.environ.get("API_PORT", 8000)))

@@ -8,10 +8,10 @@ from __future__ import annotations
 import os
 from urllib.parse import urlparse
 
-import common  # noqa: F401
 from arq import cron
 from arq.connections import RedisSettings
 
+import common  # noqa: F401
 from worker import tasks
 
 

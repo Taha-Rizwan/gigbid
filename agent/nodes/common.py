@@ -39,7 +39,7 @@ def _summary(name: str, out: dict) -> str:
     parts = []
     for k, v in (out or {}).items():
         if hasattr(v, "score"):
-            parts.append(f"{k} score {getattr(v, 'score'):.2f}")
+            parts.append(f"{k} score {v.score:.2f}")
         elif hasattr(v, "decision"):
             parts.append(f"decision {v.decision}")
         elif k == "status":
