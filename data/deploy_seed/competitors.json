@@ -1,0 +1,27 @@
+{
+  "quality_quantiles": [
+    0.15,
+    0.2659,
+    0.3365,
+    0.3874,
+    0.4279,
+    0.468,
+    0.5008,
+    0.5306,
+    0.5568,
+    0.5831,
+    0.6097,
+    0.6352,
+    0.6591,
+    0.6829,
+    0.7081,
+    0.7334,
+    0.7589,
+    0.7868,
+    0.8156,
+    0.8507,
+    0.9
+  ],
+  "source": "K5 composite (0.45 success_score + 0.25 job_success_rate + 0.15 profile_completeness + 0.15 has_portfolio), P1-P99 min-max scaled to 0.15-0.90",
+  "n": 12000
+}

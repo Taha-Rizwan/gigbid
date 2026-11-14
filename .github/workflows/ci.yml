@@ -1,0 +1,65 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env: {POSTGRES_USER: gigbid, POSTGRES_PASSWORD: gigbid, POSTGRES_DB: gigbid}
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U gigbid" --health-interval 5s --health-timeout 5s --health-retries 20
+    env:
+      DATABASE_URL: postgresql://gigbid:gigbid@localhost:5432/gigbid
+      GIGSIM_LLM_DISABLED: "1"
+      HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: astral-sh/setup-uv@v6
+        with: {version: "0.13.8"}
+      - run: uv sync --frozen --extra dev
+      - name: Repository rules (secrets, frozen gigsim/, prompts in agent/prompts, README numbers)
+        run: uv run python scripts/ci_guards.py
+      - name: Lint
+        run: uv run ruff check .
+      - name: Unit, contract and simulator tests
+        run: uv run pytest -q tests/unit tests/contract gigsim/tests
+
+  web:
+    runs-on: ubuntu-latest
+    defaults: {run: {working-directory: apps/web}}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: 22, cache: npm, cache-dependency-path: apps/web/package-lock.json}
+      - run: npm ci
+      - name: Generated API client is up to date
+        run: npm run gen:api && git diff --exit-code -- src/lib/api
+      - run: npx tsc --noEmit
+      - run: npm run lint
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - run: npx playwright test
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: playwright-report, path: apps/web/playwright-report, retention-days: 14}
+
+  compose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: docker compose up (whole stack) and health check
+        run: |
+          docker compose -f infra/docker-compose.yml up -d --build --wait --wait-timeout 600 \
+            postgres redis gigsim mcp-marketplace mcp-portfolio mcp-workspace api web
+          for i in $(seq 1 60); do curl -fsS localhost:8000/api/health && break; sleep 5; done
+          curl -fsS localhost:8000/api/health | grep -q '"status":"ok"'
+          curl -fsS -o /dev/null localhost:3000/login
+      - if: failure()
+        run: docker compose -f infra/docker-compose.yml logs --tail 200
