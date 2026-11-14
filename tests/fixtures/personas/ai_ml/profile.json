@@ -1,0 +1,25 @@
+{
+ "persona_id": "ai_ml",
+ "name": "Test Persona",
+ "title": "ML engineer",
+ "hourly_rate": 60,
+ "skills": [
+  "Python",
+  "RAG",
+  "PyTorch",
+  "MLOps"
+ ],
+ "years_experience": 6,
+ "industries": [
+  "legal",
+  "telecom"
+ ],
+ "bio": "Fixture persona for tests.",
+ "gigsim_account_id": "acct_ai",
+ "synthetic": true,
+ "generator": {
+  "model": "hand-written",
+  "prompt_version": "fixture",
+  "seed": 0
+ }
+}
