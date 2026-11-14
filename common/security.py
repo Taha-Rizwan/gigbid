@@ -15,7 +15,7 @@ _PATTERNS = [
     (re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}"), "[EMAIL]"),
     (re.compile(r"\b(?:\d[ -]?){13,19}\b"), "[CARD]"),
     (re.compile(r"\b[A-Z]{2}\d{2}[A-Z0-9]{11,30}\b"), "[IBAN]"),
-    (re.compile(r"(?<!\w)\+?\d[\d\s().-]{8,}\d"), "[PHONE]"),
+    (re.compile(r"(?<![\w-])\+?\d(?:[ ().-]?\d){8,}(?![\w-])"), "[PHONE]"),  # 9+ digits; not dates or versions
     (re.compile(r"(?i)\b(bearer|token|api[_-]?key|password|secret)\b(\s*[:=]\s*|\s+)\S+"), r"\1=[REDACTED]"),
 ]
 
