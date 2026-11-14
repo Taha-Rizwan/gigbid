@@ -1,0 +1,225 @@
+{
+ "prompts": [],
+ "resource_templates": [],
+ "tools": {
+  "create_email_draft": {
+   "annotations": {
+    "destructiveHint": false,
+    "idempotentHint": false,
+    "openWorldHint": false,
+    "readOnlyHint": false
+   },
+   "description": "Save an email draft (never sent automatically).",
+   "input_schema": {
+    "properties": {
+     "body": {
+      "maxLength": 10000,
+      "title": "Body",
+      "type": "string"
+     },
+     "subject": {
+      "maxLength": 300,
+      "title": "Subject",
+      "type": "string"
+     },
+     "to": {
+      "maxLength": 200,
+      "title": "To",
+      "type": "string"
+     }
+    },
+    "required": [
+     "to",
+     "subject",
+     "body"
+    ],
+    "title": "create_email_draftArguments",
+    "type": "object"
+   },
+   "output_schema": {
+    "properties": {
+     "body": {
+      "title": "Body",
+      "type": "string"
+     },
+     "draft_id": {
+      "title": "Draft Id",
+      "type": "string"
+     },
+     "status": {
+      "default": "draft",
+      "title": "Status",
+      "type": "string"
+     },
+     "subject": {
+      "title": "Subject",
+      "type": "string"
+     },
+     "to": {
+      "title": "To",
+      "type": "string"
+     }
+    },
+    "required": [
+     "draft_id",
+     "to",
+     "subject",
+     "body"
+    ],
+    "title": "EmailDraft",
+    "type": "object"
+   }
+  },
+  "create_interview_hold": {
+   "annotations": {
+    "destructiveHint": false,
+    "idempotentHint": false,
+    "openWorldHint": false,
+    "readOnlyHint": false
+   },
+   "description": "Place a tentative calendar hold for a proposed interview slot.",
+   "input_schema": {
+    "properties": {
+     "duration_minutes": {
+      "default": 30,
+      "maximum": 180,
+      "minimum": 15,
+      "title": "Duration Minutes",
+      "type": "integer"
+     },
+     "start": {
+      "description": "ISO datetime",
+      "title": "Start",
+      "type": "string"
+     },
+     "title": {
+      "default": "Client interview (tentative)",
+      "maxLength": 200,
+      "title": "Title",
+      "type": "string"
+     }
+    },
+    "required": [
+     "start"
+    ],
+    "title": "create_interview_holdArguments",
+    "type": "object"
+   },
+   "output_schema": {
+    "properties": {
+     "end": {
+      "title": "End",
+      "type": "string"
+     },
+     "hold_id": {
+      "title": "Hold Id",
+      "type": "string"
+     },
+     "start": {
+      "title": "Start",
+      "type": "string"
+     },
+     "status": {
+      "default": "tentative",
+      "title": "Status",
+      "type": "string"
+     },
+     "title": {
+      "title": "Title",
+      "type": "string"
+     }
+    },
+    "required": [
+     "hold_id",
+     "start",
+     "end",
+     "title"
+    ],
+    "title": "Hold",
+    "type": "object"
+   }
+  },
+  "free_slots": {
+   "annotations": {
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false,
+    "readOnlyHint": true
+   },
+   "description": "Free interview slots in working hours over the next days, avoiding existing holds.",
+   "input_schema": {
+    "properties": {
+     "days_ahead": {
+      "default": 5,
+      "maximum": 14,
+      "minimum": 1,
+      "title": "Days Ahead",
+      "type": "integer"
+     },
+     "duration_minutes": {
+      "default": 30,
+      "maximum": 180,
+      "minimum": 15,
+      "title": "Duration Minutes",
+      "type": "integer"
+     },
+     "max_slots": {
+      "default": 3,
+      "maximum": 10,
+      "minimum": 1,
+      "title": "Max Slots",
+      "type": "integer"
+     },
+     "timezone": {
+      "default": "Asia/Karachi",
+      "title": "Timezone",
+      "type": "string"
+     }
+    },
+    "title": "free_slotsArguments",
+    "type": "object"
+   },
+   "output_schema": {
+    "$defs": {
+     "Slot": {
+      "properties": {
+       "end": {
+        "title": "End",
+        "type": "string"
+       },
+       "label": {
+        "title": "Label",
+        "type": "string"
+       },
+       "start": {
+        "title": "Start",
+        "type": "string"
+       }
+      },
+      "required": [
+       "start",
+       "end",
+       "label"
+      ],
+      "title": "Slot",
+      "type": "object"
+     }
+    },
+    "properties": {
+     "result": {
+      "items": {
+       "$ref": "#/$defs/Slot"
+      },
+      "title": "Result",
+      "type": "array"
+     }
+    },
+    "required": [
+     "result"
+    ],
+    "title": "free_slotsOutput",
+    "type": "object"
+   }
+  }
+ }
+}
