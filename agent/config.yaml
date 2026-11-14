@@ -86,6 +86,11 @@ thresholds:
 autonomy:
   default: manual          # manual | auto_skip_low_fit  (never auto-send)
 
+proposal_strategies:      # X2 extension: A/B-tested writing strategies (profile.strategy picks one)
+  evidence_first: "Open by naming the client's problem in one sentence, then lead with the single most similar past project and its measured result."
+  question_first: "Open with one sharp, specific question about the client's problem that shows you understood the post, then show the most relevant evidence."
+default_strategy: evidence_first
+
 memory:
   style_promotion_min_occurrences: 2
   style_max_rules: 12

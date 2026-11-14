@@ -21,6 +21,14 @@ class _Draft(BaseModel):
     screening_answers: list[str] = Field(default_factory=list)
 
 
+def strategy_rule(profile: dict) -> str:
+    """X2: the opening strategy under test (config.proposal_strategies)."""
+    cfg = config()
+    name = profile.get("strategy") or cfg.get("default_strategy")
+    text = (cfg.get("proposal_strategies") or {}).get(name)
+    return f"\n- Opening strategy ({name}): {text}" if text else ""
+
+
 def policy_rules(profile: dict) -> str:
     disclosure = config()["policy"].get("required_disclosure") or (profile.get("policy") or {}).get("required_disclosure")
     return f"\n- The cover letter MUST end with this exact sentence: \"{disclosure}\"" if disclosure else ""
@@ -41,7 +49,7 @@ async def write(state: dict, ctx: RunContext, store, instructions: str = "") -> 
     system = system.format(
         min_words=t["min_proposal_words"], max_words=t["max_proposal_words"],
         style_rules=("User style rules (learned from their edits):\n" + "\n".join(f"- {r}" for r in rules)) if rules else "",
-        policy_rules=policy_rules(state.get("profile") or {}),
+        policy_rules=policy_rules(state.get("profile") or {}) + strategy_rule(state.get("profile") or {}),
     )
     price = state.get("price_quote")
     user = (
@@ -50,7 +58,7 @@ async def write(state: dict, ctx: RunContext, store, instructions: str = "") -> 
         f"Bid: {price.amount if price else '?'} ({price.rate_type if price else ''})\n"
         + (f"What worked before in this category: {hint}\n" if hint else "")
         + f"\nEVIDENCE (cite ids exactly):\n{evidence_block(evidence[:12], 500)}\n"
-        + (f"\nScreening questions to answer:\n" + "\n".join(f"{i + 1}. {q}" for i, q in enumerate(questions)) if questions else "")
+        + ("\nScreening questions to answer:\n" + "\n".join(f"{i + 1}. {q}" for i, q in enumerate(questions)) if questions else "")
         + (f"\n\nREVISION INSTRUCTIONS from the critic:\n{instructions}\n\nPrevious draft:\n{state['draft'].cover_letter}"
            if instructions and state.get("draft") else "")
     )

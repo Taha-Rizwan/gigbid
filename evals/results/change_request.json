@@ -1,0 +1,23 @@
+{
+ "generated_at": "2026-11-14T20:26:20.738621+00:00",
+ "git_sha": "84df3b1",
+ "change": "GigSim policy v2 (our own change request; the instructor's 2 Nov update was not published): proposals must end with the AI-assistance disclosure sentence; +4 Connects when proposals_count > 20.",
+ "how_applied": "POST /admin/policy {version: v2} on GigSim",
+ "gigbid_lines_changed": {
+  "code": 0,
+  "config": 0,
+  "prompts": 0
+ },
+ "why_zero": "pricing_strategist reads the live policy via the get_policy MCP tool into state.profile.policy; agent/nodes/compliance.py and agent/nodes/writer.py apply policy.required_disclosure from config or the live policy; Connects cost comes from get_job (GigSim applies the v2 formula).",
+ "verification": {
+  "job_id": "job_002",
+  "thread_id": "bid-u_reviewer-job_002-r0c3f",
+  "model_profile": "paid",
+  "proposal_ends_with_disclosure": true,
+  "gigsim_submit_status": "submitted",
+  "run_tokens": 29272,
+  "run_cost_usd": 0.006033
+ },
+ "time_to_absorb_minutes": 0,
+ "caveat": "Zero lines because the system was designed to read platform policy at runtime; a rule that is not expressible as a disclosure, a regex pattern or a Connects formula would need code in agent/nodes/compliance.py."
+}
