@@ -1,6 +1,6 @@
 # GigBid: R&D design review (AI-4016)
 
-Generated 15 Nov 2026 14:58 by `scripts/build_report.py`. Every number below is read from `evals/results/`;
+Generated 15 Nov 2026 15:17 by `scripts/build_report.py`. Every number below is read from `evals/results/`;
 "pending" means the run had not finished when this was generated. Repository: https://github.com/Taha-Rizwan/gigbid
 
 ## 1. Problem and constraints
@@ -61,6 +61,13 @@ Ablation (one component removed at a time):
 | without_rerank | {"recall@5": -0.0358, "mrr": -0.044, "ndcg@10": -0.0596} |
 | without_corrective | {"recall@5": -0.0964, "mrr": -0.1481, "ndcg@10": -0.1091} |
 | fixed_chunks_instead_of_multivector | {"recall@5": -0.0556, "mrr": -0.0916, "ndcg@10": -0.0596} |
+
+End-to-end proposals:
+
+| Variant | n | Unsupported before | Unsupported after | Judge (1-5) | GigSim reply rate | p95 (s) | USD / proposal |
+|---|---|---|---|---|---|---|---|
+| v0_naive | 7 | 1.14 | 0.00 | 4.00 | 42.9% | 72.5 | 0.0096 |
+| v8_corrective | 7 | 2.00 | 0.00 | 3.86 | 28.6% | pending | 0.0088 |
 
 ## 5. R&D question C: single agent vs supervisor vs our graph
 

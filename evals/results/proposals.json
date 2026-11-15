@@ -1,0 +1,725 @@
+{
+  "generated_at": "2026-11-15T10:17:35+00:00",
+  "git_sha_or_null": "9705415fa35d395317289f367e141e67d06a6c97",
+  "config_snapshot": {
+    "runner": "proposal_eval",
+    "args": {
+      "persona": "all",
+      "limit": 10,
+      "gigsim": null,
+      "profile": "paid",
+      "concurrency": 3,
+      "tag": "",
+      "variants": "v0_naive,best",
+      "no_judge": false
+    },
+    "models": {
+      "profile": "paid",
+      "tiers": {
+        "small": {
+          "provider": "anthropic",
+          "model": "claude-haiku-5-5",
+          "effort": "low",
+          "max_tokens": 8000
+        },
+        "strong": {
+          "provider": "anthropic",
+          "model": "claude-haiku-5-5",
+          "effort": "medium",
+          "max_tokens": 16000
+        },
+        "fallback_small": {
+          "provider": "groq",
+          "model": "openai/gpt-oss-20b",
+          "temperature": 0.0,
+          "reasoning_effort": "low"
+        },
+        "judge": {
+          "provider": "anthropic",
+          "model": "claude-haiku-5-5",
+          "effort": "low",
+          "max_tokens": 8000
+        }
+      },
+      "nodes": {
+        "scout": "small",
+        "analyst": "small",
+        "risk_assessor": "small",
+        "fit_matcher": "small",
+        "pricing": "small",
+        "writer": "strong",
+        "verifier": "small",
+        "critic": "strong",
+        "compliance": "small",
+        "liaison_intent": "small",
+        "liaison": "strong"
+      },
+      "embeddings": "BAAI/bge-small-en-v1.5",
+      "reranker": "Xenova/ms-marco-MiniLM-L-6-v2"
+    },
+    "rag": {
+      "variant": "v8_corrective",
+      "k": 5,
+      "chunk_size": 600,
+      "chunk_overlap": 80,
+      "rrf_k": 60,
+      "rerank_candidates": 30,
+      "outcome_boost": {
+        "won": 0.25,
+        "replied": 0.12,
+        "ignored": -0.05
+      },
+      "corrective_min_score": 0.35,
+      "corrective_max_requeries": 1
+    },
+    "thresholds": {
+      "minimum_fit_score": 0.55,
+      "watch_fit_score": 0.4,
+      "maximum_risk_score": 0.6,
+      "max_proposal_words": 280,
+      "min_proposal_words": 90
+    },
+    "budgets": {
+      "max_tokens_per_job": 60000,
+      "max_revisions": 2,
+      "max_graph_steps": 40
+    },
+    "policy_version": "v1",
+    "gigsim": {
+      "base_url": "http://localhost:8091",
+      "seed_dir": "data/processed/gigsim_seed",
+      "error_rate": 0,
+      "rate_per_min": 0,
+      "personalisation": "heuristic fallback (GIGSIM_LLM_DISABLED=1) to save Groq quota; deterministic"
+    },
+    "llm_cache": "data/cache/evals/llm (hits replay stored token counts; latency only from cold runs)",
+    "variants": [
+      "v0_naive",
+      "v8_corrective"
+    ]
+  },
+  "n": 14,
+  "status": "partial",
+  "model_profile": "paid",
+  "variants": [
+    "v0_naive",
+    "v8_corrective"
+  ],
+  "best_variant_from_rag_eval": "v8_corrective",
+  "job_set": "gold bid jobs, seeded per-persona sample",
+  "n_jobs_per_variant": 30,
+  "job_ids": [
+    "~013a661d528df57cb3",
+    "~019a5b1387a425fc44",
+    "~01a248f3737279eb52",
+    "~017d74095e14e668a8",
+    "~0164407596a75b066c",
+    "~012073f531718b9287",
+    "~01b22da4776e6e123f",
+    "~012ef8c8fe67f034d7",
+    "~01db2fe9d0d2820c4e",
+    "~01215d4366b13df010",
+    "~018c37a413f968cf85",
+    "~017eecc243ed11cfad",
+    "~01c02a2076af2d5d0f",
+    "~01696a21a8daaa671d",
+    "~017eacba31aaef5208",
+    "~01b769618310d9053e",
+    "~01247f2652c4193b0f",
+    "~01c66e58c6982bf482",
+    "~019b555a576a0f5c3c",
+    "~01a55a7bc072ebe20f",
+    "~0115d065edd0498e47",
+    "~0193ad2fb184619eb9",
+    "~01dd46c2161da7197f",
+    "~012e99136cf8dae494",
+    "~01015303b039c984ea",
+    "~01b49b9a31a5caf503",
+    "~01b494adceabc673bc",
+    "~019ae5dbddd657ad6a",
+    "~01d061f21c06b362a2",
+    "~01694624c18ff56167"
+  ],
+  "reply_definition": "GigSim /admin/score outcome in {replied, interview, hired}",
+  "unsupported_definition": "claim verifier labels: before = first verification pass on the first draft, after = final pass on the draft that reached approval",
+  "judge": {
+    "tier": "judge",
+    "model": "claude-haiku-5-5",
+    "prompt": "agent/prompts/judge_proposal.md"
+  },
+  "results": {
+    "v0_naive": {
+      "n_attempted": 30,
+      "n_proposals": 7,
+      "decision_counts": {
+        "bid": 16,
+        "watch": 11,
+        "skip": 3
+      },
+      "status_counts": {
+        "interrupted": 7,
+        "needs_attention": 9,
+        "done": 14
+      },
+      "unsupported_before_mean": 1.1429,
+      "unsupported_after_mean": 0.0,
+      "judge_overall_mean": 4.0,
+      "n_judged": 7,
+      "judge_overall_ci95": [
+        4.0,
+        4.0
+      ],
+      "judge_criteria_mean": {
+        "relevance": 4.1429,
+        "evidence": 3.7143,
+        "personalisation": 3.5714,
+        "clarity": 4.5714,
+        "professionalism": 4.4286
+      },
+      "gigsim_reply_rate": 0.4286,
+      "n_scored": 7,
+      "gigsim_reply_rate_ci95": [
+        0.1429,
+        0.8571
+      ],
+      "gigsim_reply_rate_over_attempted": 0.1,
+      "gigsim_hire_rate": 0.0,
+      "gigsim_p_reply_mean": 0.3772,
+      "outcomes": {
+        "ignored": 3,
+        "viewed": 1,
+        "replied": 2,
+        "interview": 1,
+        "hired": 0
+      },
+      "latency": {
+        "p50_s": 62.671,
+        "p95_s": 72.4828,
+        "n_cold": 5,
+        "n_total": 7
+      },
+      "usage_per_proposal": {
+        "tokens_mean": 46954.2857,
+        "cost_usd_mean": 0.0096,
+        "llm_calls_mean": 15.2857,
+        "tokens_total": 328680,
+        "cost_usd_total": 0.0675,
+        "n": 7
+      },
+      "judge_usage": {
+        "tokens_mean": 1987.0,
+        "cost_usd_mean": 0.0003,
+        "llm_calls_mean": 1.0,
+        "tokens_total": 13909,
+        "cost_usd_total": 0.0019,
+        "n": 7
+      },
+      "by_persona": {
+        "ai_ml": {
+          "n_attempted": 10,
+          "n_proposals": 1,
+          "decision_counts": {
+            "bid": 4,
+            "watch": 5,
+            "skip": 1
+          },
+          "status_counts": {
+            "interrupted": 1,
+            "needs_attention": 3,
+            "done": 6
+          },
+          "unsupported_before_mean": 2.0,
+          "unsupported_after_mean": 0.0,
+          "judge_overall_mean": 4.0,
+          "n_judged": 1,
+          "judge_overall_ci95": null,
+          "judge_criteria_mean": {
+            "relevance": 4.0,
+            "evidence": 4.0,
+            "personalisation": 3.0,
+            "clarity": 5.0,
+            "professionalism": 4.0
+          },
+          "gigsim_reply_rate": 0.0,
+          "n_scored": 1,
+          "gigsim_reply_rate_ci95": null,
+          "gigsim_reply_rate_over_attempted": 0.0,
+          "gigsim_hire_rate": 0.0,
+          "gigsim_p_reply_mean": 0.2283,
+          "outcomes": {
+            "ignored": 1,
+            "viewed": 0,
+            "replied": 0,
+            "interview": 0,
+            "hired": 0
+          },
+          "latency": {
+            "p50_s": null,
+            "p95_s": null,
+            "n_cold": 0,
+            "n_total": 1
+          },
+          "usage_per_proposal": {
+            "tokens_mean": 55642.0,
+            "cost_usd_mean": 0.0108,
+            "llm_calls_mean": 16.0,
+            "tokens_total": 55642,
+            "cost_usd_total": 0.0108,
+            "n": 1
+          },
+          "judge_usage": {
+            "tokens_mean": 2316.0,
+            "cost_usd_mean": 0.0004,
+            "llm_calls_mean": 1.0,
+            "tokens_total": 2316,
+            "cost_usd_total": 0.0004,
+            "n": 1
+          }
+        },
+        "data_analyst": {
+          "n_attempted": 10,
+          "n_proposals": 4,
+          "decision_counts": {
+            "bid": 6,
+            "watch": 2,
+            "skip": 2
+          },
+          "status_counts": {
+            "interrupted": 4,
+            "needs_attention": 2,
+            "done": 4
+          },
+          "unsupported_before_mean": 0.75,
+          "unsupported_after_mean": 0.0,
+          "judge_overall_mean": 4.0,
+          "n_judged": 4,
+          "judge_overall_ci95": [
+            4.0,
+            4.0
+          ],
+          "judge_criteria_mean": {
+            "relevance": 4.25,
+            "evidence": 3.75,
+            "personalisation": 3.75,
+            "clarity": 4.75,
+            "professionalism": 4.75
+          },
+          "gigsim_reply_rate": 0.5,
+          "n_scored": 4,
+          "gigsim_reply_rate_ci95": [
+            0.0,
+            1.0
+          ],
+          "gigsim_reply_rate_over_attempted": 0.2,
+          "gigsim_hire_rate": 0.0,
+          "gigsim_p_reply_mean": 0.4504,
+          "outcomes": {
+            "ignored": 1,
+            "viewed": 1,
+            "replied": 1,
+            "interview": 1,
+            "hired": 0
+          },
+          "latency": {
+            "p50_s": 63.2685,
+            "p95_s": 73.0213,
+            "n_cold": 4,
+            "n_total": 4
+          },
+          "usage_per_proposal": {
+            "tokens_mean": 47490.25,
+            "cost_usd_mean": 0.0099,
+            "llm_calls_mean": 15.75,
+            "tokens_total": 189961,
+            "cost_usd_total": 0.0395,
+            "n": 4
+          },
+          "judge_usage": {
+            "tokens_mean": 1875.0,
+            "cost_usd_mean": 0.0002,
+            "llm_calls_mean": 1.0,
+            "tokens_total": 7500,
+            "cost_usd_total": 0.001,
+            "n": 4
+          }
+        },
+        "fullstack": {
+          "n_attempted": 10,
+          "n_proposals": 2,
+          "decision_counts": {
+            "bid": 6,
+            "watch": 4,
+            "skip": 0
+          },
+          "status_counts": {
+            "interrupted": 2,
+            "needs_attention": 4,
+            "done": 4
+          },
+          "unsupported_before_mean": 1.5,
+          "unsupported_after_mean": 0.0,
+          "judge_overall_mean": 4.0,
+          "n_judged": 2,
+          "judge_overall_ci95": [
+            4.0,
+            4.0
+          ],
+          "judge_criteria_mean": {
+            "relevance": 4.0,
+            "evidence": 3.5,
+            "personalisation": 3.5,
+            "clarity": 4.0,
+            "professionalism": 4.0
+          },
+          "gigsim_reply_rate": 0.5,
+          "n_scored": 2,
+          "gigsim_reply_rate_ci95": [
+            0.0,
+            1.0
+          ],
+          "gigsim_reply_rate_over_attempted": 0.1,
+          "gigsim_hire_rate": 0.0,
+          "gigsim_p_reply_mean": 0.3052,
+          "outcomes": {
+            "ignored": 1,
+            "viewed": 0,
+            "replied": 1,
+            "interview": 0,
+            "hired": 0
+          },
+          "latency": {
+            "p50_s": 49.686,
+            "p95_s": 49.686,
+            "n_cold": 1,
+            "n_total": 2
+          },
+          "usage_per_proposal": {
+            "tokens_mean": 41538.5,
+            "cost_usd_mean": 0.0086,
+            "llm_calls_mean": 14.0,
+            "tokens_total": 83077,
+            "cost_usd_total": 0.0171,
+            "n": 2
+          },
+          "judge_usage": {
+            "tokens_mean": 2046.5,
+            "cost_usd_mean": 0.0003,
+            "llm_calls_mean": 1.0,
+            "tokens_total": 4093,
+            "cost_usd_total": 0.0006,
+            "n": 2
+          }
+        }
+      }
+    },
+    "v8_corrective": {
+      "n_attempted": 21,
+      "n_proposals": 7,
+      "decision_counts": {
+        "bid": 14,
+        "watch": 6,
+        "skip": 1
+      },
+      "status_counts": {
+        "interrupted": 7,
+        "needs_attention": 7,
+        "done": 7
+      },
+      "unsupported_before_mean": 2.0,
+      "unsupported_after_mean": 0.0,
+      "judge_overall_mean": 3.8571,
+      "n_judged": 7,
+      "judge_overall_ci95": [
+        3.5714,
+        4.0
+      ],
+      "judge_criteria_mean": {
+        "relevance": 4.4286,
+        "evidence": 3.2857,
+        "personalisation": 3.7143,
+        "clarity": 4.8571,
+        "professionalism": 4.8571
+      },
+      "gigsim_reply_rate": 0.2857,
+      "n_scored": 7,
+      "gigsim_reply_rate_ci95": [
+        0.0,
+        0.5714
+      ],
+      "gigsim_reply_rate_over_attempted": 0.0952,
+      "gigsim_hire_rate": 0.0,
+      "gigsim_p_reply_mean": 0.2749,
+      "outcomes": {
+        "ignored": 3,
+        "viewed": 2,
+        "replied": 2,
+        "interview": 0,
+        "hired": 0
+      },
+      "latency": {
+        "p50_s": null,
+        "p95_s": null,
+        "n_cold": 0,
+        "n_total": 7
+      },
+      "usage_per_proposal": {
+        "tokens_mean": 42437.7143,
+        "cost_usd_mean": 0.0088,
+        "llm_calls_mean": 14.5714,
+        "tokens_total": 297064,
+        "cost_usd_total": 0.0616,
+        "n": 7
+      },
+      "judge_usage": {
+        "tokens_mean": 1771.0,
+        "cost_usd_mean": 0.0002,
+        "llm_calls_mean": 1.0,
+        "tokens_total": 12397,
+        "cost_usd_total": 0.0017,
+        "n": 7
+      },
+      "by_persona": {
+        "ai_ml": {
+          "n_attempted": 7,
+          "n_proposals": 1,
+          "decision_counts": {
+            "bid": 3,
+            "watch": 4,
+            "skip": 0
+          },
+          "status_counts": {
+            "interrupted": 1,
+            "needs_attention": 2,
+            "done": 4
+          },
+          "unsupported_before_mean": 0.0,
+          "unsupported_after_mean": 0.0,
+          "judge_overall_mean": 4.0,
+          "n_judged": 1,
+          "judge_overall_ci95": null,
+          "judge_criteria_mean": {
+            "relevance": 4.0,
+            "evidence": 3.0,
+            "personalisation": 4.0,
+            "clarity": 5.0,
+            "professionalism": 5.0
+          },
+          "gigsim_reply_rate": 0.0,
+          "n_scored": 1,
+          "gigsim_reply_rate_ci95": null,
+          "gigsim_reply_rate_over_attempted": 0.0,
+          "gigsim_hire_rate": 0.0,
+          "gigsim_p_reply_mean": 0.081,
+          "outcomes": {
+            "ignored": 0,
+            "viewed": 1,
+            "replied": 0,
+            "interview": 0,
+            "hired": 0
+          },
+          "latency": {
+            "p50_s": null,
+            "p95_s": null,
+            "n_cold": 0,
+            "n_total": 1
+          },
+          "usage_per_proposal": {
+            "tokens_mean": 51018.0,
+            "cost_usd_mean": 0.0114,
+            "llm_calls_mean": 16.0,
+            "tokens_total": 51018,
+            "cost_usd_total": 0.0114,
+            "n": 1
+          },
+          "judge_usage": {
+            "tokens_mean": 1921.0,
+            "cost_usd_mean": 0.0002,
+            "llm_calls_mean": 1.0,
+            "tokens_total": 1921,
+            "cost_usd_total": 0.0002,
+            "n": 1
+          }
+        },
+        "data_analyst": {
+          "n_attempted": 10,
+          "n_proposals": 5,
+          "decision_counts": {
+            "bid": 8,
+            "watch": 1,
+            "skip": 1
+          },
+          "status_counts": {
+            "interrupted": 5,
+            "needs_attention": 3,
+            "done": 2
+          },
+          "unsupported_before_mean": 2.4,
+          "unsupported_after_mean": 0.0,
+          "judge_overall_mean": 3.8,
+          "n_judged": 5,
+          "judge_overall_ci95": [
+            3.4,
+            4.0
+          ],
+          "judge_criteria_mean": {
+            "relevance": 4.4,
+            "evidence": 3.2,
+            "personalisation": 3.6,
+            "clarity": 4.8,
+            "professionalism": 4.8
+          },
+          "gigsim_reply_rate": 0.2,
+          "n_scored": 5,
+          "gigsim_reply_rate_ci95": [
+            0.0,
+            0.6
+          ],
+          "gigsim_reply_rate_over_attempted": 0.1,
+          "gigsim_hire_rate": 0.0,
+          "gigsim_p_reply_mean": 0.2583,
+          "outcomes": {
+            "ignored": 3,
+            "viewed": 1,
+            "replied": 1,
+            "interview": 0,
+            "hired": 0
+          },
+          "latency": {
+            "p50_s": null,
+            "p95_s": null,
+            "n_cold": 0,
+            "n_total": 5
+          },
+          "usage_per_proposal": {
+            "tokens_mean": 43433.2,
+            "cost_usd_mean": 0.0089,
+            "llm_calls_mean": 14.8,
+            "tokens_total": 217166,
+            "cost_usd_total": 0.0445,
+            "n": 5
+          },
+          "judge_usage": {
+            "tokens_mean": 1773.0,
+            "cost_usd_mean": 0.0002,
+            "llm_calls_mean": 1.0,
+            "tokens_total": 8865,
+            "cost_usd_total": 0.0012,
+            "n": 5
+          }
+        },
+        "fullstack": {
+          "n_attempted": 4,
+          "n_proposals": 1,
+          "decision_counts": {
+            "bid": 3,
+            "watch": 1,
+            "skip": 0
+          },
+          "status_counts": {
+            "interrupted": 1,
+            "needs_attention": 2,
+            "done": 1
+          },
+          "unsupported_before_mean": 2.0,
+          "unsupported_after_mean": 0.0,
+          "judge_overall_mean": 4.0,
+          "n_judged": 1,
+          "judge_overall_ci95": null,
+          "judge_criteria_mean": {
+            "relevance": 5.0,
+            "evidence": 4.0,
+            "personalisation": 4.0,
+            "clarity": 5.0,
+            "professionalism": 5.0
+          },
+          "gigsim_reply_rate": 1.0,
+          "n_scored": 1,
+          "gigsim_reply_rate_ci95": null,
+          "gigsim_reply_rate_over_attempted": 0.25,
+          "gigsim_hire_rate": 0.0,
+          "gigsim_p_reply_mean": 0.5519,
+          "outcomes": {
+            "ignored": 0,
+            "viewed": 0,
+            "replied": 1,
+            "interview": 0,
+            "hired": 0
+          },
+          "latency": {
+            "p50_s": null,
+            "p95_s": null,
+            "n_cold": 0,
+            "n_total": 1
+          },
+          "usage_per_proposal": {
+            "tokens_mean": 28880.0,
+            "cost_usd_mean": 0.0057,
+            "llm_calls_mean": 12.0,
+            "tokens_total": 28880,
+            "cost_usd_total": 0.0057,
+            "n": 1
+          },
+          "judge_usage": {
+            "tokens_mean": 1611.0,
+            "cost_usd_mean": 0.0002,
+            "llm_calls_mean": 1.0,
+            "tokens_total": 1611,
+            "cost_usd_total": 0.0002,
+            "n": 1
+          }
+        }
+      }
+    }
+  },
+  "n_errors": 9,
+  "errors": [
+    {
+      "job_id": "~012ef8c8fe67f034d7",
+      "variant": "v8_corrective",
+      "error": "RuntimeError: search_evidence failed after retries: TimeoutError: "
+    },
+    {
+      "job_id": "~01db2fe9d0d2820c4e",
+      "variant": "v8_corrective",
+      "error": "RuntimeError: search_evidence failed after retries: TimeoutError: "
+    },
+    {
+      "job_id": "~01215d4366b13df010",
+      "variant": "v8_corrective",
+      "error": "RuntimeError: search_evidence failed after retries: TimeoutError: "
+    },
+    {
+      "job_id": "~017eecc243ed11cfad",
+      "variant": "v8_corrective",
+      "error": "RuntimeError: search_evidence failed after retries: TimeoutError: "
+    },
+    {
+      "job_id": "~01c02a2076af2d5d0f",
+      "variant": "v8_corrective",
+      "error": "RuntimeError: search_evidence failed after retries: TimeoutError: "
+    },
+    {
+      "job_id": "~018c37a413f968cf85",
+      "variant": "v8_corrective",
+      "error": "RuntimeError: search_evidence failed after retries: TimeoutError: "
+    },
+    {
+      "job_id": "~01b769618310d9053e",
+      "variant": "v8_corrective",
+      "error": "RuntimeError: search_evidence failed after retries: TimeoutError: "
+    },
+    {
+      "job_id": "~01696a21a8daaa671d",
+      "variant": "v8_corrective",
+      "error": "RuntimeError: search_evidence failed after retries: TimeoutError: "
+    },
+    {
+      "job_id": "~017eacba31aaef5208",
+      "variant": "v8_corrective",
+      "error": "RuntimeError: search_evidence failed after retries: TimeoutError: "
+    }
+  ],
+  "stopped_early": null,
+  "exhausted_models": {},
+  "anthropic_spend_usd_all_evals": 1.8899
+}
