@@ -1,29 +1,29 @@
 {
- "generated_at": "2026-11-15T09:04:49.850850+00:00",
- "git_sha": "c8ced76",
+ "generated_at": "2026-11-15T10:58:26.047439+00:00",
+ "git_sha": "36d0561",
  "model_profile": "paid",
  "strategies": {
   "evidence_first": "Open by naming the client's problem in one sentence, then lead with the single most similar past project and its measured result.",
   "question_first": "Open with one sharp, specific question about the client's problem that shows you understood the post, then show the most relevant evidence."
  },
  "n_jobs_attempted": 60,
- "n_paired": 3,
+ "n_paired": 16,
  "reply_rate": {
-  "evidence_first": 0.667,
-  "question_first": 0.333
+  "evidence_first": 0.438,
+  "question_first": 0.312
  },
  "mean_p_reply": {
-  "evidence_first": 0.2891,
-  "question_first": 0.2807
+  "evidence_first": 0.2556,
+  "question_first": 0.2548
  },
  "discordant": {
-  "evidence_first_only": 1,
-  "question_first_only": 0
+  "evidence_first_only": 4,
+  "question_first_only": 2
  },
- "mcnemar_exact_p": 1.0,
- "two_proportion_z_p": 0.4142,
- "cost_usd": 0.4327,
- "p50_latency_s": 13.6,
+ "mcnemar_exact_p": 0.6875,
+ "two_proportion_z_p": 0.4652,
+ "cost_usd": 1.2823,
+ "p50_latency_s": 79.2,
  "rows": [
   {
    "persona": "ai_ml",
@@ -31,13 +31,15 @@
    "category": "ml_ai",
    "evidence_first": {
     "outcome": "ignored",
-    "p_reply": 0.2346,
-    "quality": 0.6771,
-    "words": 188
+    "p_reply": 0.3012,
+    "quality": 0.6926,
+    "words": 201
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.skip: 'skip'> reasons=['risk 0.85 above limit 0.6 (payment_request)'] fit_score=0.6 risk_score=0.85"
+    "outcome": "replied",
+    "p_reply": 0.3477,
+    "quality": 0.7468,
+    "words": 209
    }
   },
   {
@@ -45,12 +47,16 @@
    "job_id": "~01327b2dd615b1d7f2",
    "category": "ml_ai",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=[\"client's top rate 20.0 is well under your floor 30\"] fit_score=0.625 risk_score=0.25"
+    "outcome": "viewed",
+    "p_reply": 0.0952,
+    "quality": 0.5106,
+    "words": 199
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=[\"client's top rate 20.0 is well under your floor 30\"] fit_score=0.625 risk_score=0.25"
+    "outcome": "viewed",
+    "p_reply": 0.1146,
+    "quality": 0.4894,
+    "words": 210
    }
   },
   {
@@ -58,12 +64,14 @@
    "job_id": "~01d917c92ec86348dd",
    "category": "ml_ai",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=[\"client's top rate 20.0 is well under your floor 30\"] fit_score=0.75 risk_score=0.2"
+    "outcome": "replied",
+    "p_reply": 0.858,
+    "quality": 0.8597,
+    "words": 179
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=[\"client's top rate 20.0 is well under your floor 30\"] fit_score=0.833 risk_score=0.2"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.62, risk 0.22: Strong chatbot delivery evidence in Python (Flowise with FastAPI, GPT chatbot integration).; LLM agent work with LangGraph and tool-callin"
    }
   },
   {
@@ -71,12 +79,14 @@
    "job_id": "~0113d830e0eb5d1b59",
    "category": "ml_ai",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=[\"client's top rate 15.0 is well under your floor 150\"] fit_score=0.75 risk_score=0.45"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.75, risk 0.45: Strong Python and pandas data analysis evidence from multiple delivered projects.; Machine learning model development is proven by CV and "
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=[\"client's top rate 15.0 is well under your floor 150\"] fit_score=0.667 risk_score=0.45"
+    "outcome": "viewed",
+    "p_reply": 0.3278,
+    "quality": 0.7651,
+    "words": 172
    }
   },
   {
@@ -84,12 +94,12 @@
    "job_id": "~01232167c241320192",
    "category": "ml_ai",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=['fit 0.50 below bid threshold 0.55'] fit_score=0.5 risk_score=0.2"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.50, risk 0.30: Strong evidence for prompt engineering and LLM evaluation with measurable outcomes.; Review mining for product insights directly matches t"
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=['fit 0.50 below bid threshold 0.55'] fit_score=0.5 risk_score=0.2"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.58, risk 0.22: Strong prompt engineering and LLM evaluation evidence, including a copy-generator audit and an eval harness.; Product review mining direct"
    }
   },
   {
@@ -97,12 +107,12 @@
    "job_id": "~0172af243bc893cb41",
    "category": "ml_ai",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.skip: 'skip'> reasons=['fit 0.30 below 0.4: missing JavaScript, GPT-4 API, Prompt Engineering, SEO'] fit_score=0.3 risk_score=0.38"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.30, risk 0.40: Strong ChatGPT API and prompt engineering signals, with past proposals on automated blog generation.; Web scraping experience is proven, b"
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.skip: 'skip'> reasons=['fit 0.30 below 0.4: missing Prompt Engineering, SEO, MDX, QuillBot'] fit_score=0.3 risk_score=0.4"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.30, risk 0.40: Strong ChatGPT API integration history, including WordPress blog publishing via ChatGPT.; Python and Scrapy scraping experience, but no ke"
    }
   },
   {
@@ -110,12 +120,12 @@
    "job_id": "~018b6ca3592c42bd4a",
    "category": "ml_ai",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.skip: 'skip'> reasons=['fit 0.30 below 0.4: missing Medical image analysis, 3D image processing, Image segmentation, Image registration'] fit_score=0.3 risk_score=0.12"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.20, risk 0.10: Strong deep learning and image classification evidence from the surface-defect classifier with client review.; No medical image analysis o"
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=['fit 0.42 below bid threshold 0.55'] fit_score=0.417 risk_score=0.08"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.20, risk 0.08: Strong evidence for image classification with deep learning via the surface-defect classifier case and client review.; No medical imaging,"
    }
   },
   {
@@ -124,11 +134,11 @@
    "category": "ml_ai",
    "evidence_first": {
     "status": "done",
-    "decision": "decision=<Decision.skip: 'skip'> reasons=['risk 0.85 above limit 0.6 (off_platform, scope_budget_mismatch, unpaid_work, weak_client)', 'fit 0.30 below 0.4: missing Content Creation, SEO'] fit_score=0.3 risk_score=0.85"
+    "decision": "decision=<Decision.skip: 'skip'> reasons=['risk 0.85 above limit 0.6 (off_platform, scope_budget_mismatch, unpaid_work, weak_client)'] fit_score=0.25 risk_score=0.85"
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.skip: 'skip'> reasons=['fit 0.30 below 0.4: missing Writing Critique, Content Creation'] fit_score=0.3 risk_score=0.6"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.30, risk 0.60: Strong product review and voice-of-customer analysis evidence with client praise; Web testing only shown in proposals without delivered ou"
    }
   },
   {
@@ -136,12 +146,14 @@
    "job_id": "~01f264df4e6fb0f6d3",
    "category": "ml_ai",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.skip: 'skip'> reasons=['fit 0.38 below 0.4: missing YOLO, RTSP video streaming'] fit_score=0.375 risk_score=0.35"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.50, risk 0.30: Strong Python pipeline evidence from multiple projects.; Computer vision experience is shown via a defect classifier, but without YOLO or "
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.skip: 'skip'> reasons=['fit 0.33 below 0.4: missing YOLO, Computer Vision, RTSP video processing'] fit_score=0.333 risk_score=0.3"
+    "outcome": "ignored",
+    "p_reply": 0.4872,
+    "quality": 0.8872,
+    "words": 137
    }
   },
   {
@@ -149,12 +161,14 @@
    "job_id": "~0164c75834f64f80b3",
    "category": "ml_ai",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.skip: 'skip'> reasons=['fit 0.30 below 0.4: missing TensorFlow'] fit_score=0.3 risk_score=0.15"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.30, risk 0.15: Computer vision via transfer learning is evidenced by the surface-defect classifier case.; OpenCV and Python scripting appear in past prop"
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.skip: 'skip'> reasons=['fit 0.30 below 0.4: missing evidence'] fit_score=0.3 risk_score=0.15"
+    "outcome": "viewed",
+    "p_reply": 0.104,
+    "quality": 0.6694,
+    "words": 193
    }
   },
   {
@@ -163,13 +177,11 @@
    "category": "ml_ai",
    "evidence_first": {
     "status": "needs_attention",
-    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.71, risk 0.45: Strong production ML evidence from Finchly credit-scoring pipeline; PyTorch and Python well proven, TensorFlow absent'] fit_score=0.714 risk_score=0.45"
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.83, risk 0.50: Strong evidence of production ML model delivery with MLflow, Docker, and PostgreSQL.; Python, LangGraph, and LLM integration work covers t"
    },
    "question_first": {
-    "outcome": "viewed",
-    "p_reply": 0.2375,
-    "quality": 0.5489,
-    "words": 152
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.75, risk 0.50: Strong evidence of Python ML model development and shipping, including a PyTorch computer vision case.; Git version control is well eviden"
    }
   },
   {
@@ -177,12 +189,12 @@
    "job_id": "~0141cf65704f2e4f3e",
    "category": "ml_ai",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=['fit 0.50 below bid threshold 0.55'] fit_score=0.5 risk_score=0.3"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.75, risk 0.35: Strong evidence for Python and machine learning, including a production credit-scoring pipeline and a PyTorch vision case.; Java appears o"
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=['fit 0.50 below bid threshold 0.55'] fit_score=0.5 risk_score=0.35"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.38, risk 0.30: Strong Python and ML delivery evidence across several projects; Teaching or beginner-facing experience is not evidenced, only partial cove"
    }
   },
   {
@@ -190,12 +202,14 @@
    "job_id": "~012ef8c8fe67f034d7",
    "category": "ml_ai",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=['fit 0.50 below bid threshold 0.55'] fit_score=0.5 risk_score=0.3"
+    "outcome": "replied",
+    "p_reply": 0.2879,
+    "quality": 0.5873,
+    "words": 215
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.skip: 'skip'> reasons=['fit 0.38 below 0.4: missing evidence'] fit_score=0.375 risk_score=0.25"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.50, risk 0.25: Strong LLM and RAG evidence from the contract QA case and docparse-lite repo; No delivered Azure work; the only Azure OpenAI evidence is a"
    }
   },
   {
@@ -204,11 +218,11 @@
    "category": "ml_ai",
    "evidence_first": {
     "status": "needs_attention",
-    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.75, risk 0.12: Strong evidence for data cleaning, evaluation, and post-deployment monitoring; Direct GPT-3.5 Turbo fine-tuning for resume generation is not proven'] fit_score=0.75 risk_score=0.12"
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.67, risk 0.12: Strong evidence for evaluation, monitoring, and production ML pipelines; No direct evidence of GPT-3.5 Turbo fine-tuning or resume-domain "
    },
    "question_first": {
     "status": "needs_attention",
-    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.70, risk 0.12: Strong evidence for model evaluation and post-deployment monitoring via MLOps and prompt audit work.; No direct GPT-3.5 Turbo fine-tuning or resume-domain work is proven, only related OpenAI API and LLM app experience.'] fit_score=0.7 risk_score=0.12"
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.58, risk 0.12: Strong evidence for LLM evaluation, prompt engineering, and post-deployment monitoring.; No evidence of GPT-3.5 Turbo fine-tuning or resum"
    }
   },
   {
@@ -217,11 +231,11 @@
    "category": "ml_ai",
    "evidence_first": {
     "status": "needs_attention",
-    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.70, risk 0.60: Strong computer vision and Python ML evidence from a delivered defect classifier.; OpenAI API and LLM agent work is well evidenced across several proposals.'] fit_score=0.7 risk_score=0.6"
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.50, risk 0.60: Strong proof of ML and computer vision via defect image classifier with 0.94 recall; OpenAI API integration shown in docparse-lite and a F"
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.skip: 'skip'> reasons=['fit 0.30 below 0.4: missing Computer Vision, Rasa, QML'] fit_score=0.3 risk_score=0.6"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.20, risk 0.60: Strong Python and LLM evidence from RAG, LangGraph and chatbot work; Machine learning evidence is mainly recommender and text classificati"
    }
   },
   {
@@ -229,12 +243,14 @@
    "job_id": "~01317649684ea0eaaf",
    "category": "ml_ai",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=['fit 0.50 below bid threshold 0.55'] fit_score=0.5 risk_score=0.3"
+    "outcome": "viewed",
+    "p_reply": 0.1677,
+    "quality": 0.5182,
+    "words": 154
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=['fit 0.50 below bid threshold 0.55'] fit_score=0.5 risk_score=0.3"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.58, risk 0.30: Strong delivered ML and deep learning work with measured outcomes; Python and AI skills directly evidenced'] fit_score=0.583 risk_score=0."
    }
   },
   {
@@ -242,12 +258,16 @@
    "job_id": "~013d5c66da671a1a33",
    "category": "ml_ai",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=['fit 0.40 below bid threshold 0.55'] fit_score=0.4 risk_score=0.3"
+    "outcome": "ignored",
+    "p_reply": 0.1543,
+    "quality": 0.5679,
+    "words": 164
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=['fit 0.50 below bid threshold 0.55'] fit_score=0.5 risk_score=0.35"
+    "outcome": "ignored",
+    "p_reply": 0.1661,
+    "quality": 0.5563,
+    "words": 247
    }
   },
   {
@@ -255,14 +275,12 @@
    "job_id": "~01cd29d08749bcb1a5",
    "category": "ml_ai",
    "evidence_first": {
-    "outcome": "ignored",
-    "p_reply": 0.2682,
-    "quality": 0.6969,
-    "words": 180
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.75, risk 0.12: Strong NLP evidence on transcripts and unstructured text; LLM output auditing shown but bias detection not demonstrated'] fit_score=0.75 r"
    },
    "question_first": {
     "status": "needs_attention",
-    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.70, risk 0.12: Strong NLP evidence on unstructured text via the call-intent classifier and review topic mining.; Machine learning model training and evaluation is proven by the intent classifier with macro-F1 0.87.'] fit_score=0.7 risk_score=0.12"
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.75, risk 0.12: Strong NLP and transcript classification evidence with measured macro-F1 results.; No evidence of bias or heuristic detection specifically"
    }
   },
   {
@@ -270,12 +288,12 @@
    "job_id": "~0192563a775948c7d0",
    "category": "ml_ai",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.skip: 'skip'> reasons=['fit 0.25 below 0.4: missing Simulink, Algorithm Development, Kalman filter, Fuzzy logic'] fit_score=0.25 risk_score=0.22"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.25, risk 0.25: No retrieved evidence demonstrates battery modelling, Simulink, fuzzy logic, or Kalman filtering, which are core to the job.; Python and m"
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.skip: 'skip'> reasons=['fit 0.30 below 0.4: missing Simulink, Fuzzy logic, Kalman filter, Battery modeling'] fit_score=0.3 risk_score=0.22"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.25, risk 0.20: No evidence covers the core battery domain: LiFePO4 modelling, SoH estimation, Simulink, or Kalman/fuzzy methods.; Python and machine lear"
    }
   },
   {
@@ -283,16 +301,14 @@
    "job_id": "~017d74095e14e668a8",
    "category": "ml_ai",
    "evidence_first": {
-    "outcome": "interview",
-    "p_reply": 0.1676,
-    "quality": 0.5497,
-    "words": 166
+    "status": "done",
+    "decision": "decision=<Decision.skip: 'skip'> reasons=['risk 0.62 above limit 0.6 (injection, weak_client)'] fit_score=0.7 risk_score=0.62"
    },
    "question_first": {
-    "outcome": "viewed",
-    "p_reply": 0.1676,
-    "quality": 0.5497,
-    "words": 188
+    "outcome": "ignored",
+    "p_reply": 0.3705,
+    "quality": 0.6648,
+    "words": 197
    }
   },
   {
@@ -301,11 +317,11 @@
    "category": "web_fullstack",
    "evidence_first": {
     "status": "needs_attention",
-    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.75, risk 0.22: Direct Figma-to-landing-page delivery in React/Next.js with a 5/5 client review; Strapi not named in any evidence; headless CMS experience is transferable'] fit_score=0.75 risk_score=0.22"
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.75, risk 0.22: Figma-to-landing-page delivery in 3 days is directly proven by a case study and client review.; Strapi is not named in any evidence; headl"
    },
    "question_first": {
     "status": "needs_attention",
-    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.75, risk 0.22: Direct prior delivery of a Figma-to-responsive-landing-page build in 3 days with a 5/5 client review; Headless CMS and content-API experience transfers to Strapi but Strapi itself is unproven'] fit_score=0.75 risk_score=0.22"
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.62, risk 0.22: Landing-page-from-Figma case and client review directly prove the core deliverable in three days.; Headless CMS experience is proven gener"
    }
   },
   {
@@ -313,16 +329,14 @@
    "job_id": "~01b769618310d9053e",
    "category": "web_fullstack",
    "evidence_first": {
-    "outcome": "ignored",
-    "p_reply": 0.4014,
-    "quality": 0.8522,
-    "words": 206
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.60, risk 0.22: Strong evidence for subscription billing and paywall work via Tallyhub and subscription-kit.; Responsive React front-end and REST/API back"
    },
    "question_first": {
-    "outcome": "viewed",
-    "p_reply": 0.3104,
-    "quality": 0.7073,
-    "words": 274
+    "outcome": "ignored",
+    "p_reply": 0.3012,
+    "quality": 0.7294,
+    "words": 221
    }
   },
   {
@@ -330,12 +344,16 @@
    "job_id": "~01783e1af98b917a87",
    "category": "web_fullstack",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=['fit 0.50 below bid threshold 0.55'] fit_score=0.5 risk_score=0.08"
+    "outcome": "hired",
+    "p_reply": 0.4485,
+    "quality": 0.7179,
+    "words": 176
    },
    "question_first": {
-    "status": "needs_attention",
-    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.62, risk 0.08: Strong SEO evidence from the magazine headless migration case with a 19% organic traffic gain.; WordPress experience is proven through the WooCommerce checkout case and magazine migration.'] fit_score=0.625 risk_score=0.08"
+    "outcome": "interview",
+    "p_reply": 0.5018,
+    "quality": 0.7179,
+    "words": 167
    }
   },
   {
@@ -343,12 +361,14 @@
    "job_id": "~017e35faf823129669",
    "category": "web_fullstack",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.skip: 'skip'> reasons=['fit 0.25 below 0.4: missing Django, Python, Celery, Celery Beat'] fit_score=0.25 risk_score=0.6"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.40, risk 0.60: No Django or Celery portfolio work is evidenced, so the core stack is unproven.; Bulk-processing and payout-debugging cases give partial s"
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=['fit 0.50 below bid threshold 0.55'] fit_score=0.5 risk_score=0.6"
+    "outcome": "viewed",
+    "p_reply": 0.2776,
+    "quality": 0.6334,
+    "words": 212
    }
   },
   {
@@ -356,12 +376,12 @@
    "job_id": "~01533dfd6afcd9a0b1",
    "category": "web_fullstack",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=[\"client's top rate 10.0 is well under your floor 150\"] fit_score=0.7 risk_score=0.3"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.60, risk 0.30: PHP and JavaScript are proven by a delivered WooCommerce checkout case.; Debugging and bug-fixing are shown mainly through past proposals,"
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=[\"client's top rate 10.0 is well under your floor 150\"] fit_score=0.7 risk_score=0.35"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.60, risk 0.35: Strong evidence of automated testing and stability verification after fixes; Frontend and PHP/WordPress work supports PHP, HTML, CSS and J"
    }
   },
   {
@@ -370,11 +390,11 @@
    "category": "web_fullstack",
    "evidence_first": {
     "status": "needs_attention",
-    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.70, risk 0.35: Strong WordPress migration and WooCommerce evidence with measured outcomes; PHP proven through functions.php work in the WooCommerce case'] fit_score=0.7 risk_score=0.35"
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.50, risk 0.35: Strong proof of WordPress-to-headless migration with client review confirming outcomes.; WooCommerce checkout work shows PHP and WordPress"
    },
    "question_first": {
     "status": "needs_attention",
-    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.62, risk 0.35: Strong direct evidence of WordPress-to-live migration with measurable outcomes.; WooCommerce work covers WordPress and PHP but not a standalone plugin.'] fit_score=0.625 risk_score=0.35"
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.62, risk 0.30: Direct headless migration off WordPress with client review proving live delivery.; WooCommerce work covers WordPress and PHP staging-to-li"
    }
   },
   {
@@ -382,12 +402,16 @@
    "job_id": "~012650d820673e5735",
    "category": "web_fullstack",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=[\"client's top rate 40.0 is well under your floor 150\"] fit_score=0.583 risk_score=0.3"
+    "outcome": "viewed",
+    "p_reply": 0.3645,
+    "quality": 0.7304,
+    "words": 151
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=['fit 0.42 below bid threshold 0.55'] fit_score=0.417 risk_score=0.3"
+    "outcome": "ignored",
+    "p_reply": 0.4236,
+    "quality": 0.7382,
+    "words": 197
    }
   },
   {
@@ -396,11 +420,11 @@
    "category": "web_fullstack",
    "evidence_first": {
     "status": "needs_attention",
-    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.58, risk 0.22: Strong performance testing and troubleshooting evidence with client-verified results; SEO delivered on a headless migration case study'] fit_score=0.583 risk_score=0.22"
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.70, risk 0.22: Strong evidence for performance debugging and automated testing; SEO and web performance proven via magazine migration case'] fit_score=0."
    },
    "question_first": {
     "status": "needs_attention",
-    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.70, risk 0.22: Strong evidence for performance fixing, testing, and SEO-driven delivery.; No completed Wix or Webflow project appears in the evidence; only proposals and related responsive work.'] fit_score=0.7 risk_score=0.22"
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.70, risk 0.22: Strong SEO and performance evidence from the magazine headless migration case.; Strong testing and QA evidence from the end-to-end test su"
    }
   },
   {
@@ -408,12 +432,16 @@
    "job_id": "~0112007abee097a812",
    "category": "web_fullstack",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=[\"client's top rate 40.0 is well under your floor 150\"] fit_score=0.625 risk_score=0.12"
+    "outcome": "ignored",
+    "p_reply": 0.2146,
+    "quality": 0.7595,
+    "words": 206
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=['fit 0.50 below bid threshold 0.55'] fit_score=0.5 risk_score=0.12"
+    "outcome": "ignored",
+    "p_reply": 0.1211,
+    "quality": 0.5969,
+    "words": 150
    }
   },
   {
@@ -421,12 +449,12 @@
    "job_id": "~0193d00d03b87552fd",
    "category": "web_fullstack",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=['fit 0.50 below bid threshold 0.55'] fit_score=0.5 risk_score=0.3"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.60, risk 0.45: Payment gateway integration is directly proven by the Tallyhub billing case.; NGINX appears only in a proposal, not in a delivered deploym"
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=['fit 0.50 below bid threshold 0.55'] fit_score=0.5 risk_score=0.4"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.39, risk 0.40: Strong payment gateway integration evidence from Tallyhub and WooCommerce work.; Booking portal experience transfers to course scheduling "
    }
   },
   {
@@ -434,12 +462,14 @@
    "job_id": "~01af975ee658df2a91",
    "category": "web_fullstack",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=['fit 0.50 below bid threshold 0.55'] fit_score=0.5 risk_score=0.25"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.42, risk 0.25: Strong evidence for REST API integration and database architecture from the api-starter repo and the clinic booking portal.; Frontend HTML"
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=['fit 0.40 below bid threshold 0.55'] fit_score=0.4 risk_score=0.3"
+    "outcome": "viewed",
+    "p_reply": 0.216,
+    "quality": 0.5756,
+    "words": 195
    }
   },
   {
@@ -447,12 +477,16 @@
    "job_id": "~017339534b7a4d7d05",
    "category": "web_fullstack",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=[\"client's top rate 20.0 is well under your floor 150\"] fit_score=0.667 risk_score=0.25"
+    "outcome": "ignored",
+    "p_reply": 0.0434,
+    "quality": 0.5691,
+    "words": 138
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=['fit 0.50 below bid threshold 0.55'] fit_score=0.5 risk_score=0.25"
+    "outcome": "ignored",
+    "p_reply": 0.0537,
+    "quality": 0.6089,
+    "words": 158
    }
   },
   {
@@ -461,11 +495,11 @@
    "category": "web_fullstack",
    "evidence_first": {
     "status": "done",
-    "decision": "decision=<Decision.skip: 'skip'> reasons=['risk 0.75 above limit 0.6 (privacy_intrusion, scope_budget_mismatch)', 'fit 0.00 below 0.4: missing Facebook account lookup, OSINT'] fit_score=0.0 risk_score=0.75"
+    "decision": "decision=<Decision.skip: 'skip'> reasons=['risk 0.70 above limit 0.6 (privacy_violation, scope_budget_mismatch)'] fit_score=0.5 risk_score=0.7"
    },
    "question_first": {
     "status": "done",
-    "decision": "decision=<Decision.skip: 'skip'> reasons=['fit 0.33 below 0.4: missing Python'] fit_score=0.333 risk_score=0.6"
+    "decision": "decision=<Decision.skip: 'skip'> reasons=['risk 0.65 above limit 0.6 (privacy_violation, scope_budget_mismatch)'] fit_score=0.333 risk_score=0.65"
    }
   },
   {
@@ -473,12 +507,16 @@
    "job_id": "~010a49d7362cb36bb2",
    "category": "web_fullstack",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.skip: 'skip'> reasons=['fit 0.33 below 0.4: missing WordPress'] fit_score=0.333 risk_score=0.25"
+    "outcome": "viewed",
+    "p_reply": 0.222,
+    "quality": 0.7814,
+    "words": 147
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=['fit 0.50 below bid threshold 0.55'] fit_score=0.5 risk_score=0.2"
+    "outcome": "hired",
+    "p_reply": 0.2365,
+    "quality": 0.8002,
+    "words": 166
    }
   },
   {
@@ -486,12 +524,14 @@
    "job_id": "~0185d3b2134b840925",
    "category": "web_fullstack",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.skip: 'skip'> reasons=['fit 0.29 below 0.4: missing NgXs, Tailwind CSS, Angular Material, ASP.NET Core'] fit_score=0.286 risk_score=0.3"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.25, risk 0.35: No evidence of Angular, NgRx or ASP.NET Core delivered work; only proposal claims.; Partial coverage for the Angular portal and news/feedb"
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.skip: 'skip'> reasons=['fit 0.29 below 0.4: missing Tailwind CSS, Angular Material, ASP.NET Core, Hangfire'] fit_score=0.286 risk_score=0.35"
+    "outcome": "viewed",
+    "p_reply": 0.4752,
+    "quality": 0.6964,
+    "words": 179
    }
   },
   {
@@ -499,12 +539,14 @@
    "job_id": "~0123823ddba3132955",
    "category": "web_fullstack",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.skip: 'skip'> reasons=['fit 0.30 below 0.4: missing Web3, Ethereum, ERC20 token, Blockchain'] fit_score=0.3 risk_score=0.15"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.30, risk 0.22: Strong evidence for Node.js and REST API building through api-starter and tenant-guard repositories.; No evidence of Web3, Ethereum, ERC20"
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=['fit 0.50 below bid threshold 0.55'] fit_score=0.5 risk_score=0.25"
+    "outcome": "ignored",
+    "p_reply": 0.2541,
+    "quality": 0.7487,
+    "words": 192
    }
   },
   {
@@ -512,12 +554,14 @@
    "job_id": "~01d3bf08db3e246405",
    "category": "web_fullstack",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=[\"client's top rate 15.0 is well under your floor 30\"] fit_score=0.8 risk_score=0.22"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.58, risk 0.20: Strong Shopify app and GraphQL evidence, including a client review with a 14% AOV lift; Payment integration proven through Tallyhub billin"
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=[\"client's top rate 15.0 is well under your floor 30\"] fit_score=0.8 risk_score=0.22"
+    "outcome": "viewed",
+    "p_reply": 0.3507,
+    "quality": 0.7066,
+    "words": 196
    }
   },
   {
@@ -525,16 +569,16 @@
    "job_id": "~01d489ad1517ab82f5",
    "category": "web_fullstack",
    "evidence_first": {
-    "outcome": "replied",
-    "p_reply": 0.2984,
-    "quality": 0.6482,
-    "words": 238
+    "outcome": "interview",
+    "p_reply": 0.3415,
+    "quality": 0.6099,
+    "words": 232
    },
    "question_first": {
-    "outcome": "replied",
-    "p_reply": 0.3641,
-    "quality": 0.5712,
-    "words": 150
+    "outcome": "ignored",
+    "p_reply": 0.3011,
+    "quality": 0.5723,
+    "words": 216
    }
   },
   {
@@ -542,12 +586,16 @@
    "job_id": "~01eeecb45a4997aa31",
    "category": "web_fullstack",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=['fit 0.50 below bid threshold 0.55'] fit_score=0.5 risk_score=0.15"
+    "outcome": "interview",
+    "p_reply": 0.2329,
+    "quality": 0.6126,
+    "words": 170
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=['fit 0.40 below bid threshold 0.55'] fit_score=0.4 risk_score=0.15"
+    "outcome": "replied",
+    "p_reply": 0.2677,
+    "quality": 0.5813,
+    "words": 166
    }
   },
   {
@@ -556,13 +604,13 @@
    "category": "web_fullstack",
    "evidence_first": {
     "status": "needs_attention",
-    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.60, risk 0.15: Strong evidence for responsive landing page design delivered from Figma.; WordPress experience is indirect via a headless migration away from WordPress.'] fit_score=0.6 risk_score=0.15"
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.50, risk 0.15: Strong front-end evidence: responsive landing page from Figma delivered on time with 5/5 client review.; Web development and WordPress/HTM"
    },
    "question_first": {
-    "outcome": "replied",
-    "p_reply": 0.8658,
-    "quality": 0.8964,
-    "words": 185
+    "outcome": "interview",
+    "p_reply": 0.7849,
+    "quality": 0.8356,
+    "words": 166
    }
   },
   {
@@ -570,12 +618,16 @@
    "job_id": "~01d1cbbcb1775db424",
    "category": "data_analysis",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.skip: 'skip'> reasons=['fit 0.00 below 0.4: missing NinjaTrader, NinjaScript (C#), orderflow analysis'] fit_score=0.0 risk_score=0.2"
+    "outcome": "ignored",
+    "p_reply": 0.5617,
+    "quality": 0.7814,
+    "words": 152
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.skip: 'skip'> reasons=['fit 0.38 below 0.4: missing NinjaTrader, NinjaScript, orderflow analysis'] fit_score=0.375 risk_score=0.2"
+    "outcome": "ignored",
+    "p_reply": 0.4278,
+    "quality": 0.7002,
+    "words": 162
    }
   },
   {
@@ -583,12 +635,12 @@
    "job_id": "~017ef1f9d6a902662c",
    "category": "data_analysis",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=['fit 0.40 below bid threshold 0.55'] fit_score=0.4 risk_score=0.22"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.38, risk 0.20: Strong Excel automation and reporting track record (accountancy packs, Brightcart KPI dashboard).; No Bloomberg Terminal evidence at all.'"
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=['fit 0.40 below bid threshold 0.55'] fit_score=0.4 risk_score=0.22"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.40, risk 0.22: Strong Excel automation and reporting evidence, including a 30 staff hours a month saving case.; VBA is supported mainly by the accountanc"
    }
   },
   {
@@ -596,12 +648,12 @@
    "job_id": "~019e40e8e17d99a2df",
    "category": "data_analysis",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=['fit 0.50 below bid threshold 0.55'] fit_score=0.5 risk_score=0.3"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.42, risk 0.30: Strong evidence of Excel reporting and data analysis work.; No direct SEO or SEMrush delivery is evidenced; SEO claims rest on a won propo"
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=['fit 0.50 below bid threshold 0.55'] fit_score=0.5 risk_score=0.3"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.50, risk 0.30: Strong evidence of data analysis, dashboards and reporting across several cases.; Past winning SEO keyword research proposal shows relevan"
    }
   },
   {
@@ -609,12 +661,12 @@
    "job_id": "~013834337d3694454a",
    "category": "data_analysis",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.skip: 'skip'> reasons=['fit 0.25 below 0.4: missing IBM SPSS, Statistics, Generalized linear models, Logistic regression'] fit_score=0.25 risk_score=0.22"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.25, risk 0.22: No direct evidence of SPSS, the core tool required.; No logistic, Poisson, or multinomial regression work is evidenced.'] fit_score=0.25 r"
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.skip: 'skip'> reasons=['fit 0.38 below 0.4: missing IBM SPSS, Generalized linear models, Logistic regression, Poisson regression'] fit_score=0.375 risk_score=0.25"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.50, risk 0.25: Statistical modelling experience exists in the retention survival analysis and the attribution case.; No direct IBM SPSS evidence was foun"
    }
   },
   {
@@ -622,12 +674,12 @@
    "job_id": "~01033bd9f52d50869b",
    "category": "data_analysis",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.skip: 'skip'> reasons=['fit 0.33 below 0.4: missing Azure SQL, Database administration, Backup and recovery, High availability configuration'] fit_score=0.333 risk_score=0.4"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.33, risk 0.45: Strong SQL evidence from KPI SQL library, SQL tutoring and CV data models; Microsoft SQL Server work shown as data modelling, not administ"
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.skip: 'skip'> reasons=['fit 0.33 below 0.4: missing Azure SQL, MySQL, query optimization, database backup and recovery'] fit_score=0.333 risk_score=0.45"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.25, risk 0.45: Strong SQL and data modelling evidence across repos and CV; No direct evidence of Azure SQL or database administration'] fit_score=0.25 ri"
    }
   },
   {
@@ -635,12 +687,12 @@
    "job_id": "~01ff25fb981a42cbc0",
    "category": "data_analysis",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.skip: 'skip'> reasons=['fit 0.21 below 0.4: missing ASP.NET, VB.NET, C#, Groovy on Grails'] fit_score=0.214 risk_score=0.25"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.17, risk 0.25: Strong SQL and SQL Server data modelling experience maps to the SQL requirement.; No evidence of .NET, VB.NET, C#, or Groovy on Grails dev"
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.skip: 'skip'> reasons=['fit 0.12 below 0.4: missing ASP.NET, VB.NET, C#, Groovy on Grails'] fit_score=0.125 risk_score=0.3"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.08, risk 0.25: Evidence is almost entirely data analytics and Python, not .NET or Java-based enterprise development.; No Ellucian Banner ERP or Banner Wo"
    }
   },
   {
@@ -649,13 +701,13 @@
    "category": "data_analysis",
    "evidence_first": {
     "outcome": "ignored",
-    "p_reply": 0.3803,
-    "quality": 0.9198,
-    "words": 204
+    "p_reply": 0.3532,
+    "quality": 0.8026,
+    "words": 183
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=['fit 0.50 below bid threshold 0.55'] fit_score=0.5 risk_score=0.3"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.62, risk 0.22: Strong Google Sheets and spreadsheet automation evidence; No direct proof of bulk exporting thousands of sheets'] fit_score=0.625 risk_sco"
    }
   },
   {
@@ -663,12 +715,12 @@
    "job_id": "~011dff513717f930a2",
    "category": "data_analysis",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=['fit 0.50 below bid threshold 0.55'] fit_score=0.5 risk_score=0.4"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.50, risk 0.30: Strong Google Sheets CRM evidence supports recording call responses.; No evidence of cold calling or telemarketing experience.'] fit_score"
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=['fit 0.50 below bid threshold 0.55'] fit_score=0.5 risk_score=0.4"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.38, risk 0.40: Google Sheets CRM work directly proves shared call-response recording.; No evidence of cold calling or telemarketing, which are central to"
    }
   },
   {
@@ -676,12 +728,16 @@
    "job_id": "~01d9c18be2e25d082d",
    "category": "data_analysis",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=[\"client's top rate 40.0 is well under your floor 150\"] fit_score=0.667 risk_score=0.12"
+    "outcome": "interview",
+    "p_reply": 0.1741,
+    "quality": 0.6116,
+    "words": 175
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=[\"client's top rate 40.0 is well under your floor 150\"] fit_score=0.667 risk_score=0.12"
+    "outcome": "replied",
+    "p_reply": 0.2205,
+    "quality": 0.6912,
+    "words": 144
    }
   },
   {
@@ -689,12 +745,14 @@
    "job_id": "~01655f65f846916133",
    "category": "data_analysis",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=['fit 0.50 below bid threshold 0.55'] fit_score=0.5 risk_score=0.45"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.50, risk 0.50: Strong Excel and spreadsheet automation experience in accountancy and reporting work; Data cleaning and accuracy-focused case work support"
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.skip: 'skip'> reasons=['risk 0.85 above limit 0.6 (credential_request, scope_budget_mismatch, weak_client)'] fit_score=0.5 risk_score=0.85"
+    "outcome": "viewed",
+    "p_reply": 0.2038,
+    "quality": 0.7703,
+    "words": 166
    }
   },
   {
@@ -702,12 +760,12 @@
    "job_id": "~01081774bd757753cd",
    "category": "data_analysis",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=[\"client's top rate 50.0 is well under your floor 150\"] fit_score=0.6 risk_score=0.45"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.50, risk 0.45: Strong evidence of financial modelling in real estate and P&L work, and a bottom-up TAM model used in a seed deck.; No direct evidence of "
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=[\"client's top rate 50.0 is well under your floor 150\"] fit_score=0.625 risk_score=0.42"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.50, risk 0.55: Strong financial modelling and spreadsheet evidence across several past proposals and cases; Market sizing work was used in a real investo"
    }
   },
   {
@@ -716,11 +774,11 @@
    "category": "data_analysis",
    "evidence_first": {
     "status": "done",
-    "decision": "decision=<Decision.skip: 'skip'> reasons=['risk 0.85 above limit 0.6 (off_platform, payment_request, scope_budget_mismatch, weak_client)', 'fit 0.00 below 0.4: missing Forex Trading, MetaTrader 4, MQL 4, MQL 5'] fit_score=0.0 risk_score=0.85"
+    "decision": "decision=<Decision.skip: 'skip'> reasons=['risk 0.85 above limit 0.6 (off_platform, payment_request, scope_budget_mismatch, weak_client)'] fit_score=0.0 risk_score=0.85"
    },
    "question_first": {
     "status": "done",
-    "decision": "decision=<Decision.skip: 'skip'> reasons=['risk 0.85 above limit 0.6 (off_platform, payment_request, scope_budget_mismatch, weak_client)', 'fit 0.12 below 0.4: missing Forex Trading, MetaTrader 4, MQL4, MQL5'] fit_score=0.125 risk_score=0.85"
+    "decision": "decision=<Decision.skip: 'skip'> reasons=['risk 0.85 above limit 0.6 (off_platform, payment_request, scope_budget_mismatch, weak_client)'] fit_score=0.0 risk_score=0.85"
    }
   },
   {
@@ -728,12 +786,16 @@
    "job_id": "~016252ffd7b73472a9",
    "category": "data_analysis",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.skip: 'skip'> reasons=['fit 0.38 below 0.4: missing IBM SPSS, Multivariate linear regression, Academic Writing'] fit_score=0.375 risk_score=0.12"
+    "outcome": "hired",
+    "p_reply": 0.16,
+    "quality": 0.5668,
+    "words": 161
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.skip: 'skip'> reasons=['fit 0.38 below 0.4: missing IBM SPSS, Multivariate linear regression'] fit_score=0.375 risk_score=0.12"
+    "outcome": "ignored",
+    "p_reply": 0.224,
+    "quality": 0.6397,
+    "words": 207
    }
   },
   {
@@ -741,12 +803,14 @@
    "job_id": "~01e6a3a4a29bfe933e",
    "category": "data_analysis",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=[\"client's top rate 10.0 is well under your floor 150\"] fit_score=0.667 risk_score=0.35"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.67, risk 0.40: Strong statistical analysis evidence from survival analysis, A/B testing and survey analysis cases.; No explicit evidence of R usage; R is"
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=[\"client's top rate 10.0 is well under your floor 150\"] fit_score=0.667 risk_score=0.45"
+    "outcome": "viewed",
+    "p_reply": 0.2547,
+    "quality": 0.5111,
+    "words": 128
    }
   },
   {
@@ -754,12 +818,16 @@
    "job_id": "~019e2ea76a67fdcf65",
    "category": "data_analysis",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=['fit 0.50 below bid threshold 0.55'] fit_score=0.5 risk_score=0.25"
+    "outcome": "interview",
+    "p_reply": 0.2026,
+    "quality": 0.6703,
+    "words": 178
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=['fit 0.50 below bid threshold 0.55'] fit_score=0.5 risk_score=0.25"
+    "outcome": "ignored",
+    "p_reply": 0.269,
+    "quality": 0.7166,
+    "words": 174
    }
   },
   {
@@ -767,12 +835,14 @@
    "job_id": "~01a67bc92e00e71041",
    "category": "data_analysis",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=['fit 0.50 below bid threshold 0.55'] fit_score=0.5 risk_score=0.35"
+    "outcome": "replied",
+    "p_reply": 0.3195,
+    "quality": 0.6162,
+    "words": 140
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.skip: 'skip'> reasons=['fit 0.38 below 0.4: missing Development feasibility modelling, Feastudy Professional, Accounting principles, GST reporting'] fit_score=0.375 risk_score=0.35"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.38, risk 0.35: Strong Excel and spreadsheet reporting experience is evidenced across several items.; Real estate and business financial modelling proposa"
    }
   },
   {
@@ -780,12 +850,16 @@
    "job_id": "~01ff65d9d82a33cc5a",
    "category": "data_analysis",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=['fit 0.50 below bid threshold 0.55'] fit_score=0.5 risk_score=0.05"
+    "outcome": "hired",
+    "p_reply": 0.3182,
+    "quality": 0.7882,
+    "words": 143
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.skip: 'skip'> reasons=['fit 0.33 below 0.4: missing Microsoft Word'] fit_score=0.333 risk_score=0.08"
+    "outcome": "viewed",
+    "p_reply": 0.2371,
+    "quality": 0.6267,
+    "words": 139
    }
   },
   {
@@ -793,12 +867,14 @@
    "job_id": "~01aada0ef1112161ee",
    "category": "data_analysis",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=[\"client's top rate 20.0 is well under your floor 30\"] fit_score=0.6 risk_score=0.12"
+    "outcome": "ignored",
+    "p_reply": 0.1881,
+    "quality": 0.5931,
+    "words": 169
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=['fit 0.50 below bid threshold 0.55'] fit_score=0.5 risk_score=0.2"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.58, risk 0.15: Strong analytics and reporting evidence covers spreadsheet and dashboard tracking; No direct evidence of running Facebook Ads Manager camp"
    }
   },
   {
@@ -806,12 +882,16 @@
    "job_id": "~01ebab90b5014ded03",
    "category": "data_analysis",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=[\"client's top rate 15.0 is well under your floor 150\"] fit_score=0.75 risk_score=0.15"
+    "outcome": "viewed",
+    "p_reply": 0.2547,
+    "quality": 0.7503,
+    "words": 183
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=[\"client's top rate 15.0 is well under your floor 150\"] fit_score=0.75 risk_score=0.25"
+    "outcome": "ignored",
+    "p_reply": 0.1646,
+    "quality": 0.6578,
+    "words": 175
    }
   },
   {
@@ -819,14 +899,14 @@
    "job_id": "~0138a6e4f4cdaddccf",
    "category": "data_analysis",
    "evidence_first": {
-    "status": "done",
-    "decision": "decision=<Decision.skip: 'skip'> reasons=['fit 0.33 below 0.4: missing Trendline charting'] fit_score=0.333 risk_score=0.15"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.33, risk 0.15: Strong general data visualisation and dashboard evidence (Power BI, Looker Studio, KPI dashboards).; No direct trendline charting evidence"
    },
    "question_first": {
-    "status": "done",
-    "decision": "decision=<Decision.watch: 'watch'> reasons=[\"client's top rate 50.0 is well under your floor 150\"] fit_score=0.556 risk_score=0.12"
+    "status": "needs_attention",
+    "decision": "decision=<Decision.bid: 'bid'> reasons=['fit 0.50, risk 0.15: Strong general data visualisation and dashboard evidence from survey and KPI reporting work.; Excel-specific chart delivery is only claime"
    }
   }
  ],
- "note": "Outcomes come from our own simulated clients (GigSim), not real clients."
+ "note": "Outcomes come from our own simulated clients (GigSim), not real clients. The fit gate (minimum/watch fit score) was set to 0 for this experiment so every non-scam core-category job is drafted with both strategies; the risk gate was kept. Retrieval used v2_hybrid for speed (X2 compares writing, not retrieval); jobs ran 4 at a time."
 }

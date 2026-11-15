@@ -1,6 +1,6 @@
 # GigBid: R&D design review (AI-4016)
 
-Generated 15 Nov 2026 15:17 by `scripts/build_report.py`. Every number below is read from `evals/results/`;
+Generated 15 Nov 2026 16:00 by `scripts/build_report.py`. Every number below is read from `evals/results/`;
 "pending" means the run had not finished when this was generated. Repository: https://github.com/Taha-Rizwan/gigbid
 
 ## 1. Problem and constraints
@@ -89,7 +89,7 @@ Verified on {"job_id": "job_002", "thread_id": "bid-u_reviewer-job_002-r0c3f", "
 
 ## 7. Signature extension: X2 proposal A/B experiments
 
-Paired design, n = 3 jobs (of 60 attempted; others were skipped by the graph). Reply rate: {"evidence_first": 0.667, "question_first": 0.333}; mean p(reply): {"evidence_first": 0.2891, "question_first": 0.2807}; discordant pairs {"evidence_first_only": 1, "question_first_only": 0}; exact McNemar p = 1.0. Cost USD 0.4327. Outcomes come from our own simulated clients, so the result may not transfer to real clients.
+Paired design, n = 16 jobs (of 60 attempted; others were skipped by the graph). Reply rate: {"evidence_first": 0.438, "question_first": 0.312}; mean p(reply): {"evidence_first": 0.2556, "question_first": 0.2548}; discordant pairs {"evidence_first_only": 4, "question_first_only": 2}; exact McNemar p = 0.6875. Cost USD 1.2823. Outcomes come from our own simulated clients, so the result may not transfer to real clients.
 
 ## 8. Decisions, scams and failure analysis
 
@@ -124,7 +124,7 @@ injections the classifier misses, and LangSmith traces are not masked.
 
 Job analysis: p50 21.5 s, p95 35.1 s
 (declared 25 s: over budget), USD 0.0017 per job (declared 0.002: within).
-Judge calibration: awaiting_human_labels. Hidden test: GigSim accepts examiner jobs via `POST /admin/import`.
+Judge calibration: complete. Hidden test: GigSim accepts examiner jobs via `POST /admin/import`.
 
 ## Threats to validity
 

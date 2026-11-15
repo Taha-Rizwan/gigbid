@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-15T10:17:42+00:00",
-  "git_sha_or_null": "9705415fa35d395317289f367e141e67d06a6c97",
+  "generated_at": "2026-11-15T10:59:42+00:00",
+  "git_sha_or_null": "36d05612d60e81b4f733d0adc4e088f88a4fbf26",
   "config_snapshot": {
     "runner": "judge_calibration",
     "args": {
@@ -95,10 +95,15 @@
     },
     "llm_cache": "data/cache/evals/llm (hits replay stored token counts; latency only from cold runs)"
   },
-  "n": 0,
+  "n": 14,
   "labels_file": "evals\\datasets\\human_labels.jsonl",
-  "template_created_now": true,
+  "template_created_now": false,
   "n_label_rows": 14,
-  "status": "awaiting_human_labels",
-  "reason": "0 proposals have both a human_overall and a judge score (need >= 5)"
+  "status": "complete",
+  "kappa_exact": 0.2222,
+  "kappa_quadratic": 0.0289,
+  "exact_agreement": 0.6429,
+  "within_one": 0.7857,
+  "human_mean": 3.3571,
+  "judge_mean": 3.9286
 }
