@@ -1,6 +1,6 @@
 # GigBid: R&D design review (AI-4016)
 
-Generated 15 Nov 2026 13:23 by `scripts/build_report.py`. Every number below is read from `evals/results/`;
+Generated 15 Nov 2026 14:02 by `scripts/build_report.py`. Every number below is read from `evals/results/`;
 "pending" means the run had not finished when this was generated. Repository: https://github.com/Taha-Rizwan/gigbid
 
 ## 1. Problem and constraints
@@ -37,11 +37,32 @@ Finding: coarse tools are cheapest in tokens but lose argument accuracy (the mod
 
 ## 4. R&D question B: retrieval variants and claim verification
 
-Pending: `rag_variants.json` is still being produced by `evals/runners/rag_eval.py` (all 600 dev jobs x 9 variants).
+Hypothesis (stated before running): requirement decomposition plus hybrid retrieval raises evidence Recall@5 over V0 on jobs with four or more requirements. n = 423 dev jobs; best variant by rule: `v8_corrective`.
+
+| Variant | Recall@5 (same jobs) | MRR | nDCG@10 | n | Recall@5 (all) | n (all) | Recall@5 (>=4 reqs) | p95 latency (s) |
+|---|---|---|---|---|---|---|---|---|
+| v0_naive | 0.151 | 0.277 | 0.188 | 60 | 0.138 | 423 | 0.114 | 0.006 |
+| v2_hybrid | 0.126 | 0.234 | 0.181 | 60 | 0.195 | 423 | 0.168 | 0.003 |
+| v3_rerank | 0.231 | 0.301 | 0.242 | 60 | 0.206 | 423 | 0.165 | 10.979 |
+| v5_multivector | 0.126 | 0.229 | 0.175 | 60 | 0.195 | 423 | 0.168 | 0.037 |
+| v1_decompose | 0.188 | 0.191 | 0.164 | 60 | 0.188 | 60 | 0.145 | 0.014 |
+| v4_outcome | 0.334 | 0.351 | 0.317 | 60 | 0.334 | 60 | 0.226 | 14.489 |
+| v7_hyde | 0.188 | 0.328 | 0.233 | 60 | 0.188 | 60 | 0.131 | 4.460 |
+| v8_corrective | 0.400 | 0.519 | 0.420 | 60 | 0.400 | 60 | 0.267 | 25.638 |
+
+The like-for-like comparison is the first block: every variant on the same jobs (LLM variants were limited to that sample by the free-tier budget). Rule for the shipped choice: highest Recall@5 (tie: nDCG@10) on llm_sample, the jobs every LLM variant covered.
 
 ## 5. R&D question C: single agent vs supervisor vs our graph
 
-Pending: `multiagent.json` is still being produced by `evals/runners/multiagent_compare.py`.
+n = 51 dev jobs (partial).
+
+| System | Jobs | Proposals | Bid/skip acc. | Unsupported claims | Violations caught | GigSim reply | Tokens / job | p95 (s) |
+|---|---|---|---|---|---|---|---|---|
+| react | 51 | 11 | 0.902 | 2.27 | 0 | 45.5% | 23536 | 59.0 |
+| supervisor | 51 | 1 | 0.784 | 4.00 | 0 | 100.0% | 50940 | 64.7 |
+| graph | 49 | 3 | 0.775 | 0.33 | 1 | 0.0% | 19573 | 114.1 |
+
+Reply rates rest on very few proposals per system (column Proposals), so they are not comparable; the robust differences are grounding (unsupported claims per proposal) and tokens per job. The single ReAct agent decided bid/skip more accurately on this sample because our graph skips too often (section 8).
 
 ## 6. Change request
 

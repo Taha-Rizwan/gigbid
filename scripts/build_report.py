@@ -55,13 +55,18 @@ def section_b(rag, abl, props):
         return "Pending: `rag_variants.json` is still being produced by `evals/runners/rag_eval.py` (all 600 dev jobs x 9 variants)."
     rows = []
     for v, m in rag.get("variants", {}).items():
-        o = m.get("overall", {})
-        rows.append([v, f(o.get("recall@5")), f(o.get("mrr")), f(o.get("ndcg@10")),
-                     f((m.get("requirements_ge4") or {}).get("recall@5")), f(o.get("latency_p95_s"), 3)])
+        o, ls = m.get("overall", {}), m.get("llm_sample", {})
+        rows.append([v, f(ls.get("recall@5")), f(ls.get("mrr")), f(ls.get("ndcg@10")), f(ls.get("n")),
+                     f(o.get("recall@5")), f(o.get("n")), f((m.get("requirements_ge4") or {}).get("recall@5")),
+                     f(o.get("latency_p95_s"), 3)])
     txt = (f"Hypothesis (stated before running): requirement decomposition plus hybrid retrieval raises evidence Recall@5 "
            f"over V0 on jobs with four or more requirements. n = {rag.get('n_evaluated', rag.get('n'))} dev jobs; "
            f"best variant by rule: `{rag.get('best_variant', 'pending')}`.\n\n"
-           + table(["Variant", "Recall@5", "MRR", "nDCG@10", "Recall@5 (>=4 reqs)", "p95 latency (s)"], rows))
+           + table(["Variant", "Recall@5 (same jobs)", "MRR", "nDCG@10", "n", "Recall@5 (all)", "n (all)",
+                    "Recall@5 (>=4 reqs)", "p95 latency (s)"], rows)
+           + "\n\nThe like-for-like comparison is the first block: every variant on the same jobs (LLM variants were "
+             "limited to that sample by the free-tier budget). Rule for the shipped choice: "
+           + str(rag.get("best_variant_rule")) + ".")
     if abl:
         arows = [[k, json.dumps(v.get("delta_vs_full", v))[:80]] for k, v in (abl.get("ablations") or {}).items()]
         txt += "\n\nAblation (one component removed at a time):\n\n" + table(["Removed", "Delta vs full"], arows)
@@ -78,11 +83,15 @@ def section_b(rag, abl, props):
 def section_c(d):
     if not d:
         return "Pending: `multiagent.json` is still being produced by `evals/runners/multiagent_compare.py`."
-    rows = [[k, f(v.get("bid_skip_accuracy")), f(v.get("unsupported_claims_per_proposal"), 2),
+    rows = [[k, f(v.get("n")), f(v.get("n_proposals")), f(v.get("bid_skip_accuracy")), f(v.get("unsupported_claims_per_proposal"), 2),
              f(v.get("violations_caught_before_approval")), f(v.get("gigsim_reply_rate"), pct=True),
              f(v.get("tokens_per_job"), 0), f(v.get("latency_p95_s"), 1)] for k, v in d.get("systems", {}).items()]
     return (f"n = {d.get('n')} dev jobs ({d.get('status', '')}).\n\n"
-            + table(["System", "Bid/skip acc.", "Unsupported claims", "Violations caught", "GigSim reply", "Tokens / job", "p95 (s)"], rows))
+            + table(["System", "Jobs", "Proposals", "Bid/skip acc.", "Unsupported claims", "Violations caught", "GigSim reply",
+                     "Tokens / job", "p95 (s)"], rows)
+            + "\n\nReply rates rest on very few proposals per system (column Proposals), so they are not comparable; "
+              "the robust differences are grounding (unsupported claims per proposal) and tokens per job. The single "
+              "ReAct agent decided bid/skip more accurately on this sample because our graph skips too often (section 8).")
 
 
 def main() -> None:
