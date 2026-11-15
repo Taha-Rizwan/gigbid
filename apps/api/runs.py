@@ -79,14 +79,9 @@ def _emitter(run_id: str):
 
 
 async def _toolbox(user_id: str, trace_id: str) -> ToolBox:
-    import os
+    from agent.mcp_client import toolbox_for
 
-    if os.environ.get("GIGBID_INPROCESS_MCP") == "1":
-        stack = AsyncExitStack()
-        box = await ToolBox.in_memory(stack)
-        box._stack = stack  # type: ignore[attr-defined]
-        return box
-    return await ToolBox.http(user_id, trace_id)
+    return await toolbox_for(user_id, trace_id)
 
 
 async def execute(run_id: str, user_id: str, thread_id: str, *, start: dict | None = None,

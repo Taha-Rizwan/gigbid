@@ -25,6 +25,8 @@ def config() -> dict[str, Any]:
         cfg["marketplace"]["mode"] = mode
     if profile := os.environ.get("MODEL_PROFILE"):
         cfg["models"]["profile"] = profile
+    if variant := os.environ.get("RAG_VARIANT"):  # e.g. a low-memory deployment without the reranker
+        cfg["rag"]["variant"] = variant
     return cfg
 
 

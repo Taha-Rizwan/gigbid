@@ -25,9 +25,12 @@ def _db() -> sqlite3.Connection:
 
 @lru_cache(maxsize=4)
 def _embedder(name: str):
+    import os
+
     from fastembed import TextEmbedding
 
-    return TextEmbedding(model_name=name, cache_dir=str(MODEL_CACHE))
+    threads = int(os.environ["EMBED_THREADS"]) if os.environ.get("EMBED_THREADS") else None
+    return TextEmbedding(model_name=name, cache_dir=str(MODEL_CACHE), threads=threads)
 
 
 @lru_cache(maxsize=2)

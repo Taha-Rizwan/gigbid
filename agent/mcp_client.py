@@ -179,3 +179,19 @@ def _tool_error(exc: Exception) -> dict | None:
         return obj if isinstance(obj, dict) and "error" in obj else None
     except ValueError:
         return None
+
+
+_shared_stack: AsyncExitStack | None = None
+_shared_box: ToolBox | None = None
+
+
+async def toolbox_for(user_id: str, trace_id: str | None = None) -> ToolBox:
+    """HTTP MCP clients normally; one shared in-process MCP session set when GIGBID_INPROCESS_MCP=1
+    (single-container deployments with little RAM: same MCP protocol, no extra server processes)."""
+    global _shared_stack, _shared_box
+    if os.environ.get("GIGBID_INPROCESS_MCP") == "1":
+        if _shared_box is None:
+            _shared_stack = AsyncExitStack()
+            _shared_box = await ToolBox.in_memory(_shared_stack)
+        return _shared_box
+    return await ToolBox.http(user_id, trace_id)

@@ -1,3 +1,4 @@
+import os
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Request
@@ -23,7 +24,16 @@ from apps.api.settings import settings
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await service.startup()
+    ticker = None
+    if os.environ.get("GIGSIM_MOUNT") == "1":  # single-container mode: keep the mounted simulator moving
+        import asyncio
+
+        from apps.api.sim_ticker import run as run_ticker
+
+        ticker = asyncio.create_task(run_ticker())
     yield
+    if ticker:
+        ticker.cancel()
     await service.shutdown()
 
 
@@ -58,3 +68,10 @@ async def marketplace_down(_: Request, exc: service.MarketplaceUnavailable):
 
 for r in (auth, profile, portfolio, jobs, proposals, approvals, messages, runs, analytics, oauth):
     app.include_router(r.router)
+
+
+if os.environ.get("GIGSIM_MOUNT") == "1":
+    # Single-container deployments (512 MB): GigSim runs inside the API process at /gigsim.
+    from gigsim.app import create_app as _gigsim_app
+
+    app.mount("/gigsim", _gigsim_app())

@@ -608,9 +608,9 @@ _box_cache: dict[str, Any] = {}
 
 
 async def _box(user_id: str):
-    from agent.mcp_client import ToolBox
+    from agent.mcp_client import toolbox_for
 
-    return await ToolBox.http(user_id, new_trace_id())
+    return await toolbox_for(user_id, new_trace_id())
 
 
 async def health() -> HealthOut:
@@ -622,7 +622,8 @@ async def health() -> HealthOut:
         services.append(ServiceStatus(name="database", status="ok"))
     except Exception as exc:  # noqa: BLE001
         services.append(ServiceStatus(name="database", status="down", detail=type(exc).__name__))
-    for name in ("marketplace", "portfolio", "workspace"):
+    inproc = os.environ.get("GIGBID_INPROCESS_MCP") == "1"
+    for name in (() if inproc else ("marketplace", "portfolio", "workspace")):
         url = os.environ.get(f"MCP_{name.upper()}_URL", getattr(settings, f"mcp_{name}_url"))
         try:
             async with httpx.AsyncClient(timeout=3) as c:
@@ -632,6 +633,8 @@ async def health() -> HealthOut:
             services.append(ServiceStatus(name=f"mcp_{name}", status="ok" if r.status_code < 500 else "down"))
         except Exception as exc:  # noqa: BLE001
             services.append(ServiceStatus(name=f"mcp_{name}", status="down", detail=type(exc).__name__))
+    if inproc:
+        services += [ServiceStatus(name=f"mcp_{n}", status="ok", detail="in-process") for n in ("marketplace", "portfolio", "workspace")]
     if config()["marketplace"]["mode"] == "gigsim":
         try:
             async with httpx.AsyncClient(timeout=3) as c:

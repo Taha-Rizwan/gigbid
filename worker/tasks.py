@@ -9,7 +9,7 @@ from typing import Any
 
 from agent.handoffs import Job
 from agent.marketplace_port import MarketplaceUnavailable
-from agent.mcp_client import ToolBox
+from agent.mcp_client import toolbox_for
 from agent.memory.promotion_rules import record_outcome
 from agent.nodes.scout import fingerprint, scout
 from agent.settings import config
@@ -67,7 +67,7 @@ async def scout_user(ctx: dict, user_id: str, run_id: str | None = None) -> dict
     searches = [r["data"] for r in await db.fetch("select data from searches where user_id=%s", user_id)
                 if r["data"].get("enabled", True)]
     seen = await db.fetch("select job_id, job->>'fingerprint' as fp from jobs where user_id=%s", user_id)
-    box = await ToolBox.http(user_id)
+    box = await toolbox_for(user_id)
     emit = None
     if run_id:
         emit, init = runs._emitter(run_id)
@@ -124,7 +124,7 @@ async def analyse_job(ctx: dict, user_id: str, job_id: str) -> None:
 async def sync_events(ctx: dict, user_id: str) -> dict:
     """Marketplace events -> pipeline stages, conversations, and outcome memory (aggregates only)."""
     await _ensure_engine()
-    box = await ToolBox.http(user_id)
+    box = await toolbox_for(user_id)
     tracker = box.for_agent("tracker")
     cur = await db.fetchrow("select cursor from events_cursor where user_id=%s", user_id)
     after = cur["cursor"] if cur else 0
