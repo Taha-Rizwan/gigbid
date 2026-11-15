@@ -95,6 +95,7 @@ async def main() -> None:
 
     _cfg()["thresholds"]["minimum_fit_score"] = 0.0
     _cfg()["thresholds"]["watch_fit_score"] = 0.0
+    _cfg()["rag"]["variant"] = "v2_hybrid"  # fast retrieval; X2 compares writing strategies, not retrieval
     personas = a.personas.split(",")
     per = max(1, a.n // len(personas))
     rows, cost, latencies = [], 0.0, []
@@ -103,11 +104,10 @@ async def main() -> None:
         graph = bid_graph.build(saver, store)
         box = await ToolBox.in_memory(stack)
         async with httpx.AsyncClient(timeout=60) as http:
-            for persona in personas:
-                account, token = ACCOUNT[persona]
-                os.environ["GIGSIM_DEFAULT_TOKEN"] = token
-                srv._adapters.clear()
-                for job in dev_jobs(persona)[:per]:
+            sem = asyncio.Semaphore(4)
+
+            async def one(persona: str, account: str, job: dict) -> dict:
+                async with sem:
                     rec = {"persona": persona, "job_id": job["job_id"], "category": job.get("category")}
                     for strategy in names:
                         t0 = time.perf_counter()
@@ -117,20 +117,28 @@ async def main() -> None:
                             rec[strategy] = {"error": f"{type(exc).__name__}: {str(exc)[:160]}"}
                             continue
                         latencies.append(time.perf_counter() - t0)
-                        cost += out["usage"]["cost_usd"]
+                        costs.append(out["usage"]["cost_usd"])
                         dr = (out["state"] or {}).get("dry_run")
                         if out["status"] != "interrupted" or not dr:
-                            rec[strategy] = {"status": out["status"], "decision": str((out["state"] or {}).get("decision"))}
+                            rec[strategy] = {"status": out["status"], "decision": str((out["state"] or {}).get("decision"))[:200]}
                             continue
                         r = await http.post(f"{a.gigsim}/admin/score", headers={"X-Admin-Token": os.environ.get("GIGSIM_ADMIN_TOKEN", "gigsim-admin")},
                                             json={"job_id": job["job_id"], "cover_letter": dr["cover_letter"],
                                                   "screening_answers": dr["screening_answers"], "bid_amount": dr["bid_amount"],
                                                   "rate_type": dr["rate_type"], "account_id": account})
-                        s = r.json()
-                        rec[strategy] = {"outcome": s.get("outcome"), "p_reply": s.get("p_reply"),
-                                         "quality": s.get("quality"), "words": len(dr["cover_letter"].split())}
-                    rows.append(rec)
+                        sc = r.json()
+                        rec[strategy] = {"outcome": sc.get("outcome"), "p_reply": sc.get("p_reply"),
+                                         "quality": sc.get("quality"), "words": len(dr["cover_letter"].split())}
                     print(json.dumps(rec)[:220], flush=True)
+                    return rec
+
+            costs: list[float] = []
+            for persona in personas:
+                account, token = ACCOUNT[persona]
+                os.environ["GIGSIM_DEFAULT_TOKEN"] = token
+                srv._adapters.clear()
+                rows += await asyncio.gather(*(one(persona, account, job) for job in dev_jobs(persona)[:per]))
+            cost = sum(costs)
     paired = [r for r in rows if all("outcome" in r.get(s, {}) for s in names)]
     A, B = names
     a_rep = [r[A]["outcome"] in REPLY for r in paired]
@@ -151,7 +159,7 @@ async def main() -> None:
         "cost_usd": round(cost, 4),
         "p50_latency_s": round(statistics.median(latencies), 1) if latencies else None,
         "rows": rows,
-        "note": "Outcomes come from our own simulated clients (GigSim), not real clients. The fit gate (minimum/watch fit score) was set to 0 for this experiment so every non-scam core-category job is drafted with both strategies; the risk gate was kept.",
+        "note": "Outcomes come from our own simulated clients (GigSim), not real clients. The fit gate (minimum/watch fit score) was set to 0 for this experiment so every non-scam core-category job is drafted with both strategies; the risk gate was kept. Retrieval used v2_hybrid for speed (X2 compares writing, not retrieval); jobs ran 4 at a time.",
     }
     out = ROOT / "evals" / "results" / "ab_experiment.json"
     out.write_text(json.dumps(result, indent=1), encoding="utf-8")
