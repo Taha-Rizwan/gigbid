@@ -72,7 +72,7 @@ def main() -> None:
             api.add_space_secret(repo_id, k, v)
     for k, v in {"PUBLIC_BASE_URL": url, "CORS_ORIGINS": f'["{url}"]', "LANGSMITH_TRACING": "true",
                  "LANGSMITH_PROJECT": "gigbid", "MODEL_PROFILE": os.environ.get("DEPLOY_MODEL_PROFILE", "open"),
-                 "WORKER_MODE": "arq"}.items():
+                 "WORKER_MODE": "arq", "GIGSIM_LLM_DISABLED": "1"}.items():
         api.add_space_variable(repo_id, k, v)
 
     files = subprocess.run(["git", "ls-files"], cwd=ROOT, capture_output=True, text=True, check=True).stdout.split()

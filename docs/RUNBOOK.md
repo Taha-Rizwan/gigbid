@@ -390,8 +390,8 @@ python scripts/deploy_hf.py      # needs HF_TOKEN and HF_USERNAME in .env
 listens on 127.0.0.1, but set a real token if `/admin` is ever exposed.
 
 - Image: `infra/hf/Dockerfile`. Processes: `infra/hf/supervisord.conf`. Public port 7860.
-- Live URL: `{{LIVE_URL}}`.
-- Health: `GET {{LIVE_URL}}/api/health`.
+- Live URL: `https://relationships-schools-crossing-bacon.trycloudflare.com`.
+- Health: `GET https://relationships-schools-crossing-bacon.trycloudflare.com/api/health`.
 - Logs: the Space's container log. supervisord sends every process to stdout.
 
 ## 13. Known limitations

@@ -6,7 +6,7 @@ your own evidence. Nothing is sent until you approve it.
 
 {{DEMO_GIF: 30-second GIF, inbox → job detail → proposal studio with evidence on hover → approve}}
 
-**Live demo:** {{LIVE_URL}}. Reviewer login details are in the private submission comment. The
+**Live demo:** https://relationships-schools-crossing-bacon.trycloudflare.com. Reviewer login details are in the private submission comment. The
 demo runs against GigSim, our marketplace simulator, on open-weight models.
 
 ## What it does
