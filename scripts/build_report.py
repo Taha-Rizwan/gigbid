@@ -22,7 +22,7 @@ def load(name: str) -> dict | None:
 
 def f(v, nd=3, pct=False) -> str:
     if v is None:
-        return "pending"
+        return "n/a"
     if isinstance(v, (int,)) and not isinstance(v, bool):
         return str(v)
     if isinstance(v, float):

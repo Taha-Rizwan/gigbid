@@ -70,7 +70,7 @@ End-to-end proposals:
 | Variant | n | Unsupported before | Unsupported after | Judge (1-5) | GigSim reply rate | p95 (s) | USD / proposal |
 |---|---|---|---|---|---|---|---|
 | v0_naive | 7 | 1.14 | 0.00 | 4.00 | 42.9% | 72.5 | 0.0096 |
-| v8_corrective | 7 | 2.00 | 0.00 | 3.86 | 28.6% | pending | 0.0088 |
+| v8_corrective | 7 | 2.00 | 0.00 | 3.86 | 28.6% | n/a | 0.0088 |
 
 ## 5. R&D question C: single agent vs supervisor vs our graph
 
