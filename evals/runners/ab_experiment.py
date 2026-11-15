@@ -67,7 +67,7 @@ async def draft(graph, box, persona: str, job_id: str, strategy: str, profile_na
     from agent.runner import start_bid
 
     ctx = RunContext(toolbox=box, usage=Usage(), trace_id=uuid.uuid4().hex)
-    profile = {"hourly_floor": 30, "fixed_floor": 150, "weekly_connects_budget": 10_000, "strategy": strategy}
+    profile = {"hourly_floor": 0, "fixed_floor": 0, "weekly_connects_budget": 10_000, "strategy": strategy}
     out = await start_bid(graph, f"ab-{strategy}", persona, job_id, profile, ctx,
                           thread_id=f"ab-{strategy}-{job_id}-{uuid.uuid4().hex[:6]}", profile_name=profile_name)
     return out
@@ -89,6 +89,12 @@ async def main() -> None:
     from mcp_servers.marketplace import server as srv
 
     names = list(strategies())[:2]
+    # X2 measures writing strategy, not the bid decision: open the fit gate for this run only (risk gate kept,
+    # so scams are still skipped). Recorded in the result file.
+    from agent.settings import config as _cfg
+
+    _cfg()["thresholds"]["minimum_fit_score"] = 0.0
+    _cfg()["thresholds"]["watch_fit_score"] = 0.0
     personas = a.personas.split(",")
     per = max(1, a.n // len(personas))
     rows, cost, latencies = [], 0.0, []
@@ -145,7 +151,7 @@ async def main() -> None:
         "cost_usd": round(cost, 4),
         "p50_latency_s": round(statistics.median(latencies), 1) if latencies else None,
         "rows": rows,
-        "note": "Outcomes come from our own simulated clients (GigSim), not real clients.",
+        "note": "Outcomes come from our own simulated clients (GigSim), not real clients. The fit gate (minimum/watch fit score) was set to 0 for this experiment so every non-scam core-category job is drafted with both strategies; the risk gate was kept.",
     }
     out = ROOT / "evals" / "results" / "ab_experiment.json"
     out.write_text(json.dumps(result, indent=1), encoding="utf-8")
