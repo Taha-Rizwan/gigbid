@@ -1,0 +1,220 @@
+{
+  "generated_at": "2026-11-15T09:52:56+00:00",
+  "git_sha_or_null": "d4955e6175472325a32d270a2469a70d737973e2",
+  "config_snapshot": {
+    "runner": "ablation",
+    "args": {
+      "persona": "all",
+      "limit": null,
+      "gigsim": null,
+      "profile": "paid",
+      "concurrency": 2,
+      "tag": "",
+      "variant": null
+    },
+    "models": {
+      "profile": "paid",
+      "tiers": {
+        "small": {
+          "provider": "anthropic",
+          "model": "claude-haiku-5-5",
+          "effort": "low",
+          "max_tokens": 8000
+        },
+        "strong": {
+          "provider": "anthropic",
+          "model": "claude-haiku-5-5",
+          "effort": "medium",
+          "max_tokens": 16000
+        },
+        "fallback_small": {
+          "provider": "groq",
+          "model": "openai/gpt-oss-20b",
+          "temperature": 0.0,
+          "reasoning_effort": "low"
+        },
+        "judge": {
+          "provider": "anthropic",
+          "model": "claude-haiku-5-5",
+          "effort": "low",
+          "max_tokens": 8000
+        }
+      },
+      "nodes": {
+        "scout": "small",
+        "analyst": "small",
+        "risk_assessor": "small",
+        "fit_matcher": "small",
+        "pricing": "small",
+        "writer": "strong",
+        "verifier": "small",
+        "critic": "strong",
+        "compliance": "small",
+        "liaison_intent": "small",
+        "liaison": "strong"
+      },
+      "embeddings": "BAAI/bge-small-en-v1.5",
+      "reranker": "Xenova/ms-marco-MiniLM-L-6-v2"
+    },
+    "rag": {
+      "variant": "v3_rerank",
+      "k": 5,
+      "chunk_size": 600,
+      "chunk_overlap": 80,
+      "rrf_k": 60,
+      "rerank_candidates": 30,
+      "outcome_boost": {
+        "won": 0.25,
+        "replied": 0.12,
+        "ignored": -0.05
+      },
+      "corrective_min_score": 0.35,
+      "corrective_max_requeries": 1
+    },
+    "thresholds": {
+      "minimum_fit_score": 0.55,
+      "watch_fit_score": 0.4,
+      "maximum_risk_score": 0.6,
+      "max_proposal_words": 280,
+      "min_proposal_words": 90
+    },
+    "budgets": {
+      "max_tokens_per_job": 60000,
+      "max_revisions": 2,
+      "max_graph_steps": 40
+    },
+    "policy_version": "v1",
+    "gigsim": {
+      "base_url": "http://localhost:8091",
+      "seed_dir": "data/processed/gigsim_seed",
+      "error_rate": 0,
+      "rate_per_min": 0,
+      "personalisation": "heuristic fallback (GIGSIM_LLM_DISABLED=1) to save Groq quota; deterministic"
+    },
+    "llm_cache": "data/cache/evals/llm (hits replay stored token counts; latency only from cold runs)",
+    "best_variant": "v8_corrective"
+  },
+  "n": 60,
+  "status": "complete",
+  "best_variant": "v8_corrective",
+  "pipeline": {
+    "name": "v8_corrective",
+    "scheme": "multivector",
+    "decompose": true,
+    "hybrid": true,
+    "rerank": true,
+    "outcome": false,
+    "contextual": false,
+    "hyde": false,
+    "corrective": true
+  },
+  "n_jobs": 60,
+  "full": {
+    "n": 60,
+    "recall@5": 0.4003,
+    "mrr": 0.5192,
+    "ndcg@10": 0.4202,
+    "recall@5_ci95": [
+      0.3092,
+      0.4894
+    ],
+    "latency_p50_s": null,
+    "latency_p95_s": null,
+    "latency_n_cold": 0
+  },
+  "ablations": {
+    "without_decompose": {
+      "n": 60,
+      "recall@5": 0.4142,
+      "mrr": 0.5218,
+      "ndcg@10": 0.4066,
+      "recall@5_ci95": [
+        0.3208,
+        0.5078
+      ],
+      "latency_p50_s": null,
+      "latency_p95_s": null,
+      "latency_n_cold": 0,
+      "delta_vs_full": {
+        "recall@5": 0.0139,
+        "mrr": 0.0026,
+        "ndcg@10": -0.0135
+      }
+    },
+    "without_hybrid": {
+      "n": 60,
+      "recall@5": 0.3197,
+      "mrr": 0.4677,
+      "ndcg@10": 0.3761,
+      "recall@5_ci95": [
+        0.2364,
+        0.4069
+      ],
+      "latency_p50_s": 11.7117,
+      "latency_p95_s": 18.5027,
+      "latency_n_cold": 30,
+      "delta_vs_full": {
+        "recall@5": -0.0806,
+        "mrr": -0.0514,
+        "ndcg@10": -0.0441
+      }
+    },
+    "without_rerank": {
+      "n": 60,
+      "recall@5": 0.3644,
+      "mrr": 0.4752,
+      "ndcg@10": 0.3605,
+      "recall@5_ci95": [
+        0.2772,
+        0.4444
+      ],
+      "latency_p50_s": 4.0213,
+      "latency_p95_s": 5.9523,
+      "latency_n_cold": 59,
+      "delta_vs_full": {
+        "recall@5": -0.0358,
+        "mrr": -0.044,
+        "ndcg@10": -0.0596
+      }
+    },
+    "without_corrective": {
+      "n": 60,
+      "recall@5": 0.3039,
+      "mrr": 0.3711,
+      "ndcg@10": 0.3111,
+      "recall@5_ci95": [
+        0.2219,
+        0.3842
+      ],
+      "latency_p50_s": 3.9842,
+      "latency_p95_s": 7.0526,
+      "latency_n_cold": 60,
+      "delta_vs_full": {
+        "recall@5": -0.0964,
+        "mrr": -0.1481,
+        "ndcg@10": -0.1091
+      }
+    },
+    "fixed_chunks_instead_of_multivector": {
+      "n": 60,
+      "recall@5": 0.3447,
+      "mrr": 0.4275,
+      "ndcg@10": 0.3605,
+      "recall@5_ci95": [
+        0.2561,
+        0.4403
+      ],
+      "latency_p50_s": 15.01,
+      "latency_p95_s": 21.177,
+      "latency_n_cold": 59,
+      "delta_vs_full": {
+        "recall@5": -0.0556,
+        "mrr": -0.0916,
+        "ndcg@10": -0.0596
+      }
+    }
+  },
+  "stopped_early": null,
+  "exhausted_models": {},
+  "note": "delta = metric without the component minus metric of the full pipeline (negative = the component helps)"
+}

@@ -1,6 +1,6 @@
 # GigBid: R&D design review (AI-4016)
 
-Generated 15 Nov 2026 14:50 by `scripts/build_report.py`. Every number below is read from `evals/results/`;
+Generated 15 Nov 2026 14:58 by `scripts/build_report.py`. Every number below is read from `evals/results/`;
 "pending" means the run had not finished when this was generated. Repository: https://github.com/Taha-Rizwan/gigbid
 
 ## 1. Problem and constraints
@@ -51,6 +51,16 @@ Hypothesis (stated before running): requirement decomposition plus hybrid retrie
 | v8_corrective | 0.400 | 0.519 | 0.420 | 60 | 0.400 | 60 | 0.267 | 25.638 |
 
 The like-for-like comparison is the first block: every variant on the same jobs (LLM variants were limited to that sample by the free-tier budget). Rule for the shipped choice: highest Recall@5 (tie: nDCG@10) on llm_sample, the jobs every LLM variant covered.
+
+Ablation (one component removed at a time):
+
+| Removed | Delta vs full |
+|---|---|
+| without_decompose | {"recall@5": 0.0139, "mrr": 0.0026, "ndcg@10": -0.0135} |
+| without_hybrid | {"recall@5": -0.0806, "mrr": -0.0514, "ndcg@10": -0.0441} |
+| without_rerank | {"recall@5": -0.0358, "mrr": -0.044, "ndcg@10": -0.0596} |
+| without_corrective | {"recall@5": -0.0964, "mrr": -0.1481, "ndcg@10": -0.1091} |
+| fixed_chunks_instead_of_multivector | {"recall@5": -0.0556, "mrr": -0.0916, "ndcg@10": -0.0596} |
 
 ## 5. R&D question C: single agent vs supervisor vs our graph
 
