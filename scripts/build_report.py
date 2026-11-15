@@ -104,8 +104,11 @@ def main() -> None:
                 for m, v in ((inj or {}).get("results") or {}).items()]
     md = f"""# GigBid: R&D design review (AI-4016)
 
-Generated {datetime.now():%d %b %Y %H:%M} by `scripts/build_report.py`. Every number below is read from `evals/results/`;
-"pending" means the run had not finished when this was generated. Repository: https://github.com/Taha-Rizwan/gigbid
+**Taha Rizwan** | Roll no. 23i-0664 | Section A
+AI-4016 R&D Assignment II | FAST-NUCES Islamabad | Instructor: Muhammad Owais Idrees | {datetime.now():%d %B %Y}
+
+Repository: https://github.com/Taha-Rizwan/gigbid | Live app: https://gigbid-vtva.onrender.com
+All numbers are taken from the result files in `evals/results/` of the repository.
 
 ## 1. Problem and constraints
 
