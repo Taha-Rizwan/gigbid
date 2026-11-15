@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import contextvars
 import json
 import time
 import uuid
@@ -19,6 +20,9 @@ from agent.graphs import bid_graph
 from agent.llm import BudgetExceeded, Usage, current_profile, current_usage
 from agent.marketplace_port import MarketplaceUnavailable
 from agent.mcp_client import ToolBox
+
+# Extra LangGraph run config for the next run (LangSmith root run id, name, metadata), set by callers.
+current_run_config: contextvars.ContextVar[dict | None] = contextvars.ContextVar("run_config", default=None)
 
 
 def _serialisable(v: Any) -> Any:
@@ -37,7 +41,7 @@ async def run_graph(graph, inputs: dict | Command, thread_id: str, ctx: RunConte
     current_usage.set(ctx.usage)
     if profile_name:
         current_profile.set(profile_name)
-    cfg = bid_graph.graph_config(thread_id)
+    cfg = bid_graph.graph_config(thread_id) | (current_run_config.get() or {})
     t0 = time.perf_counter()
     interrupt_payload = None
     status = "done"

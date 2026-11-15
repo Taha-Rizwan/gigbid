@@ -15,7 +15,7 @@ from agent.llm import Usage
 from agent.marketplace_port import MarketplaceUnavailable
 from agent.mcp_client import ToolBox
 from agent.memory.store import open_persistence
-from agent.runner import _serialisable, resume, run_graph, start_bid
+from agent.runner import _serialisable, current_run_config, resume, run_graph, start_bid
 from common import db
 
 log = logging.getLogger("gigbid.runs")
@@ -56,7 +56,7 @@ async def new_run(user_id: str, thread_id: str, graph: str, job_id: str | None, 
     run_id = uuid.uuid4().hex[:16]
     await db.execute(
         "insert into runs (run_id, user_id, thread_id, graph, job_id, status, trace_url) values (%s,%s,%s,%s,%s,'queued',%s)",
-        run_id, user_id, thread_id, graph, job_id, langsmith_url(trace_id),
+        run_id, user_id, thread_id, graph, job_id, None,
     )
     return run_id
 
@@ -93,6 +93,10 @@ async def execute(run_id: str, user_id: str, thread_id: str, *, start: dict | No
                   answer: dict | None = None, update: dict | None = None, profile_name: str | None = None) -> dict:
     """Run one step of a thread (start, resume with an approval answer, or continue after a state update)."""
     trace_id = uuid.uuid4().hex
+    ls_run_id = uuid.uuid4()
+    current_run_config.set({"run_id": ls_run_id, "run_name": "conversation_graph" if thread_id.startswith("conv-") else "bid_graph",
+                            "metadata": {"user_id": user_id, "thread_id": thread_id, "trace_id": trace_id, "run_id": run_id},
+                            "tags": ["gigbid", "conversation" if thread_id.startswith("conv-") else "bid"]})
     emit, init = _emitter(run_id)
     await init()
     await db.execute("update runs set status='running' where run_id=%s", run_id)
@@ -137,7 +141,33 @@ async def execute(run_id: str, user_id: str, thread_id: str, *, start: dict | No
         status, out["usage"]["tokens"], out["usage"]["cost_usd"], out["latency_s"], json.dumps(out["usage"]), run_id,
     )
     await mirror(user_id, thread_id, out["state"], out)
+    url = await share_trace(ls_run_id)
+    if url:
+        await db.execute("update runs set trace_url=%s where run_id=%s", url, run_id)
     return out
+
+
+async def share_trace(ls_run_id) -> str | None:
+    """Public LangSmith link for this run (tracing must never break a run)."""
+    import asyncio
+    import os
+
+    if not os.environ.get("LANGSMITH_API_KEY"):
+        return None
+    try:
+        from langchain_core.tracers.langchain import wait_for_all_tracers
+        from langsmith import Client
+
+        await asyncio.to_thread(wait_for_all_tracers)
+        client = Client()
+        for _ in range(6):  # the run is ingested asynchronously
+            try:
+                return await asyncio.to_thread(client.share_run, ls_run_id)
+            except Exception:  # noqa: BLE001
+                await asyncio.sleep(2)
+    except Exception as exc:  # noqa: BLE001
+        log.warning("could not share trace: %s", exc)
+    return None
 
 
 async def mirror(user_id: str, thread_id: str, state: dict, out: dict | None) -> None:

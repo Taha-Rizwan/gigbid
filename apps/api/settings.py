@@ -47,3 +47,11 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
+
+# LangSmith tracing is on whenever a key is configured (every graph run becomes a trace).
+if settings.langsmith_api_key:
+    import os as _os
+
+    _os.environ.setdefault("LANGSMITH_TRACING", "true")
+    _os.environ.setdefault("LANGSMITH_PROJECT", settings.langsmith_project)
+    _os.environ.setdefault("LANGSMITH_API_KEY", settings.langsmith_api_key)
