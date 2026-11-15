@@ -412,3 +412,12 @@ listens on 127.0.0.1, but set a real token if `/admin` is ever exposed.
 - **Workspace** is a mock: no Google Calendar or Gmail, and its writes have no idempotency keys.
 - **GigSim `/admin`** is protected only by a shared header token. Keep `GIGSIM_ADMIN_TOKEN`
   secret, and never expose `/admin` without it.
+
+
+## Live Upwork mode: status (15 Nov 2026)
+
+Tried end to end from the public URL. Upwork's authorization server fetched our client ID metadata document
+(`/api/oauth/upwork/client-metadata.json`, HTTP 200) and, after the user signed in, answered
+"Client not found or disabled". Upwork does not accept self-hosted MCP clients this way, so live mode needs a
+registered Upwork API key (`UPWORK_CLIENT_ID`, `UPWORK_CLIENT_SECRET`, fixed redirect URI). Evidence:
+`evals/results/upwork_live.json`. GigSim mode is unaffected.

@@ -1,0 +1,12 @@
+{
+ "generated_at": "2026-11-15T08:32:03.131878+00:00",
+ "status": "blocked_by_upwork",
+ "steps": [
+  "GET /api/oauth/upwork/start -> 307 to https://www.upwork.com/ab/account-security/oauth2/authorize (PKCE S256, resource=https://mcp.upwork.com/mcp)",
+  "Upwork's servers fetched our client ID metadata document: GET /api/oauth/upwork/client-metadata.json -> 200 (request from 52.89.103.56)",
+  "User signed in on upwork.com; Upwork then showed: 'Client not found or disabled'"
+ ],
+ "interpretation": "Upwork advertises client_id_metadata_document_supported, fetched our document, but does not accept our self-hosted client (likely an allowlist of approved MCP clients). Our code supports a registered client (UPWORK_CLIENT_ID / UPWORK_CLIENT_SECRET) as the alternative.",
+ "next_step": "Apply for an Upwork API key at upwork.com/developer/keys/apply with a fixed HTTPS redirect URI, set UPWORK_CLIENT_ID/SECRET, and reconnect. Not possible before the deadline (Upwork reviews applications).",
+ "what_works_without_it": "GigSim mode (the graded mode) end to end; live adapter unit-tested against the discovered metadata; writes are draft-only by design."
+}
