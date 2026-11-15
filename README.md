@@ -75,9 +75,9 @@ What ships: {{RESULT: rag_variants.json → best_variant}} is the retrieval vari
 
 ### Public traces
 
-- A scam that was skipped: {{TRACE_URL: skipped scam}}
-- An approved proposal, including a Critic loop: {{TRACE_URL: approved proposal with Critic revision}}
-- A crash and resume with exactly-once submission: {{TRACE_URL: crash and resume}}
+- A scam that was skipped: https://smith.langchain.com/public/6fdeef6c-3f53-45e5-94f9-141b6acd9b64/r
+- A job with a planted prompt injection, drafted to the approval interrupt without following it: https://smith.langchain.com/public/4783b827-e980-4d4e-9133-c65e7530c4b6/r
+- A full bid-graph analysis (parallel analyst, risk and fit agents): https://smith.langchain.com/public/6b440b6b-a97c-4a30-bea3-c678b0fa5cc1/r
 
 ## Quick start
 
