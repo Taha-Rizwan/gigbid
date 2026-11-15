@@ -59,7 +59,7 @@ models:
     gpt-oss-120b: [0.35, 0.75]   # Cerebras list price
 
 rag:
-  variant: v3_rerank           # provisional; set from evals/results/rag_variants.json
+  variant: v8_corrective       # chosen by evals/results/rag_variants.json (best Recall@5 on the same 60 jobs)
   k: 5
   chunk_size: 600
   chunk_overlap: 80
