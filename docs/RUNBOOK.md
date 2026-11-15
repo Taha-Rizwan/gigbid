@@ -390,8 +390,8 @@ python scripts/deploy_hf.py      # needs HF_TOKEN and HF_USERNAME in .env
 listens on 127.0.0.1, but set a real token if `/admin` is ever exposed.
 
 - Image: `infra/hf/Dockerfile`. Processes: `infra/hf/supervisord.conf`. Public port 7860.
-- Live URL: `https://relationships-schools-crossing-bacon.trycloudflare.com`.
-- Health: `GET https://relationships-schools-crossing-bacon.trycloudflare.com/api/health`.
+- Live URL: `https://gigbid-vtva.onrender.com`.
+- Health: `GET https://gigbid-vtva.onrender.com/api/health`.
 - Logs: the Space's container log. supervisord sends every process to stdout.
 
 ## 13. Known limitations
@@ -421,3 +421,20 @@ Tried end to end from the public URL. Upwork's authorization server fetched our 
 "Client not found or disabled". Upwork does not accept self-hosted MCP clients this way, so live mode needs a
 registered Upwork API key (`UPWORK_CLIENT_ID`, `UPWORK_CLIENT_SECRET`, fixed redirect URI). Evidence:
 `evals/results/upwork_live.json`. GigSim mode is unaffected.
+
+## Hosted deployment (Render, single container)
+
+Live URL: https://gigbid-vtva.onrender.com (reviewer login `reviewer@gigbid.dev`; the password is the
+`REVIEWER_PASSWORD` secret, shared privately). Hugging Face withdrew free Docker Spaces, so the app runs on
+Render's free web service from `infra/render/Dockerfile`, deployed by `scripts/deploy_render.py`.
+
+Render's free tier has 512 MB of RAM, so this deployment runs in single-container mode:
+- one Python process serves the API, the three MCP servers in-process (`GIGBID_INPROCESS_MCP=1`, same MCP
+  protocol over in-memory streams) and GigSim mounted at `/gigsim` (`GIGSIM_MOUNT=1`);
+- the Arq worker's schedules are replaced by a timer in the API (`apps/api/sim_ticker.py`);
+- retrieval uses `v2_hybrid` (`RAG_VARIANT`) so the cross-encoder model is not loaded; the evaluated, shipped
+  variant (`v8_corrective`) runs in the full deployment (`infra/docker-compose.yml`);
+- models: the Claude Haiku profile (`MODEL_PROFILE=paid`), because Groq's free tier caps daily tokens.
+
+Known limits: the free instance sleeps after 15 idle minutes (about a minute to wake), GigSim state resets on
+restart, and memory is tight (about 1.6 GB was measured on Windows for the full single process).
