@@ -3,6 +3,7 @@ WORKDIR /web
 COPY apps/web/package.json apps/web/package-lock.json ./
 RUN npm ci
 COPY apps/web ./
+RUN mkdir -p public
 ARG API_URL=http://api:8000
 ENV API_URL=$API_URL NEXT_TELEMETRY_DISABLED=1
 RUN npm run build
