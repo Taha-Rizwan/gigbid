@@ -87,7 +87,7 @@ async def pool() -> AsyncConnectionPool:
     global _pool
     if _pool is None:
         _pool = AsyncConnectionPool(
-            dsn(), min_size=1, max_size=8, open=False,
+            dsn(), min_size=1, max_size=8, open=False, max_idle=120, check=AsyncConnectionPool.check_connection,
             kwargs={"autocommit": True, "row_factory": dict_row, "prepare_threshold": None},
         )
         await _pool.open()

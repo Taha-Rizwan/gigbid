@@ -51,7 +51,7 @@ def connections(user_id: str, trace_id: str | None = None) -> dict[str, dict[str
     headers = {"Authorization": f"Bearer {token}", "X-GigBid-User": user_id, "X-Trace-Id": trace_id or ""}
     return {
         name: {"transport": "streamable_http", "url": os.environ.get(f"MCP_{name.upper()}_URL", default),
-               "headers": headers, "timeout": 30}
+               "headers": headers, "timeout": 180}
         for name, default in [
             ("marketplace", "http://127.0.0.1:8101/mcp"),
             ("portfolio", "http://127.0.0.1:8102/mcp"),
@@ -66,7 +66,9 @@ def _parse(result: Any) -> Any:
         result = result[0]
     if isinstance(result, list):
         texts = [r.get("text") if isinstance(r, dict) else getattr(r, "text", r) for r in result]
-        result = texts[0] if len(texts) == 1 else texts
+        if len(texts) != 1:  # a tool returning a list yields one text block per item
+            return [_parse(t) for t in texts]
+        result = texts[0]
     if isinstance(result, str):
         try:
             return json.loads(result)
@@ -78,7 +80,7 @@ def _parse(result: Any) -> Any:
 class ToolBox:
     """All MCP tools for one user/run, handed out per agent by allowlist."""
 
-    def __init__(self, tools: dict[str, BaseTool], timeout: float = 30, retries: int = 2):
+    def __init__(self, tools: dict[str, BaseTool], timeout: float = 180, retries: int = 2):
         self.tools, self.timeout, self.retries = tools, timeout, retries
 
     @classmethod

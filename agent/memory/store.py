@@ -28,9 +28,20 @@ async def open_persistence(stack: AsyncExitStack, durable: bool | None = None) -
         from langgraph.checkpoint.postgres.aio import AsyncPostgresSaver
         from langgraph.store.postgres.aio import AsyncPostgresStore
 
-        url = os.environ["DATABASE_URL"]
-        saver = await stack.enter_async_context(AsyncPostgresSaver.from_conn_string(url, serde=serde()))
-        store = await stack.enter_async_context(AsyncPostgresStore.from_conn_string(url))
+        from psycopg.rows import dict_row
+        from psycopg_pool import AsyncConnectionPool
+
+        # A pool that checks connections before use: hosted Postgres (Neon) closes idle connections,
+        # and a single long-lived connection made every run fail after a quiet period.
+        pool = AsyncConnectionPool(
+            os.environ["DATABASE_URL"], min_size=1, max_size=6, open=False, max_idle=120,
+            check=AsyncConnectionPool.check_connection,
+            kwargs={"autocommit": True, "prepare_threshold": 0, "row_factory": dict_row},
+        )
+        await pool.open()
+        stack.push_async_callback(pool.close)
+        saver = AsyncPostgresSaver(pool, serde=serde())
+        store = AsyncPostgresStore(pool)
         await saver.setup()
         await store.setup()
         return saver, store
