@@ -1,6 +1,6 @@
 # GigBid: R&D design review (AI-4016)
 
-Generated 15 Nov 2026 14:02 by `scripts/build_report.py`. Every number below is read from `evals/results/`;
+Generated 15 Nov 2026 14:50 by `scripts/build_report.py`. Every number below is read from `evals/results/`;
 "pending" means the run had not finished when this was generated. Repository: https://github.com/Taha-Rizwan/gigbid
 
 ## 1. Problem and constraints
@@ -72,7 +72,7 @@ Verified on {"job_id": "job_002", "thread_id": "bid-u_reviewer-job_002-r0c3f", "
 
 ## 7. Signature extension: X2 proposal A/B experiments
 
-Pending: `ab_experiment.json` run in progress.
+Paired design, n = 3 jobs (of 60 attempted; others were skipped by the graph). Reply rate: {"evidence_first": 0.667, "question_first": 0.333}; mean p(reply): {"evidence_first": 0.2891, "question_first": 0.2807}; discordant pairs {"evidence_first_only": 1, "question_first_only": 0}; exact McNemar p = 1.0. Cost USD 0.4327. Outcomes come from our own simulated clients, so the result may not transfer to real clients.
 
 ## 8. Decisions, scams and failure analysis
 
