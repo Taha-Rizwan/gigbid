@@ -30,6 +30,11 @@ It survives crashes: approvals live in Postgres checkpoints, and submissions car
 keys, so a proposal is submitted exactly once. When the marketplace is down, the UI says so,
 queues the work and recovers.
 
+
+> **Run it locally (recommended for the full system):** `powershell -ExecutionPolicy Bypass -File .\run_local.ps1`,
+> then open http://localhost:3000. The hosted free instance (https://gigbid-vtva.onrender.com) serves the UI but runs
+> out of memory on new analyses; see `docs/RUNBOOK.md`.
+
 ## Architecture
 
 ![Bid graph](docs/images/bid_graph.png)

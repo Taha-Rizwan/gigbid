@@ -1,6 +1,6 @@
 # GigBid: R&D design review (AI-4016)
 
-Generated 15 Nov 2026 16:00 by `scripts/build_report.py`. Every number below is read from `evals/results/`;
+Generated 15 Nov 2026 17:00 by `scripts/build_report.py`. Every number below is read from `evals/results/`;
 "pending" means the run had not finished when this was generated. Repository: https://github.com/Taha-Rizwan/gigbid
 
 ## 1. Problem and constraints
@@ -125,6 +125,16 @@ injections the classifier misses, and LangSmith traces are not masked.
 Job analysis: p50 21.5 s, p95 35.1 s
 (declared 25 s: over budget), USD 0.0017 per job (declared 0.002: within).
 Judge calibration: complete. Hidden test: GigSim accepts examiner jobs via `POST /admin/import`.
+
+**Deployment.** Live URL: https://gigbid-vtva.onrender.com (Render free web service, single container from
+`infra/render/Dockerfile`: one Python process serving the API, the three MCP servers in-process and GigSim mounted at
+`/gigsim`, plus the Next.js server). Hugging Face had withdrawn free Docker Spaces. On the free tier's 512 MB, the UI,
+login, inbox, job details, drafts, run viewer and traces work, but **starting a new analysis crashes the instance**:
+Render's event log records `oomKilled` with a 512Mi limit when the Fit Matcher loads the embedding model and builds
+the portfolio index (measured about 1.6 GB for the single process locally), after which Render restarts it. The full
+system runs on the laptop with `run_local.ps1` (all services as separate processes, no memory cap) and is what is
+demonstrated in the viva and the demo video; a 2 GB instance or `docker compose -f infra/docker-compose.yml up` runs
+it unchanged.
 
 ## Threats to validity
 

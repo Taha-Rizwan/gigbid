@@ -14,7 +14,7 @@ import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-PY = str(ROOT / (".venv/Scripts/python.exe" if os.name == "nt" else ".venv/bin/python"))
+PY = sys.executable  # the interpreter that launched this script (any venv)
 LOGS = ROOT / "data" / "cache" / "logs"
 
 SERVICES = [

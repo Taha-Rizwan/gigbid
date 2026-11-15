@@ -184,6 +184,16 @@ Job analysis: p50 {f(dev.get('latency', {}).get('p50_s'), 1)} s, p95 {f(dev.get(
 (declared 25 s: over budget), USD {f(dev.get('usage', {}).get('cost_usd_mean'), 4)} per job (declared 0.002: within).
 Judge calibration: {(jc or {}).get('status', 'pending')}. Hidden test: GigSim accepts examiner jobs via `POST /admin/import`.
 
+**Deployment.** Live URL: https://gigbid-vtva.onrender.com (Render free web service, single container from
+`infra/render/Dockerfile`: one Python process serving the API, the three MCP servers in-process and GigSim mounted at
+`/gigsim`, plus the Next.js server). Hugging Face had withdrawn free Docker Spaces. On the free tier's 512 MB, the UI,
+login, inbox, job details, drafts, run viewer and traces work, but **starting a new analysis crashes the instance**:
+Render's event log records `oomKilled` with a 512Mi limit when the Fit Matcher loads the embedding model and builds
+the portfolio index (measured about 1.6 GB for the single process locally), after which Render restarts it. The full
+system runs on the laptop with `run_local.ps1` (all services as separate processes, no memory cap) and is what is
+demonstrated in the viva and the demo video; a 2 GB instance or `docker compose -f infra/docker-compose.yml up` runs
+it unchanged.
+
 ## Threats to validity
 
 Synthetic personas and our own simulator (GigSim) decide outcomes; gold evidence labels are LLM-made (Claude Haiku,

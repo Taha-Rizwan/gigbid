@@ -31,3 +31,4 @@ apps/web/playwright-report/
 
 # build info
 *.tsbuildinfo
+.venv-local/

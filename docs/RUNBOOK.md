@@ -436,5 +436,22 @@ Render's free tier has 512 MB of RAM, so this deployment runs in single-containe
   variant (`v8_corrective`) runs in the full deployment (`infra/docker-compose.yml`);
 - models: the Claude Haiku profile (`MODEL_PROFILE=paid`), because Groq's free tier caps daily tokens.
 
-Known limits: the free instance sleeps after 15 idle minutes (about a minute to wake), GigSim state resets on
-restart, and memory is tight (about 1.6 GB was measured on Windows for the full single process).
+Known limits: the free instance sleeps after 15 idle minutes (about a minute to wake) and GigSim state resets on
+restart. **Starting a new analysis exceeds 512 MB**: Render's event log shows `oomKilled` (limit 512Mi) when the Fit
+Matcher loads the embedding model, and the instance restarts. Browsing existing jobs, drafts, runs and traces works.
+The full system runs locally (below) or on a 2 GB instance without changes.
+
+
+## Run everything locally (viva / demo)
+
+One command from the repo root, in PowerShell:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\run_local.ps1
+```
+
+The first run creates `.venv-local` (Python 3.12 via uv) and installs the web dependencies; later runs start in
+seconds. It starts GigSim, the three MCP servers, the API (inline worker) and the web app as separate processes.
+Open http://localhost:3000 and sign in as `reviewer@gigbid.dev` (password: `REVIEWER_PASSWORD` in `.env`). Logs are
+in `data/cache/logs/`. Ctrl+C stops everything. Needs `.env` (Neon `DATABASE_URL`, `ANTHROPIC_API_KEY`, optional
+`GROQ_API_KEY`, `LANGSMITH_API_KEY`), Python 3.11+ on PATH and Node 22.
