@@ -1,0 +1,2892 @@
+{
+  "generated_at": "2026-11-14T20:43:46+00:00",
+  "git_sha_or_null": "1691991d5151f63571c39f1c35460669ac9a7b15",
+  "config_snapshot": {
+    "runner": "tool_granularity",
+    "args": {
+      "persona": "all",
+      "limit": null,
+      "gigsim": null,
+      "profile": "paid",
+      "concurrency": 3,
+      "tag": "",
+      "tasks": "C:\\Users\\tahar\\OneDrive\\Documents\\assignments\\agentic\\A2\\gigbid\\evals\\datasets\\tool_tasks.jsonl",
+      "sets": "fine,coarse,mcp,mcp_rewritten"
+    },
+    "models": {
+      "profile": "paid",
+      "tiers": {
+        "small": {
+          "provider": "anthropic",
+          "model": "claude-haiku-5-5",
+          "effort": "low",
+          "max_tokens": 8000
+        },
+        "strong": {
+          "provider": "anthropic",
+          "model": "claude-haiku-5-5",
+          "effort": "medium",
+          "max_tokens": 16000
+        },
+        "fallback_small": {
+          "provider": "groq",
+          "model": "openai/gpt-oss-20b",
+          "temperature": 0.0,
+          "reasoning_effort": "low"
+        },
+        "judge": {
+          "provider": "anthropic",
+          "model": "claude-haiku-5-5",
+          "effort": "low",
+          "max_tokens": 8000
+        }
+      },
+      "nodes": {
+        "scout": "small",
+        "analyst": "small",
+        "risk_assessor": "small",
+        "fit_matcher": "small",
+        "pricing": "small",
+        "writer": "strong",
+        "verifier": "small",
+        "critic": "strong",
+        "compliance": "small",
+        "liaison_intent": "small",
+        "liaison": "strong"
+      },
+      "embeddings": "BAAI/bge-small-en-v1.5",
+      "reranker": "Xenova/ms-marco-MiniLM-L-6-v2"
+    },
+    "rag": {
+      "variant": "v3_rerank",
+      "k": 5,
+      "chunk_size": 600,
+      "chunk_overlap": 80,
+      "rrf_k": 60,
+      "rerank_candidates": 30,
+      "outcome_boost": {
+        "won": 0.25,
+        "replied": 0.12,
+        "ignored": -0.05
+      },
+      "corrective_min_score": 0.35,
+      "corrective_max_requeries": 1
+    },
+    "thresholds": {
+      "minimum_fit_score": 0.55,
+      "watch_fit_score": 0.4,
+      "maximum_risk_score": 0.6,
+      "max_proposal_words": 280,
+      "min_proposal_words": 90
+    },
+    "budgets": {
+      "max_tokens_per_job": 60000,
+      "max_revisions": 2,
+      "max_graph_steps": 40
+    },
+    "policy_version": "v1",
+    "gigsim": {
+      "base_url": "http://localhost:8091",
+      "seed_dir": "data/processed/gigsim_seed",
+      "error_rate": 0,
+      "rate_per_min": 0,
+      "personalisation": "heuristic fallback (GIGSIM_LLM_DISABLED=1) to save Groq quota; deterministic"
+    },
+    "llm_cache": "data/cache/evals/llm (hits replay stored token counts; latency only from cold runs)",
+    "model": "claude-haiku-5-5",
+    "system_prompt": "You help a freelancer whose portfolio persona is ai_ml. Use the tools to gather what the task needs, then answer in one or two sentences. Call only the tools you need. Never create, submit or send anything."
+  },
+  "n": 40,
+  "status": "complete",
+  "model_profile": "paid",
+  "agent_model": "claude-haiku-5-5",
+  "n_tasks": 40,
+  "tasks_file": "evals/datasets/tool_tasks.jsonl",
+  "sets": {
+    "fine": {
+      "n_tools": 18,
+      "tool_names": [
+        "search_jobs_by_keyword",
+        "list_jobs_in_category",
+        "get_job_details",
+        "get_job_budget",
+        "get_job_screening_questions",
+        "get_client_profile",
+        "get_client_reviews",
+        "get_connects_balance",
+        "get_hourly_rate_stats",
+        "get_fixed_price_stats",
+        "get_policy_rules",
+        "list_my_proposals",
+        "search_case_studies",
+        "search_repositories",
+        "search_client_reviews",
+        "search_past_proposals",
+        "get_evidence_item",
+        "list_portfolio_skills"
+      ],
+      "status": "complete",
+      "n_errors": 0,
+      "errors": [],
+      "n": 40,
+      "tool_selection_accuracy": 1.0,
+      "argument_accuracy": 0.9625,
+      "exact_task_success": 0.95,
+      "calls_per_task": 1.375,
+      "extra_calls_per_task": 0.2,
+      "tokens_per_task": 5624.525,
+      "cost_usd_per_task": 0.0007,
+      "latency_p50_s": 4.199,
+      "latency_p95_s": 24.7329,
+      "single_step": {
+        "n": 35,
+        "tool_selection_accuracy": 1.0,
+        "argument_accuracy": 0.9714,
+        "exact_task_success": 0.9714,
+        "calls_per_task": 1.2,
+        "extra_calls_per_task": 0.1714,
+        "tokens_per_task": 5424.0571,
+        "cost_usd_per_task": 0.0007,
+        "latency_p50_s": 4.016,
+        "latency_p95_s": 25.4024
+      },
+      "multi_step": {
+        "n": 5,
+        "tool_selection_accuracy": 1.0,
+        "argument_accuracy": 0.9,
+        "exact_task_success": 0.8,
+        "calls_per_task": 2.6,
+        "extra_calls_per_task": 0.4,
+        "tokens_per_task": 7027.8,
+        "cost_usd_per_task": 0.0009,
+        "latency_p50_s": 5.244,
+        "latency_p95_s": 10.5094
+      },
+      "per_task": [
+        {
+          "task_id": "t01",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "search_jobs_by_keyword",
+              "args": {
+                "query": "churn prediction"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t02",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "list_jobs_in_category",
+              "args": {
+                "category": "ml_ai"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t03",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "search_jobs_by_keyword",
+              "args": {
+                "query": "Airflow pipelines"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t04",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "list_jobs_in_category",
+              "args": {
+                "category": "data_engineering"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t05",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "search_jobs_by_keyword",
+              "args": {
+                "query": "RAG chatbot"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t06",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "search_jobs_by_keyword",
+              "args": {
+                "query": "computer vision"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t07",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "list_jobs_in_category",
+              "args": {
+                "category": "automation_scraping"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t08",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "search_jobs_by_keyword",
+              "args": {
+                "query": "LangChain"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t09",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_job_details",
+              "args": {
+                "job_id": "~0192563a775948c7d0"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t10",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_job_screening_questions",
+              "args": {
+                "job_id": "~01a2b5b740be207e56"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t11",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_job_budget",
+              "args": {
+                "job_id": "~012a7de8bbce31a9d1"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t12",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_job_budget",
+              "args": {
+                "job_id": "~01c01a1eeabbee80d3"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t13",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_job_details",
+              "args": {
+                "job_id": "~0167e63276048b5d86"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t14",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_job_budget",
+              "args": {
+                "job_id": "~01a2b5b740be207e56"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t15",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 2,
+          "calls": [
+            {
+              "tool": "get_client_profile",
+              "args": {
+                "client_id": "cl_00749"
+              }
+            },
+            {
+              "tool": "get_client_reviews",
+              "args": {
+                "client_id": "cl_00749"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t16",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_client_reviews",
+              "args": {
+                "client_id": "cl_00037"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t17",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_client_profile",
+              "args": {
+                "client_id": "cl_00023"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t18",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_client_profile",
+              "args": {
+                "client_id": "cl_00749"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t19",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 3,
+          "calls": [
+            {
+              "tool": "get_job_details",
+              "args": {
+                "job_id": "~0192563a775948c7d0"
+              }
+            },
+            {
+              "tool": "get_client_profile",
+              "args": {
+                "client_id": "cl_00749"
+              }
+            },
+            {
+              "tool": "get_client_reviews",
+              "args": {
+                "client_id": "cl_00749"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t20",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_connects_balance",
+              "args": {}
+            }
+          ]
+        },
+        {
+          "task_id": "t21",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_hourly_rate_stats",
+              "args": {
+                "category": "ml_ai"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t22",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_fixed_price_stats",
+              "args": {
+                "category": "data_analysis"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t23",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_hourly_rate_stats",
+              "args": {
+                "category": "web_fullstack"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t24",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_policy_rules",
+              "args": {}
+            }
+          ]
+        },
+        {
+          "task_id": "t25",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_policy_rules",
+              "args": {}
+            }
+          ]
+        },
+        {
+          "task_id": "t26",
+          "selection_correct": true,
+          "arg_accuracy": 0.0,
+          "n_calls": 3,
+          "calls": [
+            {
+              "tool": "list_my_proposals",
+              "args": {}
+            },
+            {
+              "tool": "search_past_proposals",
+              "args": {
+                "query": "",
+                "outcome": "replied"
+              }
+            },
+            {
+              "tool": "search_past_proposals",
+              "args": {
+                "query": "ai",
+                "outcome": "replied"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t27",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 2,
+          "calls": [
+            {
+              "tool": "list_my_proposals",
+              "args": {
+                "status": "submitted"
+              }
+            },
+            {
+              "tool": "list_my_proposals",
+              "args": {}
+            }
+          ]
+        },
+        {
+          "task_id": "t28",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 2,
+          "calls": [
+            {
+              "tool": "search_case_studies",
+              "args": {
+                "query": "churn model"
+              }
+            },
+            {
+              "tool": "search_repositories",
+              "args": {
+                "query": "churn model"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t29",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 2,
+          "calls": [
+            {
+              "tool": "search_case_studies",
+              "args": {
+                "query": "deployed machine learning models MLOps"
+              }
+            },
+            {
+              "tool": "search_repositories",
+              "args": {
+                "query": "MLOps model deployment"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t30",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "search_repositories",
+              "args": {
+                "query": "retrieval-augmented generation"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t31",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "search_client_reviews",
+              "args": {
+                "query": "NLP"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t32",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "search_past_proposals",
+              "args": {
+                "query": "forecasting",
+                "outcome": "won"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t33",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_evidence_item",
+              "args": {
+                "evidence_id": "ai_ml:case:churn-uplift-telco"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t34",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_evidence_item",
+              "args": {
+                "evidence_id": "ai_ml:case:contract-qa-rag"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t35",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "list_portfolio_skills",
+              "args": {}
+            }
+          ]
+        },
+        {
+          "task_id": "t36",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 2,
+          "calls": [
+            {
+              "tool": "search_case_studies",
+              "args": {
+                "query": "invoice document field extraction"
+              }
+            },
+            {
+              "tool": "search_repositories",
+              "args": {
+                "query": "invoice document field extraction"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t37",
+          "selection_correct": true,
+          "arg_accuracy": 0.5,
+          "n_calls": 3,
+          "calls": [
+            {
+              "tool": "get_job_details",
+              "args": {
+                "job_id": "01a2b5b740be207e56"
+              }
+            },
+            {
+              "tool": "search_case_studies",
+              "args": {
+                "query": "LLM applications"
+              }
+            },
+            {
+              "tool": "search_repositories",
+              "args": {
+                "query": "LLM applications"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t38",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 3,
+          "calls": [
+            {
+              "tool": "get_job_details",
+              "args": {
+                "job_id": "~0192563a775948c7d0"
+              }
+            },
+            {
+              "tool": "get_connects_balance",
+              "args": {}
+            },
+            {
+              "tool": "get_client_profile",
+              "args": {
+                "client_id": "cl_00749"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t39",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 2,
+          "calls": [
+            {
+              "tool": "search_jobs_by_keyword",
+              "args": {
+                "query": "RAG"
+              }
+            },
+            {
+              "tool": "get_hourly_rate_stats",
+              "args": {
+                "category": "ml_ai"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t40",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 2,
+          "calls": [
+            {
+              "tool": "get_policy_rules",
+              "args": {}
+            },
+            {
+              "tool": "get_connects_balance",
+              "args": {}
+            }
+          ]
+        }
+      ]
+    },
+    "coarse": {
+      "n_tools": 2,
+      "tool_names": [
+        "marketplace",
+        "portfolio"
+      ],
+      "status": "complete",
+      "n_errors": 0,
+      "errors": [],
+      "n": 40,
+      "tool_selection_accuracy": 0.95,
+      "argument_accuracy": 0.8708,
+      "exact_task_success": 0.85,
+      "calls_per_task": 1.25,
+      "extra_calls_per_task": 0.125,
+      "tokens_per_task": 3352.9,
+      "cost_usd_per_task": 0.0005,
+      "latency_p50_s": 3.705,
+      "latency_p95_s": 9.7628,
+      "single_step": {
+        "n": 35,
+        "tool_selection_accuracy": 0.9714,
+        "argument_accuracy": 0.8857,
+        "exact_task_success": 0.8857,
+        "calls_per_task": 1.1429,
+        "extra_calls_per_task": 0.1429,
+        "tokens_per_task": 3300.0857,
+        "cost_usd_per_task": 0.0004,
+        "latency_p50_s": 3.463,
+        "latency_p95_s": 9.8768
+      },
+      "multi_step": {
+        "n": 5,
+        "tool_selection_accuracy": 0.8,
+        "argument_accuracy": 0.7667,
+        "exact_task_success": 0.6,
+        "calls_per_task": 2.0,
+        "extra_calls_per_task": 0.0,
+        "tokens_per_task": 3722.6,
+        "cost_usd_per_task": 0.0005,
+        "latency_p50_s": 4.256,
+        "latency_p95_s": 6.6468
+      },
+      "per_task": [
+        {
+          "task_id": "t01",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "search_jobs",
+                "query": "churn prediction",
+                "status": "open"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t02",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "search_jobs",
+                "category": "ml_ai",
+                "status": "open"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t03",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "search_jobs",
+                "query": "Airflow pipelines",
+                "status": "open"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t04",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "search_jobs",
+                "category": "data_engineering",
+                "status": "open"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t05",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "search_jobs",
+                "query": "RAG chatbot"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t06",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 2,
+          "calls": [
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "search_jobs",
+                "query": "computer vision"
+              }
+            },
+            {
+              "tool": "portfolio",
+              "args": {
+                "action": "skills"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t07",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "search_jobs",
+                "category": "automation_scraping",
+                "status": "open"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t08",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "search_jobs",
+                "query": "LangChain"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t09",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "get_job",
+                "job_id": "~0192563a775948c7d0"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t10",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "get_job",
+                "job_id": "~01a2b5b740be207e56"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t11",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "get_job",
+                "job_id": "~012a7de8bbce31a9d1"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t12",
+          "selection_correct": true,
+          "arg_accuracy": 0.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "get_job",
+                "job_id": "01c01a1eeabbee80d3"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t13",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "get_job",
+                "job_id": "~0167e63276048b5d86"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t14",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "get_job",
+                "job_id": "~01a2b5b740be207e56"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t15",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "get_client_history",
+                "client_id": "cl_00749"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t16",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "get_client_history",
+                "client_id": "cl_00037"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t17",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "get_client_history",
+                "client_id": "cl_00023"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t18",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "get_client_history",
+                "client_id": "cl_00749"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t19",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 2,
+          "calls": [
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "get_job",
+                "job_id": "~0192563a775948c7d0"
+              }
+            },
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "get_client_history",
+                "client_id": "cl_00749"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t20",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "get_connects_balance"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t21",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "get_market_stats",
+                "category": "ml_ai"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t22",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "get_market_stats",
+                "category": "data_analysis"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t23",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "get_market_stats",
+                "category": "web_fullstack"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t24",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "get_policy"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t25",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "get_policy",
+                "query": "AI assistance disclosure in proposals"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t26",
+          "selection_correct": true,
+          "arg_accuracy": 0.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "list_proposals"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t27",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "list_proposals",
+                "status": "submitted"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t28",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "portfolio",
+              "args": {
+                "action": "search",
+                "query": "churn model"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t29",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "portfolio",
+              "args": {
+                "action": "search",
+                "query": "deployed models MLOps tooling"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t30",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 2,
+          "calls": [
+            {
+              "tool": "portfolio",
+              "args": {
+                "action": "search",
+                "query": "retrieval-augmented generation RAG"
+              }
+            },
+            {
+              "tool": "portfolio",
+              "args": {
+                "action": "search",
+                "query": "RAG retrieval augmented generation vector search",
+                "types": [
+                  "repo"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t31",
+          "selection_correct": true,
+          "arg_accuracy": 0.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "portfolio",
+              "args": {
+                "action": "search",
+                "query": "NLP client review feedback"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t32",
+          "selection_correct": false,
+          "arg_accuracy": 0.0,
+          "n_calls": 4,
+          "calls": [
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "list_proposals",
+                "query": "forecasting",
+                "status": "won"
+              }
+            },
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "list_proposals",
+                "query": "forecasting",
+                "status": "hired"
+              }
+            },
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "list_proposals",
+                "query": "forecasting"
+              }
+            },
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "list_proposals"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t33",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "portfolio",
+              "args": {
+                "action": "get",
+                "evidence_id": "ai_ml:case:churn-uplift-telco"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t34",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "portfolio",
+              "args": {
+                "action": "get",
+                "evidence_id": "ai_ml:case:contract-qa-rag"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t35",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "portfolio",
+              "args": {
+                "action": "skills"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t36",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "portfolio",
+              "args": {
+                "action": "search",
+                "query": "invoice document field extraction"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t37",
+          "selection_correct": true,
+          "arg_accuracy": 0.5,
+          "n_calls": 2,
+          "calls": [
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "get_job",
+                "job_id": "01a2b5b740be207e56"
+              }
+            },
+            {
+              "tool": "portfolio",
+              "args": {
+                "action": "search",
+                "query": "LLM applications"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t38",
+          "selection_correct": false,
+          "arg_accuracy": 0.3333,
+          "n_calls": 2,
+          "calls": [
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "get_job",
+                "job_id": "0192563a775948c7d0"
+              }
+            },
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "get_connects_balance"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t39",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 2,
+          "calls": [
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "search_jobs",
+                "query": "RAG",
+                "status": "open"
+              }
+            },
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "get_market_stats",
+                "category": "ml_ai"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t40",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 2,
+          "calls": [
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "get_policy"
+              }
+            },
+            {
+              "tool": "marketplace",
+              "args": {
+                "action": "get_connects_balance"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "mcp": {
+      "n_tools": 10,
+      "tool_names": [
+        "search_jobs",
+        "get_job",
+        "get_client_history",
+        "get_connects_balance",
+        "get_market_stats",
+        "get_policy",
+        "list_proposals",
+        "search_evidence",
+        "get_case_study",
+        "list_skills"
+      ],
+      "status": "complete",
+      "n_errors": 0,
+      "errors": [],
+      "n": 40,
+      "tool_selection_accuracy": 1.0,
+      "argument_accuracy": 0.9875,
+      "exact_task_success": 0.975,
+      "calls_per_task": 1.175,
+      "extra_calls_per_task": 0.0,
+      "tokens_per_task": 6562.7,
+      "cost_usd_per_task": 0.0008,
+      "latency_p50_s": 4.1425,
+      "latency_p95_s": 15.6367,
+      "single_step": {
+        "n": 35,
+        "tool_selection_accuracy": 1.0,
+        "argument_accuracy": 1.0,
+        "exact_task_success": 1.0,
+        "calls_per_task": 1.0286,
+        "extra_calls_per_task": 0.0,
+        "tokens_per_task": 6424.8857,
+        "cost_usd_per_task": 0.0007,
+        "latency_p50_s": 4.013,
+        "latency_p95_s": 16.3255
+      },
+      "multi_step": {
+        "n": 5,
+        "tool_selection_accuracy": 1.0,
+        "argument_accuracy": 0.9,
+        "exact_task_success": 0.8,
+        "calls_per_task": 2.2,
+        "extra_calls_per_task": 0.0,
+        "tokens_per_task": 7527.4,
+        "cost_usd_per_task": 0.001,
+        "latency_p50_s": 7.207,
+        "latency_p95_s": 10.823
+      },
+      "per_task": [
+        {
+          "task_id": "t01",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "search_jobs",
+              "args": {
+                "query": "churn prediction"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t02",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "search_jobs",
+              "args": {
+                "category": "ml_ai"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t03",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "search_jobs",
+              "args": {
+                "query": "Airflow pipelines"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t04",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "search_jobs",
+              "args": {
+                "category": "data_engineering"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t05",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "search_jobs",
+              "args": {
+                "query": "RAG chatbot"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t06",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "search_jobs",
+              "args": {
+                "query": "computer vision",
+                "limit": 20
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t07",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "search_jobs",
+              "args": {
+                "query": "automation scraping",
+                "category": "automation_scraping"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t08",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "search_jobs",
+              "args": {
+                "query": "LangChain"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t09",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_job",
+              "args": {
+                "job_id": "~0192563a775948c7d0"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t10",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_job",
+              "args": {
+                "job_id": "~01a2b5b740be207e56"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t11",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_job",
+              "args": {
+                "job_id": "~012a7de8bbce31a9d1"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t12",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_job",
+              "args": {
+                "job_id": "~01c01a1eeabbee80d3"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t13",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_job",
+              "args": {
+                "job_id": "~0167e63276048b5d86"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t14",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_job",
+              "args": {
+                "job_id": "~01a2b5b740be207e56"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t15",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_client_history",
+              "args": {
+                "client_id": "cl_00749"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t16",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_client_history",
+              "args": {
+                "client_id": "cl_00037"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t17",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_client_history",
+              "args": {
+                "client_id": "cl_00023"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t18",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_client_history",
+              "args": {
+                "client_id": "cl_00749"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t19",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 2,
+          "calls": [
+            {
+              "tool": "get_job",
+              "args": {
+                "job_id": "~0192563a775948c7d0"
+              }
+            },
+            {
+              "tool": "get_client_history",
+              "args": {
+                "client_id": "cl_00749"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t20",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_connects_balance",
+              "args": {}
+            }
+          ]
+        },
+        {
+          "task_id": "t21",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_market_stats",
+              "args": {
+                "category": "ml_ai"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t22",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_market_stats",
+              "args": {
+                "category": "data_analysis"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t23",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_market_stats",
+              "args": {
+                "category": "web_fullstack"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t24",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_policy",
+              "args": {}
+            }
+          ]
+        },
+        {
+          "task_id": "t25",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_policy",
+              "args": {}
+            }
+          ]
+        },
+        {
+          "task_id": "t26",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 2,
+          "calls": [
+            {
+              "tool": "list_proposals",
+              "args": {
+                "status": "replied"
+              }
+            },
+            {
+              "tool": "list_proposals",
+              "args": {}
+            }
+          ]
+        },
+        {
+          "task_id": "t27",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "list_proposals",
+              "args": {
+                "status": "submitted"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t28",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "search_evidence",
+              "args": {
+                "requirement": "churn model (customer churn prediction)",
+                "persona_id": "ai_ml"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t29",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "search_evidence",
+              "args": {
+                "requirement": "Deployed machine learning models in production using MLOps tooling (e.g., MLflow, Kubeflow, Docker, Kubernetes, CI/CD, model monitoring)",
+                "persona_id": "ai_ml",
+                "k": 8
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t30",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "search_evidence",
+              "args": {
+                "requirement": "retrieval-augmented generation (RAG) pipeline code repository",
+                "persona_id": "ai_ml",
+                "filters": {
+                  "types": [
+                    "repo"
+                  ]
+                },
+                "k": 20
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t31",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "search_evidence",
+              "args": {
+                "requirement": "client reviews about NLP work",
+                "persona_id": "ai_ml",
+                "filters": {
+                  "types": [
+                    "review"
+                  ]
+                },
+                "k": 5
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t32",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "search_evidence",
+              "args": {
+                "requirement": "forecasting models and time series prediction",
+                "persona_id": "ai_ml",
+                "filters": {
+                  "types": [
+                    "proposal"
+                  ],
+                  "outcomes": [
+                    "won"
+                  ]
+                },
+                "k": 20
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t33",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_case_study",
+              "args": {
+                "evidence_id": "ai_ml:case:churn-uplift-telco"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t34",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_case_study",
+              "args": {
+                "evidence_id": "ai_ml:case:contract-qa-rag"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t35",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "list_skills",
+              "args": {
+                "persona_id": "ai_ml"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t36",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "search_evidence",
+              "args": {
+                "requirement": "invoice or document field extraction",
+                "persona_id": "ai_ml"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t37",
+          "selection_correct": true,
+          "arg_accuracy": 0.5,
+          "n_calls": 2,
+          "calls": [
+            {
+              "tool": "get_job",
+              "args": {
+                "job_id": "01a2b5b740be207e56"
+              }
+            },
+            {
+              "tool": "search_evidence",
+              "args": {
+                "requirement": "LLM applications",
+                "persona_id": "ai_ml",
+                "k": 5
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t38",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 3,
+          "calls": [
+            {
+              "tool": "get_job",
+              "args": {
+                "job_id": "~0192563a775948c7d0"
+              }
+            },
+            {
+              "tool": "get_connects_balance",
+              "args": {}
+            },
+            {
+              "tool": "get_client_history",
+              "args": {
+                "client_id": "cl_00749"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t39",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 2,
+          "calls": [
+            {
+              "tool": "search_jobs",
+              "args": {
+                "query": "RAG",
+                "category": "ml_ai"
+              }
+            },
+            {
+              "tool": "get_market_stats",
+              "args": {
+                "category": "ml_ai"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t40",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 2,
+          "calls": [
+            {
+              "tool": "get_policy",
+              "args": {}
+            },
+            {
+              "tool": "get_connects_balance",
+              "args": {}
+            }
+          ]
+        }
+      ]
+    },
+    "mcp_rewritten": {
+      "n_tools": 10,
+      "tool_names": [
+        "search_jobs",
+        "get_job",
+        "get_client_history",
+        "get_connects_balance",
+        "get_market_stats",
+        "get_policy",
+        "list_proposals",
+        "search_evidence",
+        "get_case_study",
+        "list_skills"
+      ],
+      "status": "complete",
+      "n_errors": 0,
+      "errors": [],
+      "n": 40,
+      "tool_selection_accuracy": 1.0,
+      "argument_accuracy": 1.0,
+      "exact_task_success": 1.0,
+      "calls_per_task": 1.2,
+      "extra_calls_per_task": 0.0,
+      "tokens_per_task": 7316.025,
+      "cost_usd_per_task": 0.0008,
+      "latency_p50_s": 3.7735,
+      "latency_p95_s": 10.3227,
+      "single_step": {
+        "n": 35,
+        "tool_selection_accuracy": 1.0,
+        "argument_accuracy": 1.0,
+        "exact_task_success": 1.0,
+        "calls_per_task": 1.0286,
+        "extra_calls_per_task": 0.0,
+        "tokens_per_task": 6855.0,
+        "cost_usd_per_task": 0.0008,
+        "latency_p50_s": 3.255,
+        "latency_p95_s": 8.8761
+      },
+      "multi_step": {
+        "n": 5,
+        "tool_selection_accuracy": 1.0,
+        "argument_accuracy": 1.0,
+        "exact_task_success": 1.0,
+        "calls_per_task": 2.4,
+        "extra_calls_per_task": 0.0,
+        "tokens_per_task": 10543.2,
+        "cost_usd_per_task": 0.0013,
+        "latency_p50_s": 4.96,
+        "latency_p95_s": 15.1268
+      },
+      "per_task": [
+        {
+          "task_id": "t01",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "search_jobs",
+              "args": {
+                "query": "churn prediction"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t02",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "search_jobs",
+              "args": {
+                "category": "ml_ai"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t03",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "search_jobs",
+              "args": {
+                "query": "airflow pipelines",
+                "limit": 10
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t04",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "search_jobs",
+              "args": {
+                "category": "data_engineering",
+                "limit": 20
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t05",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "search_jobs",
+              "args": {
+                "query": "RAG chatbot"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t06",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "search_jobs",
+              "args": {
+                "query": "computer vision",
+                "limit": 20
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t07",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "search_jobs",
+              "args": {
+                "category": "automation_scraping"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t08",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "search_jobs",
+              "args": {
+                "query": "LangChain",
+                "limit": 20
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t09",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_job",
+              "args": {
+                "job_id": "~0192563a775948c7d0"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t10",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_job",
+              "args": {
+                "job_id": "~01a2b5b740be207e56"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t11",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_job",
+              "args": {
+                "job_id": "~012a7de8bbce31a9d1"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t12",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_job",
+              "args": {
+                "job_id": "~01c01a1eeabbee80d3"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t13",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_job",
+              "args": {
+                "job_id": "~0167e63276048b5d86"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t14",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_job",
+              "args": {
+                "job_id": "~01a2b5b740be207e56"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t15",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_client_history",
+              "args": {
+                "client_id": "cl_00749"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t16",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_client_history",
+              "args": {
+                "client_id": "cl_00037"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t17",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_client_history",
+              "args": {
+                "client_id": "cl_00023"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t18",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_client_history",
+              "args": {
+                "client_id": "cl_00749"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t19",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 2,
+          "calls": [
+            {
+              "tool": "get_job",
+              "args": {
+                "job_id": "~0192563a775948c7d0"
+              }
+            },
+            {
+              "tool": "get_client_history",
+              "args": {
+                "client_id": "cl_00749"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t20",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_connects_balance",
+              "args": {}
+            }
+          ]
+        },
+        {
+          "task_id": "t21",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_market_stats",
+              "args": {
+                "category": "ml_ai"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t22",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_market_stats",
+              "args": {
+                "category": "data_analysis"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t23",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_market_stats",
+              "args": {
+                "category": "web_fullstack"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t24",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_policy",
+              "args": {}
+            }
+          ]
+        },
+        {
+          "task_id": "t25",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_policy",
+              "args": {}
+            }
+          ]
+        },
+        {
+          "task_id": "t26",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 2,
+          "calls": [
+            {
+              "tool": "list_proposals",
+              "args": {
+                "status": "replied"
+              }
+            },
+            {
+              "tool": "list_proposals",
+              "args": {}
+            }
+          ]
+        },
+        {
+          "task_id": "t27",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "list_proposals",
+              "args": {
+                "status": "submitted"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t28",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "search_evidence",
+              "args": {
+                "requirement": "churn model",
+                "persona_id": "ai_ml",
+                "k": 5
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t29",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "search_evidence",
+              "args": {
+                "requirement": "deployed machine learning models with MLOps tooling (MLflow, Kubeflow, SageMaker, Docker, Kubernetes, CI/CD)",
+                "persona_id": "ai_ml",
+                "k": 8
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t30",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "search_evidence",
+              "args": {
+                "requirement": "retrieval-augmented generation RAG pipeline",
+                "filters": {
+                  "types": [
+                    "repo"
+                  ]
+                },
+                "persona_id": "ai_ml",
+                "k": 10
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t31",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "search_evidence",
+              "args": {
+                "requirement": "NLP work client review feedback",
+                "filters": {
+                  "types": [
+                    "review"
+                  ]
+                },
+                "persona_id": "ai_ml",
+                "k": 5
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t32",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "search_evidence",
+              "args": {
+                "requirement": "forecasting",
+                "filters": {
+                  "types": [
+                    "proposal"
+                  ],
+                  "outcomes": [
+                    "won"
+                  ]
+                },
+                "persona_id": "ai_ml",
+                "k": 10
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t33",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_case_study",
+              "args": {
+                "evidence_id": "ai_ml:case:churn-uplift-telco"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t34",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "get_case_study",
+              "args": {
+                "evidence_id": "ai_ml:case:contract-qa-rag"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t35",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "list_skills",
+              "args": {
+                "persona_id": "ai_ml"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t36",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 1,
+          "calls": [
+            {
+              "tool": "search_evidence",
+              "args": {
+                "requirement": "invoice or document field extraction",
+                "persona_id": "ai_ml"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t37",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 3,
+          "calls": [
+            {
+              "tool": "get_job",
+              "args": {
+                "job_id": "~01a2b5b740be207e56"
+              }
+            },
+            {
+              "tool": "search_evidence",
+              "args": {
+                "requirement": "LLM application development with GPT-4, NLP, conversational AI chatbot, healthcare integration",
+                "persona_id": "ai_ml",
+                "k": 5
+              }
+            },
+            {
+              "tool": "search_evidence",
+              "args": {
+                "requirement": "LLM chatbot GPT-4 production application, healthcare or EHR integration",
+                "persona_id": "ai_ml",
+                "k": 5,
+                "filters": {
+                  "types": [
+                    "case",
+                    "repo"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t38",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 3,
+          "calls": [
+            {
+              "tool": "get_job",
+              "args": {
+                "job_id": "~0192563a775948c7d0"
+              }
+            },
+            {
+              "tool": "get_connects_balance",
+              "args": {}
+            },
+            {
+              "tool": "get_client_history",
+              "args": {
+                "client_id": "cl_00749"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t39",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 2,
+          "calls": [
+            {
+              "tool": "search_jobs",
+              "args": {
+                "query": "RAG",
+                "limit": 10
+              }
+            },
+            {
+              "tool": "get_market_stats",
+              "args": {
+                "category": "ml_ai"
+              }
+            }
+          ]
+        },
+        {
+          "task_id": "t40",
+          "selection_correct": true,
+          "arg_accuracy": 1.0,
+          "n_calls": 2,
+          "calls": [
+            {
+              "tool": "get_policy",
+              "args": {}
+            },
+            {
+              "tool": "get_connects_balance",
+              "args": {}
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "stopped_early": null,
+  "anthropic_spend_usd_all_evals": 0.1955,
+  "note": "Tasks and expected calls are hand-written by the eval author (single rater)."
+}

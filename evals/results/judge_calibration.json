@@ -1,0 +1,104 @@
+{
+  "generated_at": "2026-11-14T20:33:08+00:00",
+  "git_sha_or_null": "84df3b1eb664a8d64ea63d3cb2cd7f583981e84b",
+  "config_snapshot": {
+    "runner": "judge_calibration",
+    "args": {
+      "labels": "C:\\Users\\tahar\\OneDrive\\Documents\\assignments\\agentic\\A2\\gigbid\\evals\\datasets\\human_labels.jsonl",
+      "n": 30,
+      "tag": ""
+    },
+    "models": {
+      "profile": "open",
+      "tiers": {
+        "small": {
+          "provider": "groq",
+          "model": "openai/gpt-oss-20b",
+          "temperature": 0.0,
+          "reasoning_effort": "low"
+        },
+        "strong": {
+          "provider": "groq",
+          "model": "openai/gpt-oss-120b",
+          "temperature": 0.4,
+          "reasoning_effort": "medium"
+        },
+        "fallback_small": {
+          "provider": "groq",
+          "model": "openai/gpt-oss-120b",
+          "temperature": 0.0,
+          "reasoning_effort": "low"
+        },
+        "fallback_strong": {
+          "provider": "groq",
+          "model": "openai/gpt-oss-20b",
+          "temperature": 0.4,
+          "reasoning_effort": "medium"
+        },
+        "judge": {
+          "provider": "anthropic",
+          "model": "claude-haiku-5-5",
+          "effort": "low",
+          "max_tokens": 8000
+        }
+      },
+      "nodes": {
+        "scout": "small",
+        "analyst": "small",
+        "risk_assessor": "small",
+        "fit_matcher": "small",
+        "pricing": "small",
+        "writer": "strong",
+        "verifier": "small",
+        "critic": "strong",
+        "compliance": "small",
+        "liaison_intent": "small",
+        "liaison": "strong"
+      },
+      "embeddings": "BAAI/bge-small-en-v1.5",
+      "reranker": "Xenova/ms-marco-MiniLM-L-6-v2"
+    },
+    "rag": {
+      "variant": "v3_rerank",
+      "k": 5,
+      "chunk_size": 600,
+      "chunk_overlap": 80,
+      "rrf_k": 60,
+      "rerank_candidates": 30,
+      "outcome_boost": {
+        "won": 0.25,
+        "replied": 0.12,
+        "ignored": -0.05
+      },
+      "corrective_min_score": 0.35,
+      "corrective_max_requeries": 1
+    },
+    "thresholds": {
+      "minimum_fit_score": 0.55,
+      "watch_fit_score": 0.4,
+      "maximum_risk_score": 0.6,
+      "max_proposal_words": 280,
+      "min_proposal_words": 90
+    },
+    "budgets": {
+      "max_tokens_per_job": 60000,
+      "max_revisions": 2,
+      "max_graph_steps": 40
+    },
+    "policy_version": "v1",
+    "gigsim": {
+      "base_url": "http://localhost:8091",
+      "seed_dir": "data/processed/gigsim_seed",
+      "error_rate": 0,
+      "rate_per_min": 0,
+      "personalisation": "heuristic fallback (GIGSIM_LLM_DISABLED=1) to save Groq quota; deterministic"
+    },
+    "llm_cache": "data/cache/evals/llm (hits replay stored token counts; latency only from cold runs)"
+  },
+  "n": 0,
+  "labels_file": "evals\\datasets\\human_labels.jsonl",
+  "template_created_now": false,
+  "n_label_rows": 0,
+  "status": "awaiting_human_labels",
+  "reason": "0 proposals have both a human_overall and a judge score (need >= 5)"
+}

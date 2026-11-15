@@ -26,7 +26,7 @@ personas:
     title: Machine Learning Engineer - LLM apps, RAG and NLP
     location: Remote (UTC+5)
     hourly_rate: 65
-    floor_rate: 40
+    floor_rate: 20
     years_experience: 7
     success_score: 0.93
     gigsim_account_id: acct_ai
@@ -159,7 +159,7 @@ personas:
     title: Full-Stack Developer - React, Next.js, Node and Postgres
     location: Remote (UTC+1)
     hourly_rate: 55
-    floor_rate: 35
+    floor_rate: 18
     years_experience: 9
     success_score: 0.90
     gigsim_account_id: acct_web
@@ -301,7 +301,7 @@ personas:
     title: Data Analyst and Analytics Engineer - SQL, dashboards, pipelines
     location: Remote (UTC+0)
     hourly_rate: 45
-    floor_rate: 28
+    floor_rate: 15
     years_experience: 6
     success_score: 0.88
     gigsim_account_id: acct_data

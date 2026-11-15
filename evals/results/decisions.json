@@ -1,0 +1,4852 @@
+{
+  "generated_at": "2026-11-14T21:02:19+00:00",
+  "git_sha_or_null": "1691991d5151f63571c39f1c35460669ac9a7b15",
+  "config_snapshot": {
+    "runner": "decision_eval",
+    "args": {
+      "persona": "all",
+      "limit": 30,
+      "gigsim": null,
+      "profile": "paid",
+      "concurrency": 3,
+      "tag": "",
+      "rag_variant": null,
+      "k6_limit": 100
+    },
+    "models": {
+      "profile": "paid",
+      "tiers": {
+        "small": {
+          "provider": "anthropic",
+          "model": "claude-haiku-5-5",
+          "effort": "low",
+          "max_tokens": 8000
+        },
+        "strong": {
+          "provider": "anthropic",
+          "model": "claude-haiku-5-5",
+          "effort": "medium",
+          "max_tokens": 16000
+        },
+        "fallback_small": {
+          "provider": "groq",
+          "model": "openai/gpt-oss-20b",
+          "temperature": 0.0,
+          "reasoning_effort": "low"
+        },
+        "judge": {
+          "provider": "anthropic",
+          "model": "claude-haiku-5-5",
+          "effort": "low",
+          "max_tokens": 8000
+        }
+      },
+      "nodes": {
+        "scout": "small",
+        "analyst": "small",
+        "risk_assessor": "small",
+        "fit_matcher": "small",
+        "pricing": "small",
+        "writer": "strong",
+        "verifier": "small",
+        "critic": "strong",
+        "compliance": "small",
+        "liaison_intent": "small",
+        "liaison": "strong"
+      },
+      "embeddings": "BAAI/bge-small-en-v1.5",
+      "reranker": "Xenova/ms-marco-MiniLM-L-6-v2"
+    },
+    "rag": {
+      "variant": "v3_rerank",
+      "k": 5,
+      "chunk_size": 600,
+      "chunk_overlap": 80,
+      "rrf_k": 60,
+      "rerank_candidates": 30,
+      "outcome_boost": {
+        "won": 0.25,
+        "replied": 0.12,
+        "ignored": -0.05
+      },
+      "corrective_min_score": 0.35,
+      "corrective_max_requeries": 1
+    },
+    "thresholds": {
+      "minimum_fit_score": 0.55,
+      "watch_fit_score": 0.4,
+      "maximum_risk_score": 0.6,
+      "max_proposal_words": 280,
+      "min_proposal_words": 90
+    },
+    "budgets": {
+      "max_tokens_per_job": 60000,
+      "max_revisions": 2,
+      "max_graph_steps": 40
+    },
+    "policy_version": "v1",
+    "gigsim": {
+      "base_url": "http://localhost:8091",
+      "seed_dir": "data/processed/gigsim_seed",
+      "error_rate": 0,
+      "rate_per_min": 0,
+      "personalisation": "heuristic fallback (GIGSIM_LLM_DISABLED=1) to save Groq quota; deterministic"
+    },
+    "llm_cache": "data/cache/evals/llm (hits replay stored token counts; latency only from cold runs)",
+    "rag_variant": "v3_rerank",
+    "settings_hash": "a11dac36e02a2caf"
+  },
+  "n": 68,
+  "status": "partial",
+  "n_requested": 90,
+  "n_errors": 22,
+  "errors": [
+    {
+      "job_id": "~01d38631936c04f647",
+      "error": "RuntimeError: search_evidence failed after retries: TimeoutError: "
+    },
+    {
+      "job_id": "~01c01a1eeabbee80d3",
+      "error": "IndexError: tuple index out of range"
+    },
+    {
+      "job_id": "~01929b2e606a81b710",
+      "error": "IndexError: tuple index out of range"
+    },
+    {
+      "job_id": "~0107d93d182df94070",
+      "error": "IndexError: tuple index out of range"
+    },
+    {
+      "job_id": "~01ee346fc62dfb2cef",
+      "error": "IndexError: tuple index out of range"
+    },
+    {
+      "job_id": "~01f0063019ace1ff59",
+      "error": "IndexError: tuple index out of range"
+    },
+    {
+      "job_id": "~01d489ad1517ab82f5",
+      "error": "IndexError: tuple index out of range"
+    },
+    {
+      "job_id": "~01c4375a73b9dd182e",
+      "error": "IndexError: tuple index out of range"
+    },
+    {
+      "job_id": "~018c57a8ee50f709ab",
+      "error": "IndexError: tuple index out of range"
+    },
+    {
+      "job_id": "~01afb3ed76a6bede24",
+      "error": "IndexError: tuple index out of range"
+    },
+    {
+      "job_id": "~01ccc1e5260222ea6a",
+      "error": "IndexError: tuple index out of range"
+    },
+    {
+      "job_id": "~010e3f92dffdce04bc",
+      "error": "IndexError: tuple index out of range"
+    },
+    {
+      "job_id": "~01ea48aaf78669141b",
+      "error": "IndexError: tuple index out of range"
+    },
+    {
+      "job_id": "~0120373c004a4aab6f",
+      "error": "IndexError: tuple index out of range"
+    },
+    {
+      "job_id": "~01781cfd2872c0cb7b",
+      "error": "IndexError: tuple index out of range"
+    },
+    {
+      "job_id": "~015e32abc8ec3de711",
+      "error": "IndexError: tuple index out of range"
+    },
+    {
+      "job_id": "~0154cb21bde941dbe3",
+      "error": "IndexError: tuple index out of range"
+    },
+    {
+      "job_id": "~015fa3e1813f7d8ebb",
+      "error": "IndexError: tuple index out of range"
+    },
+    {
+      "job_id": "~012fef49b8e55932ac",
+      "error": "IndexError: tuple index out of range"
+    },
+    {
+      "job_id": "~010e1a12805e497c2b",
+      "error": "IndexError: tuple index out of range"
+    }
+  ],
+  "rag_variant": "v3_rerank",
+  "model_profile": "paid",
+  "graph": "bid_graph.build(...).builder.compile(interrupt_before=['proposal_writer'])",
+  "predicted_scam_rule": "risk_report.score > thresholds.maximum_risk_score (0.6)",
+  "dev": {
+    "n": 68,
+    "decision_counts": {
+      "bid": 0,
+      "watch": 31,
+      "skip": 37
+    },
+    "gold_counts": {
+      "bid": 2,
+      "skip": 66
+    },
+    "bid_skip": {
+      "precision": null,
+      "recall": 0.0,
+      "f1": null,
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "tn": 66,
+      "n": 68,
+      "accuracy": 0.9706,
+      "macro_f1": 0.9851
+    },
+    "bid_skip_watch_as_bid": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 31,
+      "fn": 2,
+      "tn": 35,
+      "n": 68,
+      "accuracy": 0.5147
+    },
+    "scam": {
+      "precision": 0.4,
+      "recall": 1.0,
+      "f1": 0.5714,
+      "tp": 2,
+      "fp": 3,
+      "fn": 0,
+      "tn": 63,
+      "n": 68
+    },
+    "injection_detection": {
+      "n": 1,
+      "detected": 1,
+      "skipped": 1
+    },
+    "price": {
+      "n_priced": 0,
+      "inside_band_rate": null
+    },
+    "latency": {
+      "p50_s": 21.4715,
+      "p95_s": 35.112,
+      "n_cold": 68,
+      "n_total": 68
+    },
+    "usage": {
+      "tokens_mean": 11145.9559,
+      "cost_usd_mean": 0.0017,
+      "llm_calls_mean": 4.0,
+      "tokens_total": 757925,
+      "cost_usd_total": 0.1187,
+      "n": 68
+    }
+  },
+  "dev_by_persona": {
+    "ai_ml": {
+      "n": 25,
+      "decision_counts": {
+        "bid": 0,
+        "watch": 14,
+        "skip": 11
+      },
+      "gold_counts": {
+        "bid": 1,
+        "skip": 24
+      },
+      "bid_skip": {
+        "precision": null,
+        "recall": 0.0,
+        "f1": null,
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "tn": 24,
+        "n": 25,
+        "accuracy": 0.96,
+        "macro_f1": 0.9796
+      },
+      "bid_skip_watch_as_bid": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "fp": 14,
+        "fn": 1,
+        "tn": 10,
+        "n": 25,
+        "accuracy": 0.4
+      },
+      "scam": {
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "tn": 25,
+        "n": 25
+      },
+      "injection_detection": {
+        "n": 1,
+        "detected": 1,
+        "skipped": 1
+      },
+      "price": {
+        "n_priced": 0,
+        "inside_band_rate": null
+      },
+      "latency": {
+        "p50_s": 24.194,
+        "p95_s": 173.287,
+        "n_cold": 25,
+        "n_total": 25
+      },
+      "usage": {
+        "tokens_mean": 11197.56,
+        "cost_usd_mean": 0.0018,
+        "llm_calls_mean": 4.0,
+        "tokens_total": 279939,
+        "cost_usd_total": 0.0438,
+        "n": 25
+      }
+    },
+    "fullstack": {
+      "n": 22,
+      "decision_counts": {
+        "bid": 0,
+        "watch": 11,
+        "skip": 11
+      },
+      "gold_counts": {
+        "bid": 0,
+        "skip": 22
+      },
+      "bid_skip": {
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "tn": 22,
+        "n": 22,
+        "accuracy": 1.0,
+        "macro_f1": 1.0
+      },
+      "bid_skip_watch_as_bid": {
+        "precision": 0.0,
+        "recall": null,
+        "f1": null,
+        "tp": 0,
+        "fp": 11,
+        "fn": 0,
+        "tn": 11,
+        "n": 22,
+        "accuracy": 0.5
+      },
+      "scam": {
+        "precision": 0.3333,
+        "recall": 1.0,
+        "f1": 0.5,
+        "tp": 1,
+        "fp": 2,
+        "fn": 0,
+        "tn": 19,
+        "n": 22
+      },
+      "injection_detection": {
+        "n": 0,
+        "detected": 0,
+        "skipped": 0
+      },
+      "price": {
+        "n_priced": 0,
+        "inside_band_rate": null
+      },
+      "latency": {
+        "p50_s": 21.011,
+        "p95_s": 27.0322,
+        "n_cold": 22,
+        "n_total": 22
+      },
+      "usage": {
+        "tokens_mean": 11185.4091,
+        "cost_usd_mean": 0.0018,
+        "llm_calls_mean": 4.0,
+        "tokens_total": 246079,
+        "cost_usd_total": 0.0388,
+        "n": 22
+      }
+    },
+    "data_analyst": {
+      "n": 21,
+      "decision_counts": {
+        "bid": 0,
+        "watch": 6,
+        "skip": 15
+      },
+      "gold_counts": {
+        "bid": 1,
+        "skip": 20
+      },
+      "bid_skip": {
+        "precision": null,
+        "recall": 0.0,
+        "f1": null,
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "tn": 20,
+        "n": 21,
+        "accuracy": 0.9524,
+        "macro_f1": 0.9756
+      },
+      "bid_skip_watch_as_bid": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "fp": 6,
+        "fn": 1,
+        "tn": 14,
+        "n": 21,
+        "accuracy": 0.6667
+      },
+      "scam": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6667,
+        "tp": 1,
+        "fp": 1,
+        "fn": 0,
+        "tn": 19,
+        "n": 21
+      },
+      "injection_detection": {
+        "n": 0,
+        "detected": 0,
+        "skipped": 0
+      },
+      "price": {
+        "n_priced": 0,
+        "inside_band_rate": null
+      },
+      "latency": {
+        "p50_s": 20.755,
+        "p95_s": 28.503,
+        "n_cold": 21,
+        "n_total": 21
+      },
+      "usage": {
+        "tokens_mean": 11043.1905,
+        "cost_usd_mean": 0.0017,
+        "llm_calls_mean": 4.0,
+        "tokens_total": 231907,
+        "cost_usd_total": 0.0361,
+        "n": 21
+      }
+    }
+  },
+  "dev_by_stratum": {
+    "adjacent": {
+      "n": 20,
+      "decision_counts": {
+        "bid": 0,
+        "watch": 10,
+        "skip": 10
+      },
+      "gold_counts": {
+        "bid": 0,
+        "skip": 20
+      },
+      "bid_skip": {
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "tn": 20,
+        "n": 20,
+        "accuracy": 1.0,
+        "macro_f1": 1.0
+      },
+      "bid_skip_watch_as_bid": {
+        "precision": 0.0,
+        "recall": null,
+        "f1": null,
+        "tp": 0,
+        "fp": 10,
+        "fn": 0,
+        "tn": 10,
+        "n": 20,
+        "accuracy": 0.5
+      },
+      "scam": {
+        "precision": 0.3333,
+        "recall": 1.0,
+        "f1": 0.5,
+        "tp": 1,
+        "fp": 2,
+        "fn": 0,
+        "tn": 17,
+        "n": 20
+      },
+      "injection_detection": {
+        "n": 1,
+        "detected": 1,
+        "skipped": 1
+      },
+      "price": {
+        "n_priced": 0,
+        "inside_band_rate": null
+      },
+      "latency": {
+        "p50_s": 24.184,
+        "p95_s": 32.881,
+        "n_cold": 20,
+        "n_total": 20
+      },
+      "usage": {
+        "tokens_mean": 11730.25,
+        "cost_usd_mean": 0.0018,
+        "llm_calls_mean": 4.0,
+        "tokens_total": 234605,
+        "cost_usd_total": 0.0362,
+        "n": 20
+      }
+    },
+    "core": {
+      "n": 27,
+      "decision_counts": {
+        "bid": 0,
+        "watch": 16,
+        "skip": 11
+      },
+      "gold_counts": {
+        "bid": 2,
+        "skip": 25
+      },
+      "bid_skip": {
+        "precision": null,
+        "recall": 0.0,
+        "f1": null,
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "tn": 25,
+        "n": 27,
+        "accuracy": 0.9259,
+        "macro_f1": 0.9615
+      },
+      "bid_skip_watch_as_bid": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "fp": 16,
+        "fn": 2,
+        "tn": 9,
+        "n": 27,
+        "accuracy": 0.3333
+      },
+      "scam": {
+        "precision": 0.0,
+        "recall": null,
+        "f1": null,
+        "tp": 0,
+        "fp": 1,
+        "fn": 0,
+        "tn": 26,
+        "n": 27
+      },
+      "injection_detection": {
+        "n": 0,
+        "detected": 0,
+        "skipped": 0
+      },
+      "price": {
+        "n_priced": 0,
+        "inside_band_rate": null
+      },
+      "latency": {
+        "p50_s": 21.11,
+        "p95_s": 29.3014,
+        "n_cold": 27,
+        "n_total": 27
+      },
+      "usage": {
+        "tokens_mean": 11077.6667,
+        "cost_usd_mean": 0.0018,
+        "llm_calls_mean": 4.0,
+        "tokens_total": 299097,
+        "cost_usd_total": 0.0483,
+        "n": 27
+      }
+    },
+    "unrelated": {
+      "n": 21,
+      "decision_counts": {
+        "bid": 0,
+        "watch": 5,
+        "skip": 16
+      },
+      "gold_counts": {
+        "bid": 0,
+        "skip": 21
+      },
+      "bid_skip": {
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "tn": 21,
+        "n": 21,
+        "accuracy": 1.0,
+        "macro_f1": 1.0
+      },
+      "bid_skip_watch_as_bid": {
+        "precision": 0.0,
+        "recall": null,
+        "f1": null,
+        "tp": 0,
+        "fp": 5,
+        "fn": 0,
+        "tn": 16,
+        "n": 21,
+        "accuracy": 0.7619
+      },
+      "scam": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "tn": 20,
+        "n": 21
+      },
+      "injection_detection": {
+        "n": 0,
+        "detected": 0,
+        "skipped": 0
+      },
+      "price": {
+        "n_priced": 0,
+        "inside_band_rate": null
+      },
+      "latency": {
+        "p50_s": 20.143,
+        "p95_s": 207.448,
+        "n_cold": 21,
+        "n_total": 21
+      },
+      "usage": {
+        "tokens_mean": 10677.2857,
+        "cost_usd_mean": 0.0016,
+        "llm_calls_mean": 4.0,
+        "tokens_total": 224223,
+        "cost_usd_total": 0.0342,
+        "n": 21
+      }
+    }
+  },
+  "k6_risk_assessor_only": {
+    "status": "complete",
+    "n": 100,
+    "n_requested": 100,
+    "n_missing_or_error": 0,
+    "scam": {
+      "precision": 0.9773,
+      "recall": 0.86,
+      "f1": 0.9149,
+      "tp": 43,
+      "fp": 1,
+      "fn": 7,
+      "tn": 49,
+      "n": 100
+    },
+    "latency": {
+      "p50_s": 2.0995,
+      "p95_s": 3.1408,
+      "n_cold": 98,
+      "n_total": 100
+    },
+    "usage": {
+      "tokens_mean": 1683.45,
+      "cost_usd_mean": 0.0002,
+      "llm_calls_mean": 1.0,
+      "tokens_total": 168345,
+      "cost_usd_total": 0.0228,
+      "n": 100
+    },
+    "stopped_early": null,
+    "note": "K6 posts have no GigSim client, so only the post text is assessed; predicted scam = risk score > 0.6"
+  },
+  "stopped_early": null,
+  "exhausted_models": {},
+  "records": [
+    {
+      "job_id": "~0164a44f4f47149781",
+      "persona": "ai_ml",
+      "category": "marketing",
+      "stratum": "unrelated",
+      "status": "done",
+      "next": [],
+      "decision": "watch",
+      "reasons": [
+        "fit 0.50 below bid threshold 0.55"
+      ],
+      "fit_score": 0.5,
+      "risk_score": 0.4,
+      "risk_flags": [
+        "scope_budget_mismatch"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "deliver 250 valid email addresses",
+        "source contacts from LinkedIn",
+        "follow the instructions in the linked video"
+      ],
+      "evidence_ids": [
+        "ai_ml:proposal:139",
+        "ai_ml:repo:rag-eval-kit",
+        "ai_ml:proposal:036",
+        "ai_ml:proposal:122",
+        "ai_ml:proposal:116",
+        "ai_ml:repo:lead-agent"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 7888,
+        "output_tokens": 1482,
+        "tokens": 9370,
+        "cost_usd": 0.0015,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 5451.0,
+            "cost_usd": 0.0008
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 1959.0,
+            "cost_usd": 0.0003
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1960.0,
+            "cost_usd": 0.0004
+          }
+        }
+      },
+      "latency_s": 208.091,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~01092129f6ae516530",
+      "persona": "ai_ml",
+      "category": "video_audio",
+      "stratum": "unrelated",
+      "status": "done",
+      "next": [],
+      "decision": "skip",
+      "reasons": [
+        "fit 0.12 below 0.4: missing Music Composition, Audio Production, Voice Talent, Music Arrangement"
+      ],
+      "fit_score": 0.125,
+      "risk_score": 0.3,
+      "risk_flags": [
+        "scope_budget_mismatch",
+        "weak_client"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "compose short jingle for video intro",
+        "produce jingle with vocals",
+        "arrange and mix final audio",
+        "provide demos before hire"
+      ],
+      "evidence_ids": [
+        "ai_ml:proposal:120",
+        "ai_ml:proposal:122",
+        "ai_ml:case:podcast-transcription-pipeline"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 9082,
+        "output_tokens": 1090,
+        "tokens": 10172,
+        "cost_usd": 0.0015,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 6443.0,
+            "cost_usd": 0.0009
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2095.0,
+            "cost_usd": 0.0003
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1634.0,
+            "cost_usd": 0.0002
+          }
+        }
+      },
+      "latency_s": 207.448,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~012c4aea4146bb6fe9",
+      "persona": "ai_ml",
+      "category": "ml_ai",
+      "stratum": "core",
+      "status": "done",
+      "next": [],
+      "decision": "watch",
+      "reasons": [
+        "fit 0.50 below bid threshold 0.55"
+      ],
+      "fit_score": 0.5,
+      "risk_score": 0.4,
+      "risk_flags": [
+        "scope_budget_mismatch",
+        "weak_client"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "design full PyTorch project",
+        "apply vision-language model expertise",
+        "apply large language model expertise",
+        "apply computer vision expertise",
+        "apply multimodal learning expertise"
+      ],
+      "evidence_ids": [
+        "ai_ml:case:invoice-field-extraction",
+        "ai_ml:case:defect-image-classifier",
+        "ai_ml:case:prompt-audit-copy-tool"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 10037,
+        "output_tokens": 1471,
+        "tokens": 11508,
+        "cost_usd": 0.0017,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 7529.0,
+            "cost_usd": 0.0011
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2137.0,
+            "cost_usd": 0.0004
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1842.0,
+            "cost_usd": 0.0003
+          }
+        }
+      },
+      "latency_s": 31.971,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~017ada0f9940b6d9e4",
+      "persona": "ai_ml",
+      "category": "admin_support",
+      "stratum": "unrelated",
+      "status": "done",
+      "next": [],
+      "decision": "skip",
+      "reasons": [
+        "fit 0.33 below 0.4: missing English"
+      ],
+      "fit_score": 0.333,
+      "risk_score": 0.45,
+      "risk_flags": [
+        "scope_budget_mismatch",
+        "weak_client"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "add creator profiles to listing website",
+        "copy profile data from similar websites",
+        "complete about 40 entries per day"
+      ],
+      "evidence_ids": [
+        "ai_ml:proposal:069",
+        "ai_ml:case:invoice-field-extraction"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 7726,
+        "output_tokens": 2009,
+        "tokens": 9735,
+        "cost_usd": 0.0018,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 6228.0,
+            "cost_usd": 0.0012
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 1959.0,
+            "cost_usd": 0.0003
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1548.0,
+            "cost_usd": 0.0002
+          }
+        }
+      },
+      "latency_s": 36.42,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~012876772a812f6aa2",
+      "persona": "ai_ml",
+      "category": "data_engineering",
+      "stratum": "adjacent",
+      "status": "done",
+      "next": [],
+      "decision": "watch",
+      "reasons": [
+        "fit 0.50 below bid threshold 0.55"
+      ],
+      "fit_score": 0.5,
+      "risk_score": 0.25,
+      "risk_flags": [
+        "scope_budget_mismatch"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "build batch and streaming data pipelines",
+        "design data models",
+        "work with Azure Data Lake and ADF",
+        "develop in PySpark and SQL on Databricks",
+        "full-time remote availability (8 hours per day)",
+        "5+ years of data engineering experience"
+      ],
+      "evidence_ids": [
+        "ai_ml:case:review-topic-mining",
+        "ai_ml:proposal:004",
+        "ai_ml:case:churn-uplift-telco",
+        "ai_ml:review:014",
+        "ai_ml:proposal:046",
+        "ai_ml:proposal:145",
+        "ai_ml:proposal:101",
+        "ai_ml:proposal:086",
+        "ai_ml:cv:main"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 9906,
+        "output_tokens": 1597,
+        "tokens": 11503,
+        "cost_usd": 0.0018,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 7729.0,
+            "cost_usd": 0.0012
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1619.0,
+            "cost_usd": 0.0002
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2155.0,
+            "cost_usd": 0.0004
+          }
+        }
+      },
+      "latency_s": 36.643,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~0100106f88fc5364e2",
+      "persona": "ai_ml",
+      "category": "automation_scraping",
+      "stratum": "adjacent",
+      "status": "done",
+      "next": [],
+      "decision": "watch",
+      "reasons": [
+        "fit 0.50 below bid threshold 0.55"
+      ],
+      "fit_score": 0.5,
+      "risk_score": 0.15,
+      "risk_flags": [
+        "scope_budget_mismatch"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "scrape lawmaker voting records on all bills",
+        "follow links to pages within pages",
+        "deliver code in R or Python"
+      ],
+      "evidence_ids": [
+        "ai_ml:proposal:090",
+        "ai_ml:proposal:123",
+        "ai_ml:review:008",
+        "ai_ml:proposal:095",
+        "ai_ml:case:invoice-field-extraction",
+        "ai_ml:proposal:069",
+        "ai_ml:proposal:020"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 7624,
+        "output_tokens": 1115,
+        "tokens": 8739,
+        "cost_usd": 0.0013,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 5062.0,
+            "cost_usd": 0.0007
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2074.0,
+            "cost_usd": 0.0004
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1603.0,
+            "cost_usd": 0.0002
+          }
+        }
+      },
+      "latency_s": 23.992,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~0152650bf7dcbdfbba",
+      "persona": "ai_ml",
+      "category": "automation_scraping",
+      "stratum": "adjacent",
+      "status": "done",
+      "next": [],
+      "decision": "watch",
+      "reasons": [
+        "client's top rate 20.0 is well under your floor 150"
+      ],
+      "fit_score": 0.625,
+      "risk_score": 0.12,
+      "risk_flags": [],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "scrape data from public web pages",
+        "collect data from around 1500 to 2000 pages",
+        "work with Python or PHP",
+        "parse HTML pages"
+      ],
+      "evidence_ids": [
+        "ai_ml:proposal:046",
+        "ai_ml:case:invoice-field-extraction",
+        "ai_ml:proposal:095",
+        "ai_ml:case:research-data-cleaning",
+        "ai_ml:proposal:090",
+        "ai_ml:proposal:075",
+        "ai_ml:proposal:123",
+        "ai_ml:proposal:139"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 8587,
+        "output_tokens": 1252,
+        "tokens": 9839,
+        "cost_usd": 0.0015,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 6211.0,
+            "cost_usd": 0.0009
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 1976.0,
+            "cost_usd": 0.0003
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1652.0,
+            "cost_usd": 0.0002
+          }
+        }
+      },
+      "latency_s": 21.752,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~01db2fe9d0d2820c4e",
+      "persona": "ai_ml",
+      "category": "data_analysis",
+      "stratum": "adjacent",
+      "status": "done",
+      "next": [],
+      "decision": "skip",
+      "reasons": [
+        "fit 0.21 below 0.4: missing Microsoft Azure, Microsoft Entra, Power BI or Tableau, Data visualization"
+      ],
+      "fit_score": 0.214,
+      "risk_score": 0.25,
+      "risk_flags": [
+        "weak_client"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "build Azure/Entra dashboard with failed login tile",
+        "build tile for logins from outside the UK",
+        "build tile for failed admin-account logins",
+        "build tile for accounts using only single-factor authentication",
+        "schedule weekly report of accounts inactive over 2 months",
+        "schedule weekly report of MS Safe Score",
+        "schedule weekly report of third-party SSO agreements expiring within 2 months",
+        "automate report and real-time email alerts"
+      ],
+      "evidence_ids": [
+        "ai_ml:proposal:042",
+        "ai_ml:case:credit-model-mlops",
+        "ai_ml:case:crm-lead-agent",
+        "ai_ml:proposal:014",
+        "ai_ml:proposal:061",
+        "ai_ml:cv:main",
+        "ai_ml:case:hotel-review-sentiment"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 12557,
+        "output_tokens": 1810,
+        "tokens": 14367,
+        "cost_usd": 0.0022,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 9888.0,
+            "cost_usd": 0.0015
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1932.0,
+            "cost_usd": 0.0002
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2547.0,
+            "cost_usd": 0.0004
+          }
+        }
+      },
+      "latency_s": 32.683,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~01562ea678dda204a1",
+      "persona": "ai_ml",
+      "category": "data_engineering",
+      "stratum": "adjacent",
+      "status": "done",
+      "next": [],
+      "decision": "watch",
+      "reasons": [
+        "fit 0.50 below bid threshold 0.55"
+      ],
+      "fit_score": 0.5,
+      "risk_score": 0.12,
+      "risk_flags": [],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "import Microsoft Ads campaign data into BigQuery",
+        "schedule daily pipeline run at 7am EST",
+        "document entire process with detailed instructions and screenshots",
+        "connect BigQuery table to Power BI",
+        "build basic daily performance dashboard in Power BI"
+      ],
+      "evidence_ids": [
+        "ai_ml:proposal:086",
+        "ai_ml:proposal:042",
+        "ai_ml:proposal:073",
+        "ai_ml:case:hotel-review-sentiment",
+        "ai_ml:proposal:052",
+        "ai_ml:proposal:131",
+        "ai_ml:case:invoice-field-extraction",
+        "ai_ml:proposal:101",
+        "ai_ml:case:credit-model-mlops",
+        "ai_ml:proposal:032"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 10842,
+        "output_tokens": 1695,
+        "tokens": 12537,
+        "cost_usd": 0.0019,
+        "by_node": {
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1887.0,
+            "cost_usd": 0.0002
+          },
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 8100.0,
+            "cost_usd": 0.0012
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2550.0,
+            "cost_usd": 0.0005
+          }
+        }
+      },
+      "latency_s": 30.376,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~0141cf65704f2e4f3e",
+      "persona": "ai_ml",
+      "category": "ml_ai",
+      "stratum": "core",
+      "status": "done",
+      "next": [],
+      "decision": "watch",
+      "reasons": [
+        "fit 0.50 below bid threshold 0.55"
+      ],
+      "fit_score": 0.5,
+      "risk_score": 0.35,
+      "risk_flags": [
+        "scope_budget_mismatch",
+        "weak_client"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "teach beginners Python and Java",
+        "experience in Python development",
+        "data science or machine learning background",
+        "teach beginners programming tools"
+      ],
+      "evidence_ids": [
+        "ai_ml:cv:main",
+        "ai_ml:proposal:052",
+        "ai_ml:case:defect-image-classifier",
+        "ai_ml:proposal:113",
+        "ai_ml:proposal:018",
+        "ai_ml:proposal:026",
+        "ai_ml:proposal:140"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 9355,
+        "output_tokens": 2320,
+        "tokens": 11675,
+        "cost_usd": 0.0021,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 7671.0,
+            "cost_usd": 0.0015
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2229.0,
+            "cost_usd": 0.0004
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1775.0,
+            "cost_usd": 0.0002
+          }
+        }
+      },
+      "latency_s": 30.214,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~0108d915d8a64838be",
+      "persona": "ai_ml",
+      "category": "data_analysis",
+      "stratum": "adjacent",
+      "status": "done",
+      "next": [],
+      "decision": "watch",
+      "reasons": [
+        "fit 0.50 below bid threshold 0.55"
+      ],
+      "fit_score": 0.5,
+      "risk_score": 0.15,
+      "risk_flags": [],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "solve statistical problems on non-parametric coherence tests"
+      ],
+      "evidence_ids": [
+        "ai_ml:proposal:067",
+        "ai_ml:proposal:112",
+        "ai_ml:cv:main",
+        "ai_ml:review:004",
+        "ai_ml:case:research-data-cleaning",
+        "ai_ml:proposal:031",
+        "ai_ml:case:review-topic-mining"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 7724,
+        "output_tokens": 990,
+        "tokens": 8714,
+        "cost_usd": 0.0013,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 5208.0,
+            "cost_usd": 0.0007
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 1973.0,
+            "cost_usd": 0.0003
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1533.0,
+            "cost_usd": 0.0002
+          }
+        }
+      },
+      "latency_s": 21.153,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~01e2d9b4f32c9fea28",
+      "persona": "ai_ml",
+      "category": "ml_ai",
+      "stratum": "core",
+      "status": "done",
+      "next": [],
+      "decision": "skip",
+      "reasons": [
+        "fit 0.38 below 0.4: missing TensorFlow, PyTorch, Data Analysis, Backtesting"
+      ],
+      "fit_score": 0.375,
+      "risk_score": 0.6,
+      "risk_flags": [
+        "off_platform"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "build NER or token classification model for financial trading text",
+        "extract trading signals and entities from Telegram messages",
+        "backtest trading strategies from extracted data",
+        "deliver detailed accuracy and backtest report",
+        "portfolio of relevant ML/NLP projects",
+        "Python with TensorFlow, PyTorch, or spaCy"
+      ],
+      "evidence_ids": [
+        "ai_ml:case:call-intent-classifier",
+        "ai_ml:repo:docparse-lite",
+        "ai_ml:case:resume-parser-ner",
+        "ai_ml:repo:lead-agent"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 10556,
+        "output_tokens": 1546,
+        "tokens": 12102,
+        "cost_usd": 0.0018,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 6914.0,
+            "cost_usd": 0.001
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 2264.0,
+            "cost_usd": 0.0003
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2924.0,
+            "cost_usd": 0.0005
+          }
+        }
+      },
+      "latency_s": 19.477,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~0135fec6794f287609",
+      "persona": "ai_ml",
+      "category": "ml_ai",
+      "stratum": "core",
+      "status": "done",
+      "next": [],
+      "decision": "watch",
+      "reasons": [
+        "client's top rate 30.0 is well under your floor 150"
+      ],
+      "fit_score": 0.667,
+      "risk_score": 0.45,
+      "risk_flags": [
+        "injection",
+        "scope_budget_mismatch"
+      ],
+      "injection_detected": true,
+      "price": null,
+      "requirements": [
+        "provide quick Python AI/ML/LLM consultation",
+        "immediate availability",
+        "Python expertise in AI and ML",
+        "LLM expertise"
+      ],
+      "evidence_ids": [
+        "ai_ml:proposal:126",
+        "ai_ml:proposal:102",
+        "ai_ml:proposal:036",
+        "ai_ml:case:crm-lead-agent",
+        "ai_ml:proposal:050",
+        "ai_ml:proposal:097",
+        "ai_ml:proposal:003",
+        "ai_ml:proposal:064",
+        "ai_ml:proposal:013"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 8147,
+        "output_tokens": 1747,
+        "tokens": 9894,
+        "cost_usd": 0.0017,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 5464.0,
+            "cost_usd": 0.0008
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2217.0,
+            "cost_usd": 0.0004
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 2213.0,
+            "cost_usd": 0.0005
+          }
+        }
+      },
+      "latency_s": 16.829,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~0143f283e9c941544b",
+      "persona": "ai_ml",
+      "category": "data_analysis",
+      "stratum": "adjacent",
+      "status": "done",
+      "next": [],
+      "decision": "watch",
+      "reasons": [
+        "fit 0.40 below bid threshold 0.55"
+      ],
+      "fit_score": 0.4,
+      "risk_score": 0.25,
+      "risk_flags": [
+        "injection"
+      ],
+      "injection_detected": true,
+      "price": null,
+      "requirements": [
+        "forecast next-year unit sales for specific products",
+        "calculate raw material quantities from purchase history over last 12 months",
+        "deliver report by Wednesday for Friday supplier discussions",
+        "experience with supply chain, operations or manufacturing reporting",
+        "support transition from Unleashed to CIN7 Core reporting"
+      ],
+      "evidence_ids": [
+        "ai_ml:case:bakery-demand-forecast",
+        "ai_ml:review:003",
+        "ai_ml:case:invoice-field-extraction",
+        "ai_ml:proposal:061",
+        "ai_ml:proposal:046",
+        "ai_ml:cv:main",
+        "ai_ml:case:credit-model-mlops"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 11043,
+        "output_tokens": 1778,
+        "tokens": 12821,
+        "cost_usd": 0.002,
+        "by_node": {
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 2059.0,
+            "cost_usd": 0.0003
+          },
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 8099.0,
+            "cost_usd": 0.0012
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2663.0,
+            "cost_usd": 0.0005
+          }
+        }
+      },
+      "latency_s": 27.351,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~01c44d53663ede1726",
+      "persona": "ai_ml",
+      "category": "automation_scraping",
+      "stratum": "adjacent",
+      "status": "done",
+      "next": [],
+      "decision": "watch",
+      "reasons": [
+        "fit 0.50 below bid threshold 0.55"
+      ],
+      "fit_score": 0.5,
+      "risk_score": 0.25,
+      "risk_flags": [
+        "weak_client"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "scrape business listings for Philadelphia County",
+        "collect owner name, cell phone, email and address",
+        "ensure accuracy and attention to detail in collected data"
+      ],
+      "evidence_ids": [
+        "ai_ml:proposal:095",
+        "ai_ml:proposal:069",
+        "ai_ml:proposal:028",
+        "ai_ml:proposal:099",
+        "ai_ml:proposal:139",
+        "ai_ml:proposal:036",
+        "ai_ml:proposal:113",
+        "ai_ml:case:contract-qa-rag",
+        "ai_ml:proposal:100",
+        "ai_ml:proposal:020",
+        "ai_ml:proposal:054",
+        "ai_ml:proposal:090"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 9757,
+        "output_tokens": 2053,
+        "tokens": 11810,
+        "cost_usd": 0.002,
+        "by_node": {
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2242.0,
+            "cost_usd": 0.0004
+          },
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 7639.0,
+            "cost_usd": 0.0013
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1929.0,
+            "cost_usd": 0.0003
+          }
+        }
+      },
+      "latency_s": 25.665,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~017d9434453bf52b4f",
+      "persona": "ai_ml",
+      "category": "video_audio",
+      "stratum": "unrelated",
+      "status": "done",
+      "next": [],
+      "decision": "skip",
+      "reasons": [
+        "fit 0.25 below 0.4: missing Videography, Camera operation, Lighting"
+      ],
+      "fit_score": 0.25,
+      "risk_score": 0.25,
+      "risk_flags": [
+        "weak_client"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "film walkthrough of large warehouse interior",
+        "highlight rooms, elevators and garages",
+        "edit final walkthrough video",
+        "work within 4 hours of filming time",
+        "provide lighting for unpowered building"
+      ],
+      "evidence_ids": [
+        "ai_ml:proposal:122",
+        "ai_ml:proposal:035"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 9530,
+        "output_tokens": 1198,
+        "tokens": 10728,
+        "cost_usd": 0.0016,
+        "by_node": {
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2285.0,
+            "cost_usd": 0.0004
+          },
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 6626.0,
+            "cost_usd": 0.0009
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1817.0,
+            "cost_usd": 0.0002
+          }
+        }
+      },
+      "latency_s": 21.859,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~015a422035f3852461",
+      "persona": "ai_ml",
+      "category": "mobile",
+      "stratum": "unrelated",
+      "status": "done",
+      "next": [],
+      "decision": "skip",
+      "reasons": [
+        "fit 0.33 below 0.4: missing Android XML layouts, Figma, Android app development"
+      ],
+      "fit_score": 0.333,
+      "risk_score": 0.22,
+      "risk_flags": [
+        "scope_budget_mismatch"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "convert 3 Figma screens into Android XML layouts",
+        "produce valid Android code",
+        "match Figma design in XML"
+      ],
+      "evidence_ids": [
+        "ai_ml:case:podcast-transcription-pipeline",
+        "ai_ml:repo:docparse-lite"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 8412,
+        "output_tokens": 959,
+        "tokens": 9371,
+        "cost_usd": 0.0013,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 5444.0,
+            "cost_usd": 0.0007
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1787.0,
+            "cost_usd": 0.0002
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2140.0,
+            "cost_usd": 0.0003
+          }
+        }
+      },
+      "latency_s": 19.383,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~0169a3e4294b01cf8c",
+      "persona": "ai_ml",
+      "category": "data_analysis",
+      "stratum": "adjacent",
+      "status": "done",
+      "next": [],
+      "decision": "skip",
+      "reasons": [
+        "fit 0.25 below 0.4: missing Training, Communication"
+      ],
+      "fit_score": 0.25,
+      "risk_score": 0.2,
+      "risk_flags": [
+        "scope_budget_mismatch"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "minimum 8 years of data analysis experience",
+        "prior training or teaching experience",
+        "high level understanding of data analyst roles and responsibilities",
+        "good communication skills",
+        "deliver remote training over Zoom",
+        "75 minutes per day for 22 days"
+      ],
+      "evidence_ids": [
+        "ai_ml:proposal:113",
+        "ai_ml:proposal:131",
+        "ai_ml:cv:main",
+        "ai_ml:case:call-intent-classifier"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 8929,
+        "output_tokens": 1807,
+        "tokens": 10736,
+        "cost_usd": 0.0018,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 7009.0,
+            "cost_usd": 0.0012
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1645.0,
+            "cost_usd": 0.0002
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2082.0,
+            "cost_usd": 0.0004
+          }
+        }
+      },
+      "latency_s": 21.749,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~01366d1554987208ee",
+      "persona": "ai_ml",
+      "category": "web_fullstack",
+      "stratum": "unrelated",
+      "status": "done",
+      "next": [],
+      "decision": "watch",
+      "reasons": [
+        "fit 0.40 below bid threshold 0.55"
+      ],
+      "fit_score": 0.4,
+      "risk_score": 0.12,
+      "risk_flags": [],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "build job application tracker similar to huntr.co",
+        "build kanban-style board UI",
+        "use Rails with Hotwire",
+        "style with Bootstrap 5 and SCSS",
+        "store data in PostgreSQL",
+        "provide time and cost estimate",
+        "provide DB schema"
+      ],
+      "evidence_ids": [
+        "ai_ml:proposal:018",
+        "ai_ml:proposal:011",
+        "ai_ml:proposal:063",
+        "ai_ml:proposal:135",
+        "ai_ml:proposal:086",
+        "ai_ml:proposal:042"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 9956,
+        "output_tokens": 1439,
+        "tokens": 11395,
+        "cost_usd": 0.0017,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 7532.0,
+            "cost_usd": 0.0011
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2218.0,
+            "cost_usd": 0.0004
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1645.0,
+            "cost_usd": 0.0002
+          }
+        }
+      },
+      "latency_s": 16.783,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~0138e5d5d34757694a",
+      "persona": "ai_ml",
+      "category": "ml_ai",
+      "stratum": "core",
+      "status": "done",
+      "next": [],
+      "decision": "watch",
+      "reasons": [
+        "client's top rate 20.0 is well under your floor 150"
+      ],
+      "fit_score": 0.667,
+      "risk_score": 0.6,
+      "risk_flags": [
+        "scope_budget_mismatch",
+        "unpaid_work"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "generate 100 AI model videos",
+        "match provided sample in extremely HD and HQ quality",
+        "produce unique and authentic AI-generated images",
+        "optional: create 100 thumbnails for $7 extra"
+      ],
+      "evidence_ids": [
+        "ai_ml:proposal:148",
+        "ai_ml:proposal:121",
+        "ai_ml:proposal:036",
+        "ai_ml:proposal:034",
+        "ai_ml:proposal:122"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 8173,
+        "output_tokens": 2167,
+        "tokens": 10340,
+        "cost_usd": 0.0019,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 6428.0,
+            "cost_usd": 0.0013
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1710.0,
+            "cost_usd": 0.0002
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2202.0,
+            "cost_usd": 0.0004
+          }
+        }
+      },
+      "latency_s": 18.828,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~010a50aecbe566a0f8",
+      "persona": "ai_ml",
+      "category": "design_3d",
+      "stratum": "unrelated",
+      "status": "done",
+      "next": [],
+      "decision": "skip",
+      "reasons": [
+        "fit 0.12 below 0.4: missing Blender Python API, Blender add-on development, Grease Pencil, 3D Modeling"
+      ],
+      "fit_score": 0.125,
+      "risk_score": 0.12,
+      "risk_flags": [
+        "scope_budget_mismatch"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "build Blender add-ons for Grease Pencil",
+        "automatically connect and rig character image parts (head, torso, arms)",
+        "use Blender Python API",
+        "close feature gap with Moho and Toon Boom"
+      ],
+      "evidence_ids": [
+        "ai_ml:case:contract-qa-rag",
+        "ai_ml:case:defect-image-classifier"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 8898,
+        "output_tokens": 1169,
+        "tokens": 10067,
+        "cost_usd": 0.0015,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 6112.0,
+            "cost_usd": 0.0008
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2204.0,
+            "cost_usd": 0.0004
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1751.0,
+            "cost_usd": 0.0002
+          }
+        }
+      },
+      "latency_s": 16.537,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~012f53d732e4ea4551",
+      "persona": "ai_ml",
+      "category": "admin_support",
+      "stratum": "unrelated",
+      "status": "done",
+      "next": [],
+      "decision": "skip",
+      "reasons": [
+        "fit 0.33 below 0.4: missing Virtual Assistance, Google Docs, Google Slides, ClickUp"
+      ],
+      "fit_score": 0.333,
+      "risk_score": 0.2,
+      "risk_flags": [],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "provide customer support via email and online chat",
+        "update tasks and track contractor progress in ClickUp",
+        "work with Google Docs, Slides and Sheets",
+        "design graphics in Canva",
+        "plan travel for conference attendance",
+        "research products, services and data conferences",
+        "support monthly accounting",
+        "track time with Upwork Work Diary, no manual entry"
+      ],
+      "evidence_ids": [
+        "ai_ml:case:shopify-faq-bot",
+        "ai_ml:review:012",
+        "ai_ml:proposal:013",
+        "ai_ml:proposal:148",
+        "ai_ml:proposal:032",
+        "ai_ml:proposal:010",
+        "ai_ml:proposal:044",
+        "ai_ml:proposal:099",
+        "ai_ml:proposal:135",
+        "ai_ml:review:006",
+        "ai_ml:proposal:031",
+        "ai_ml:case:support-ticket-triage",
+        "ai_ml:case:research-data-cleaning"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 12299,
+        "output_tokens": 1782,
+        "tokens": 14081,
+        "cost_usd": 0.0021,
+        "by_node": {
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 2195.0,
+            "cost_usd": 0.0003
+          },
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 8978.0,
+            "cost_usd": 0.0013
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2908.0,
+            "cost_usd": 0.0005
+          }
+        }
+      },
+      "latency_s": 17.648,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~017abfc81598753bc2",
+      "persona": "ai_ml",
+      "category": "ml_ai",
+      "stratum": "core",
+      "status": "done",
+      "next": [],
+      "decision": "skip",
+      "reasons": [
+        "fit 0.33 below 0.4: missing Natural Language Understanding, Semantic Analysis, Knowledge Representation, Knowledge Graphs"
+      ],
+      "fit_score": 0.333,
+      "risk_score": 0.15,
+      "risk_flags": [],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "apply semantic analysis beyond literal text interpretation",
+        "tailor NLP methods to philosophical text",
+        "build knowledge graph of spiritual works, lineages and concepts",
+        "demonstrated research experience or publications in NLP or computational linguistics",
+        "experience with non-literal text such as symbolism or philosophy",
+        "collaborate with AI engineers and content specialists"
+      ],
+      "evidence_ids": [
+        "ai_ml:proposal:092",
+        "ai_ml:proposal:122",
+        "ai_ml:case:support-ticket-triage",
+        "ai_ml:case:review-topic-mining",
+        "ai_ml:case:call-intent-classifier",
+        "ai_ml:proposal:025",
+        "ai_ml:proposal:056",
+        "ai_ml:repo:lead-agent",
+        "ai_ml:case:crm-lead-agent"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 13442,
+        "output_tokens": 2053,
+        "tokens": 15495,
+        "cost_usd": 0.0024,
+        "by_node": {
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 2540.0,
+            "cost_usd": 0.0003
+          },
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 9635.0,
+            "cost_usd": 0.0015
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 3320.0,
+            "cost_usd": 0.0006
+          }
+        }
+      },
+      "latency_s": 26.907,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~0176a18cef3ef81598",
+      "persona": "ai_ml",
+      "category": "other",
+      "stratum": "unrelated",
+      "status": "done",
+      "next": [],
+      "decision": "skip",
+      "reasons": [
+        "fit 0.00 below 0.4: missing HVAC System Design, AutoCAD, HVAC Loads Calculations, Mechanical Engineering"
+      ],
+      "fit_score": 0.0,
+      "risk_score": 0.15,
+      "risk_flags": [
+        "weak_client"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "size ductwork for cleanroom FFU supply",
+        "design ductwork connecting existing HVAC unit to each FFU",
+        "maintain room temperature 26-28 C via supply air",
+        "account for 80-95% humidity from in-room humidifier",
+        "protect FFU filters from moisture",
+        "match 8,000 m3/hour FFU airflow and exhaust"
+      ],
+      "evidence_ids": [
+        "ai_ml:proposal:013",
+        "ai_ml:proposal:010",
+        "ai_ml:proposal:039",
+        "ai_ml:proposal:099",
+        "ai_ml:case:defect-image-classifier"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 9183,
+        "output_tokens": 1395,
+        "tokens": 10578,
+        "cost_usd": 0.0016,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 6267.0,
+            "cost_usd": 0.0009
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2443.0,
+            "cost_usd": 0.0005
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1868.0,
+            "cost_usd": 0.0002
+          }
+        }
+      },
+      "latency_s": 24.194,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~01c46b191126f4abd8",
+      "persona": "ai_ml",
+      "category": "ml_ai",
+      "stratum": "core",
+      "status": "done",
+      "next": [],
+      "decision": "watch",
+      "reasons": [
+        "client's top rate 30.0 is well under your floor 40.0"
+      ],
+      "fit_score": 0.7,
+      "risk_score": 0.12,
+      "risk_flags": [],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "craft prompts that give stable results from LLMs such as ChatGPT",
+        "wrap queries in Python functions for a shared project",
+        "build vector database indexing and retrieval over documents",
+        "work in Russian language for MVP stage"
+      ],
+      "evidence_ids": [
+        "ai_ml:proposal:043",
+        "ai_ml:proposal:010",
+        "ai_ml:repo:rag-eval-kit",
+        "ai_ml:case:prompt-audit-copy-tool",
+        "ai_ml:proposal:126",
+        "ai_ml:case:crm-lead-agent",
+        "ai_ml:case:contract-qa-rag",
+        "ai_ml:proposal:036",
+        "ai_ml:proposal:077",
+        "ai_ml:proposal:102"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 10697,
+        "output_tokens": 1665,
+        "tokens": 12362,
+        "cost_usd": 0.0019,
+        "by_node": {
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1879.0,
+            "cost_usd": 0.0002
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2429.0,
+            "cost_usd": 0.0004
+          },
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 8054.0,
+            "cost_usd": 0.0012
+          }
+        }
+      },
+      "latency_s": 24.719,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~01af975ee658df2a91",
+      "persona": "fullstack",
+      "category": "web_fullstack",
+      "stratum": "core",
+      "status": "done",
+      "next": [],
+      "decision": "watch",
+      "reasons": [
+        "fit 0.50 below bid threshold 0.55"
+      ],
+      "fit_score": 0.5,
+      "risk_score": 0.25,
+      "risk_flags": [
+        "scope_budget_mismatch"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "develop travel planner application",
+        "apply Semantic Web and Linked Data technologies",
+        "ontology engineering",
+        "knowledge representation",
+        "web front end in JavaScript and HTML/CSS",
+        "back end in PHP with REST API"
+      ],
+      "evidence_ids": [
+        "fullstack:cv:main",
+        "fullstack:case:figma-to-tailwind-landing",
+        "fullstack:case:gym-chain-graphql-api",
+        "fullstack:case:e2e-test-suite",
+        "fullstack:case:woocommerce-tweaks",
+        "fullstack:proposal:094"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 10433,
+        "output_tokens": 2585,
+        "tokens": 13018,
+        "cost_usd": 0.0023,
+        "by_node": {
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2094.0,
+            "cost_usd": 0.0003
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1663.0,
+            "cost_usd": 0.0002
+          },
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 9261.0,
+            "cost_usd": 0.0018
+          }
+        }
+      },
+      "latency_s": 27.172,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~01d3bf08db3e246405",
+      "persona": "fullstack",
+      "category": "web_fullstack",
+      "stratum": "core",
+      "status": "done",
+      "next": [],
+      "decision": "watch",
+      "reasons": [
+        "client's top rate 15.0 is well under your floor 35.0"
+      ],
+      "fit_score": 0.7,
+      "risk_score": 0.2,
+      "risk_flags": [
+        "scope_budget_mismatch"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "build e-commerce website for CBD retail store",
+        "integrate payment gateway",
+        "build product catalog",
+        "implement secure checkout process",
+        "ensure mobile-responsive design across devices and browsers",
+        "optimize website for search engines"
+      ],
+      "evidence_ids": [
+        "fullstack:review:010",
+        "fullstack:case:shopify-bundles-app",
+        "fullstack:repo:bundle-builder",
+        "fullstack:case:woocommerce-tweaks",
+        "fullstack:case:tallyhub-billing",
+        "fullstack:case:figma-to-tailwind-landing",
+        "fullstack:case:marketplace-payouts-fix",
+        "fullstack:case:magazine-headless-migration",
+        "fullstack:case:core-web-vitals-rescue",
+        "fullstack:case:lumen-design-system"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 10510,
+        "output_tokens": 1612,
+        "tokens": 12122,
+        "cost_usd": 0.0019,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 7617.0,
+            "cost_usd": 0.0012
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2468.0,
+            "cost_usd": 0.0004
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 2037.0,
+            "cost_usd": 0.0003
+          }
+        }
+      },
+      "latency_s": 23.869,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~01b21bf8f26ef44149",
+      "persona": "fullstack",
+      "category": "marketing",
+      "stratum": "unrelated",
+      "status": "done",
+      "next": [],
+      "decision": "skip",
+      "reasons": [
+        "fit 0.20 below 0.4: missing Copywriting, Content Writing, Social Media Marketing, Project Management"
+      ],
+      "fit_score": 0.2,
+      "risk_score": 0.2,
+      "risk_flags": [
+        "scope_budget_mismatch"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "write social media posts for LinkedIn and Twitter (X)",
+        "write podcast show notes and headlines",
+        "repurpose long-form video and audio into key quotes and takeaways",
+        "manage client content projects",
+        "excellent English and German writing skills",
+        "minimum 15 hours per week part-time freelance commitment"
+      ],
+      "evidence_ids": [
+        "fullstack:proposal:129",
+        "fullstack:cv:main",
+        "fullstack:proposal:038",
+        "fullstack:proposal:028",
+        "fullstack:case:magazine-headless-migration",
+        "fullstack:case:keystone-crm"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 13303,
+        "output_tokens": 1533,
+        "tokens": 14836,
+        "cost_usd": 0.0021,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 8076.0,
+            "cost_usd": 0.0011
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 3709.0,
+            "cost_usd": 0.0006
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 3051.0,
+            "cost_usd": 0.0004
+          }
+        }
+      },
+      "latency_s": 21.257,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~011cc3b1215385e56e",
+      "persona": "fullstack",
+      "category": "web_fullstack",
+      "stratum": "core",
+      "status": "done",
+      "next": [],
+      "decision": "skip",
+      "reasons": [
+        "fit 0.38 below 0.4: missing evidence"
+      ],
+      "fit_score": 0.375,
+      "risk_score": 0.45,
+      "risk_flags": [
+        "scope_budget_mismatch",
+        "weak_client"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "diagnose WordPress 500 error after plugin update",
+        "restore WordPress site from backup",
+        "fix blank pages on WordPress site",
+        "troubleshoot WordPress plugin conflicts"
+      ],
+      "evidence_ids": [
+        "fullstack:case:woocommerce-tweaks",
+        "fullstack:repo:api-starter",
+        "fullstack:case:core-web-vitals-rescue",
+        "fullstack:case:magazine-headless-migration",
+        "fullstack:case:marketplace-payouts-fix"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 8544,
+        "output_tokens": 1279,
+        "tokens": 9823,
+        "cost_usd": 0.0015,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 6152.0,
+            "cost_usd": 0.0009
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2072.0,
+            "cost_usd": 0.0004
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1599.0,
+            "cost_usd": 0.0002
+          }
+        }
+      },
+      "latency_s": 21.11,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~01edfe649df08e2ddc",
+      "persona": "fullstack",
+      "category": "marketing",
+      "stratum": "unrelated",
+      "status": "done",
+      "next": [],
+      "decision": "skip",
+      "reasons": [
+        "fit 0.09 below 0.4: missing Amazon Seller Central, flat file uploads, Helium 10, keyword research"
+      ],
+      "fit_score": 0.091,
+      "risk_score": 0.3,
+      "risk_flags": [
+        "scope_budget_mismatch",
+        "weak_client"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "3+ years working in Seller Central",
+        "experience with flat file uploads",
+        "edit listings and set up variations",
+        "use Helium 10 for keyword research",
+        "resolve listing issues through Amazon support",
+        "set up PPC campaigns (setup only)",
+        "very good written English",
+        "available during UK (GMT) hours"
+      ],
+      "evidence_ids": [
+        "fullstack:proposal:076",
+        "fullstack:proposal:071",
+        "fullstack:case:marketplace-payouts-fix",
+        "fullstack:case:keystone-crm"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 10817,
+        "output_tokens": 2232,
+        "tokens": 13049,
+        "cost_usd": 0.0022,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 8298.0,
+            "cost_usd": 0.0013
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2532.0,
+            "cost_usd": 0.0005
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 2219.0,
+            "cost_usd": 0.0004
+          }
+        }
+      },
+      "latency_s": 23.063,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~017339534b7a4d7d05",
+      "persona": "fullstack",
+      "category": "web_fullstack",
+      "stratum": "core",
+      "status": "done",
+      "next": [],
+      "decision": "watch",
+      "reasons": [
+        "fit 0.50 below bid threshold 0.55"
+      ],
+      "fit_score": 0.5,
+      "risk_score": 0.25,
+      "risk_flags": [
+        "scope_budget_mismatch"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "diagnose add to cart failure on WordPress site",
+        "fix WooCommerce add to cart button",
+        "verify checkout flow works after fix"
+      ],
+      "evidence_ids": [
+        "fullstack:case:shopify-bundles-app",
+        "fullstack:case:core-web-vitals-rescue",
+        "fullstack:case:magazine-headless-migration",
+        "fullstack:case:woocommerce-tweaks"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 7724,
+        "output_tokens": 1149,
+        "tokens": 8873,
+        "cost_usd": 0.0013,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 5268.0,
+            "cost_usd": 0.0008
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1582.0,
+            "cost_usd": 0.0002
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2023.0,
+            "cost_usd": 0.0003
+          }
+        }
+      },
+      "latency_s": 18.4,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~01b136ec727946cf2b",
+      "persona": "fullstack",
+      "category": "devops_cloud",
+      "stratum": "adjacent",
+      "status": "done",
+      "next": [],
+      "decision": "watch",
+      "reasons": [
+        "fit 0.43 below bid threshold 0.55"
+      ],
+      "fit_score": 0.429,
+      "risk_score": 0.2,
+      "risk_flags": [],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "build automation frameworks and advise on best practices",
+        "write automated UI, regression, smoke, and integration test suites",
+        "script in shell, Perl, Python, or PowerShell",
+        "test in containerized environments using Docker and cloud-hosted solutions",
+        "lead and manage a QA team in Agile projects",
+        "report bugs and run compatibility tests across OS, network, and hardware"
+      ],
+      "evidence_ids": [
+        "fullstack:review:013",
+        "fullstack:case:lumen-design-system",
+        "fullstack:proposal:138",
+        "fullstack:proposal:086",
+        "fullstack:case:tenant-auth-service",
+        "fullstack:case:e2e-test-suite",
+        "fullstack:proposal:147",
+        "fullstack:repo:api-starter",
+        "fullstack:repo:tenant-guard",
+        "fullstack:case:keystone-crm",
+        "fullstack:cv:main"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 13840,
+        "output_tokens": 2155,
+        "tokens": 15995,
+        "cost_usd": 0.0025,
+        "by_node": {
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 2425.0,
+            "cost_usd": 0.0003
+          },
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 10388.0,
+            "cost_usd": 0.0016
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 3182.0,
+            "cost_usd": 0.0006
+          }
+        }
+      },
+      "latency_s": 29.591,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~01654f0edd30166c62",
+      "persona": "fullstack",
+      "category": "writing",
+      "stratum": "unrelated",
+      "status": "done",
+      "next": [],
+      "decision": "skip",
+      "reasons": [
+        "fit 0.00 below 0.4: missing English to Spanish translation, English, Translation, Proofreading"
+      ],
+      "fit_score": 0.0,
+      "risk_score": 0.12,
+      "risk_flags": [],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "translate internal newsletter from English to Spanish",
+        "deliver well-done translation quality",
+        "proofread translated text"
+      ],
+      "evidence_ids": [
+        "fullstack:case:keystone-crm",
+        "fullstack:review:001",
+        "fullstack:cv:main",
+        "fullstack:proposal:091",
+        "fullstack:proposal:121"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 7662,
+        "output_tokens": 829,
+        "tokens": 8491,
+        "cost_usd": 0.0012,
+        "by_node": {
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 1970.0,
+            "cost_usd": 0.0003
+          },
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 4952.0,
+            "cost_usd": 0.0007
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1569.0,
+            "cost_usd": 0.0002
+          }
+        }
+      },
+      "latency_s": 21.525,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~01be6791864a4ccad5",
+      "persona": "fullstack",
+      "category": "design_3d",
+      "stratum": "unrelated",
+      "status": "done",
+      "next": [],
+      "decision": "watch",
+      "reasons": [
+        "fit 0.50 below bid threshold 0.55"
+      ],
+      "fit_score": 0.5,
+      "risk_score": 0.08,
+      "risk_flags": [],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "design professional logo for Profound Change LLC",
+        "logo suitable for business cards",
+        "logo suitable for website use",
+        "convey personal and thoughtful brand tone",
+        "freelancer located in the United States"
+      ],
+      "evidence_ids": [
+        "fullstack:case:bakery-logo-refresh",
+        "fullstack:review:002"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 8352,
+        "output_tokens": 1153,
+        "tokens": 9505,
+        "cost_usd": 0.0014,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 5774.0,
+            "cost_usd": 0.0009
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2087.0,
+            "cost_usd": 0.0003
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1644.0,
+            "cost_usd": 0.0002
+          }
+        }
+      },
+      "latency_s": 17.006,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~01812d803d006b657b",
+      "persona": "fullstack",
+      "category": "marketing",
+      "stratum": "unrelated",
+      "status": "done",
+      "next": [],
+      "decision": "skip",
+      "reasons": [
+        "fit 0.25 below 0.4: missing Social Media Marketing, Social Media Content Creation, Short-form video editing, Facebook"
+      ],
+      "fit_score": 0.25,
+      "risk_score": 0.6,
+      "risk_flags": [
+        "scope_budget_mismatch",
+        "unpaid_work",
+        "weak_client"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "create one social media post for SEAMOS",
+        "edit one Reel from provided unedited smoothie videos",
+        "follow social media trends and best practices",
+        "deliver on deadline with attention to detail"
+      ],
+      "evidence_ids": [
+        "fullstack:proposal:129",
+        "fullstack:case:magazine-headless-migration",
+        "fullstack:proposal:071"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 9025,
+        "output_tokens": 1587,
+        "tokens": 10612,
+        "cost_usd": 0.0017,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 6028.0,
+            "cost_usd": 0.0009
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2380.0,
+            "cost_usd": 0.0004
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 2204.0,
+            "cost_usd": 0.0004
+          }
+        }
+      },
+      "latency_s": 14.863,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~010988bbcabbcab4b1",
+      "persona": "fullstack",
+      "category": "design_3d",
+      "stratum": "unrelated",
+      "status": "done",
+      "next": [],
+      "decision": "skip",
+      "reasons": [
+        "risk 0.80 above limit 0.6 (off_platform, scope_budget_mismatch)"
+      ],
+      "fit_score": 0.5,
+      "risk_score": 0.8,
+      "risk_flags": [
+        "off_platform",
+        "scope_budget_mismatch"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "design Amazon store pictures",
+        "set up Amazon store integration",
+        "configure release date",
+        "deliver files in 12 hours total"
+      ],
+      "evidence_ids": [
+        "fullstack:case:figma-to-tailwind-landing",
+        "fullstack:repo:bundle-builder",
+        "fullstack:case:shopify-bundles-app",
+        "fullstack:case:bakery-logo-refresh",
+        "fullstack:review:002"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 7878,
+        "output_tokens": 1479,
+        "tokens": 9357,
+        "cost_usd": 0.0015,
+        "by_node": {
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2173.0,
+            "cost_usd": 0.0004
+          },
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 5124.0,
+            "cost_usd": 0.0008
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 2060.0,
+            "cost_usd": 0.0004
+          }
+        }
+      },
+      "latency_s": 19.266,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~019438a485e1fd49f6",
+      "persona": "fullstack",
+      "category": "ecommerce",
+      "stratum": "adjacent",
+      "status": "done",
+      "next": [],
+      "decision": "watch",
+      "reasons": [
+        "client's top rate 20.0 is well under your floor 150"
+      ],
+      "fit_score": 0.625,
+      "risk_score": 0.2,
+      "risk_flags": [
+        "scope_budget_mismatch"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "display custom text in place of hidden product price",
+        "add two buttons to product page via ACF",
+        "hide a line of text on WordPress tab",
+        "implement via PHP functions in WooCommerce"
+      ],
+      "evidence_ids": [
+        "fullstack:case:woocommerce-tweaks"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 8827,
+        "output_tokens": 1283,
+        "tokens": 10110,
+        "cost_usd": 0.0015,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 6247.0,
+            "cost_usd": 0.0009
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2212.0,
+            "cost_usd": 0.0004
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1651.0,
+            "cost_usd": 0.0002
+          }
+        }
+      },
+      "latency_s": 20.912,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~01738b05ac9bd4e658",
+      "persona": "fullstack",
+      "category": "web_fullstack",
+      "stratum": "core",
+      "status": "done",
+      "next": [],
+      "decision": "skip",
+      "reasons": [
+        "fit 0.38 below 0.4: missing B2B sales, SaaS sales, business development"
+      ],
+      "fit_score": 0.375,
+      "risk_score": 0.55,
+      "risk_flags": [
+        "scope_budget_mismatch",
+        "weak_client"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "sales management experience in a B2B SaaS company or as a sales partner",
+        "experience dealing with B2B clients in US and EU markets",
+        "hands-on sales experience",
+        "freelancers only, no agencies or companies"
+      ],
+      "evidence_ids": [
+        "fullstack:repo:subscription-kit",
+        "fullstack:review:006",
+        "fullstack:cv:main",
+        "fullstack:case:tallyhub-billing",
+        "fullstack:proposal:143",
+        "fullstack:proposal:051",
+        "fullstack:proposal:048"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 8603,
+        "output_tokens": 1158,
+        "tokens": 9761,
+        "cost_usd": 0.0014,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 6020.0,
+            "cost_usd": 0.0009
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2092.0,
+            "cost_usd": 0.0004
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1649.0,
+            "cost_usd": 0.0002
+          }
+        }
+      },
+      "latency_s": 18.359,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~01947a4f43c89ab2ee",
+      "persona": "fullstack",
+      "category": "devops_cloud",
+      "stratum": "adjacent",
+      "status": "done",
+      "next": [],
+      "decision": "skip",
+      "reasons": [
+        "fit 0.33 below 0.4: missing Ansible, Linux, CentOS, Debian"
+      ],
+      "fit_score": 0.333,
+      "risk_score": 0.12,
+      "risk_flags": [],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "lead technical delivery of large migration project",
+        "build Ansible automation for CentOS to Debian migration",
+        "demonstrate previous work on large complex projects",
+        "identify risks and issues and reset customer expectations",
+        "communicate well with stakeholders"
+      ],
+      "evidence_ids": [
+        "fullstack:case:firebase-to-supabase",
+        "fullstack:proposal:064",
+        "fullstack:case:tallyhub-billing",
+        "fullstack:repo:live-board",
+        "fullstack:case:magazine-headless-migration",
+        "fullstack:review:006",
+        "fullstack:case:tenant-auth-service",
+        "fullstack:case:marketplace-payouts-fix"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 10727,
+        "output_tokens": 1455,
+        "tokens": 12182,
+        "cost_usd": 0.0018,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 8293.0,
+            "cost_usd": 0.0012
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1697.0,
+            "cost_usd": 0.0002
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2192.0,
+            "cost_usd": 0.0004
+          }
+        }
+      },
+      "latency_s": 24.376,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~019b93e2dad9af4fda",
+      "persona": "fullstack",
+      "category": "web_fullstack",
+      "stratum": "core",
+      "status": "done",
+      "next": [],
+      "decision": "watch",
+      "reasons": [
+        "fit 0.50 below bid threshold 0.55"
+      ],
+      "fit_score": 0.5,
+      "risk_score": 0.4,
+      "risk_flags": [
+        "injection",
+        "scope_budget_mismatch",
+        "weak_client"
+      ],
+      "injection_detected": true,
+      "price": null,
+      "requirements": [
+        "design SaaS landing page in Figma",
+        "responsive design for mobile and desktop",
+        "share portfolio work in AI domain"
+      ],
+      "evidence_ids": [
+        "fullstack:review:003",
+        "fullstack:proposal:025",
+        "fullstack:proposal:010",
+        "fullstack:case:figma-to-tailwind-landing",
+        "fullstack:case:firebase-to-supabase",
+        "fullstack:proposal:150",
+        "fullstack:proposal:147",
+        "fullstack:case:shopify-bundles-app",
+        "fullstack:proposal:016",
+        "fullstack:proposal:122",
+        "fullstack:cv:main"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 9521,
+        "output_tokens": 1764,
+        "tokens": 11285,
+        "cost_usd": 0.0018,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 7158.0,
+            "cost_usd": 0.0011
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2090.0,
+            "cost_usd": 0.0003
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 2037.0,
+            "cost_usd": 0.0004
+          }
+        }
+      },
+      "latency_s": 21.732,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~01deff38af86379654",
+      "persona": "fullstack",
+      "category": "web_fullstack",
+      "stratum": "core",
+      "status": "done",
+      "next": [],
+      "decision": "skip",
+      "reasons": [
+        "fit 0.25 below 0.4: missing web3.js, Solana, Rust, smart contracts"
+      ],
+      "fit_score": 0.25,
+      "risk_score": 0.22,
+      "risk_flags": [
+        "weak_client"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "strong React.js proficiency",
+        "integrate web3.js functionality into existing React app",
+        "experience with Solana blockchain",
+        "knowledge of dApp development",
+        "understanding of blockchain concepts and protocols",
+        "familiarity with Rust and smart contracts"
+      ],
+      "evidence_ids": [
+        "fullstack:proposal:030",
+        "fullstack:case:firebase-to-supabase",
+        "fullstack:proposal:100",
+        "fullstack:proposal:011",
+        "fullstack:cv:main"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 9530,
+        "output_tokens": 1240,
+        "tokens": 10770,
+        "cost_usd": 0.0016,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 6460.0,
+            "cost_usd": 0.0009
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2391.0,
+            "cost_usd": 0.0004
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1919.0,
+            "cost_usd": 0.0003
+          }
+        }
+      },
+      "latency_s": 21.529,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~010a49d7362cb36bb2",
+      "persona": "fullstack",
+      "category": "web_fullstack",
+      "stratum": "core",
+      "status": "done",
+      "next": [],
+      "decision": "watch",
+      "reasons": [
+        "fit 0.50 below bid threshold 0.55"
+      ],
+      "fit_score": 0.5,
+      "risk_score": 0.25,
+      "risk_flags": [
+        "scope_budget_mismatch"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "convert Figma design into WordPress site",
+        "build a few inner pages",
+        "complete within 24 hours"
+      ],
+      "evidence_ids": [
+        "fullstack:case:figma-to-tailwind-landing",
+        "fullstack:review:003",
+        "fullstack:case:magazine-headless-migration",
+        "fullstack:proposal:003"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 7541,
+        "output_tokens": 1822,
+        "tokens": 9363,
+        "cost_usd": 0.0017,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 5758.0,
+            "cost_usd": 0.0011
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1646.0,
+            "cost_usd": 0.0002
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 1959.0,
+            "cost_usd": 0.0003
+          }
+        }
+      },
+      "latency_s": 18.919,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~01430438ab255832b8",
+      "persona": "fullstack",
+      "category": "web_fullstack",
+      "stratum": "core",
+      "status": "done",
+      "next": [],
+      "decision": "watch",
+      "reasons": [
+        "client's top rate 100.0 is well under your floor 150"
+      ],
+      "fit_score": 0.75,
+      "risk_score": 0.35,
+      "risk_flags": [
+        "scope_budget_mismatch",
+        "weak_client"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "build personal blog site in WordPress",
+        "design easy-to-use and visually appealing interface",
+        "tailor site to client's vision through collaboration"
+      ],
+      "evidence_ids": [
+        "fullstack:proposal:054",
+        "fullstack:proposal:075",
+        "fullstack:proposal:003",
+        "fullstack:case:figma-to-tailwind-landing",
+        "fullstack:case:magazine-headless-migration",
+        "fullstack:case:woocommerce-tweaks",
+        "fullstack:case:patient-booking-portal",
+        "fullstack:review:003"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 9073,
+        "output_tokens": 1318,
+        "tokens": 10391,
+        "cost_usd": 0.0016,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 6428.0,
+            "cost_usd": 0.001
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1756.0,
+            "cost_usd": 0.0002
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2207.0,
+            "cost_usd": 0.0003
+          }
+        }
+      },
+      "latency_s": 18.83,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~018368248904c7dfc9",
+      "persona": "fullstack",
+      "category": "other",
+      "stratum": "unrelated",
+      "status": "done",
+      "next": [],
+      "decision": "watch",
+      "reasons": [
+        "fit 0.50 below bid threshold 0.55"
+      ],
+      "fit_score": 0.5,
+      "risk_score": 0.2,
+      "risk_flags": [
+        "scope_budget_mismatch"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "design website workflow in Figma",
+        "connect workflow to website in Framer",
+        "web design and development experience"
+      ],
+      "evidence_ids": [
+        "fullstack:review:003",
+        "fullstack:proposal:066",
+        "fullstack:proposal:094",
+        "fullstack:proposal:128",
+        "fullstack:proposal:025",
+        "fullstack:proposal:099",
+        "fullstack:case:figma-to-tailwind-landing"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 8048,
+        "output_tokens": 1110,
+        "tokens": 9158,
+        "cost_usd": 0.0014,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 5642.0,
+            "cost_usd": 0.0008
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1549.0,
+            "cost_usd": 0.0002
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 1967.0,
+            "cost_usd": 0.0003
+          }
+        }
+      },
+      "latency_s": 17.18,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~017bf0bc538dc82f71",
+      "persona": "fullstack",
+      "category": "web_fullstack",
+      "stratum": "core",
+      "status": "done",
+      "next": [],
+      "decision": "skip",
+      "reasons": [
+        "risk 0.90 above limit 0.6 (honeypot_scam, scope_budget_mismatch, weak_client)",
+        "fit 0.00 below 0.4: missing Solidity, Ethereum smart contract development, Uniswap integration"
+      ],
+      "fit_score": 0.0,
+      "risk_score": 0.9,
+      "risk_flags": [
+        "honeypot_scam",
+        "scope_budget_mismatch",
+        "weak_client"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "write token contract that restricts selling to deployer and whitelisted wallets",
+        "deploy token contract on Ethereum via Uniswap",
+        "list token on DexScreener",
+        "advise on additional features"
+      ],
+      "evidence_ids": [
+        "fullstack:proposal:049",
+        "fullstack:repo:tenant-guard",
+        "fullstack:repo:live-board",
+        "fullstack:repo:bundle-builder",
+        "fullstack:case:tenant-auth-service"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 9283,
+        "output_tokens": 2434,
+        "tokens": 11717,
+        "cost_usd": 0.0021,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 6868.0,
+            "cost_usd": 0.0011
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 2056.0,
+            "cost_usd": 0.0004
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2793.0,
+            "cost_usd": 0.0006
+          }
+        }
+      },
+      "latency_s": 19.729,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~01dd544f95c2a93e50",
+      "persona": "fullstack",
+      "category": "ecommerce",
+      "stratum": "adjacent",
+      "status": "done",
+      "next": [],
+      "decision": "skip",
+      "reasons": [
+        "risk 0.95 above limit 0.6 (credential_request, off_platform, payment_request, scope_budget_mismatch, unpaid_work, weak_client)",
+        "fit 0.38 below 0.4: missing Etsy store setup, Data Entry"
+      ],
+      "fit_score": 0.375,
+      "risk_score": 0.95,
+      "risk_flags": [
+        "credential_request",
+        "off_platform",
+        "payment_request",
+        "scope_budget_mismatch",
+        "unpaid_work",
+        "weak_client"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "register an Etsy seller account",
+        "set up Etsy store listings",
+        "respond promptly to partner onboarding documents",
+        "operate store jointly for handicraft sales"
+      ],
+      "evidence_ids": [
+        "fullstack:proposal:071",
+        "fullstack:proposal:150",
+        "fullstack:case:shopify-bundles-app",
+        "fullstack:cv:main",
+        "fullstack:case:woocommerce-tweaks"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 10820,
+        "output_tokens": 1958,
+        "tokens": 12778,
+        "cost_usd": 0.0021,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 6817.0,
+            "cost_usd": 0.0009
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 2396.0,
+            "cost_usd": 0.0003
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 3565.0,
+            "cost_usd": 0.0008
+          }
+        }
+      },
+      "latency_s": 17.54,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~013f9bedd40db86a4a",
+      "persona": "fullstack",
+      "category": "web_fullstack",
+      "stratum": "core",
+      "status": "done",
+      "next": [],
+      "decision": "watch",
+      "reasons": [
+        "fit 0.50 below bid threshold 0.55"
+      ],
+      "fit_score": 0.5,
+      "risk_score": 0.25,
+      "risk_flags": [
+        "weak_client"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "fix report list item highlight state",
+        "enable keyboard navigation of report list",
+        "post technical proposal on GitHub issue #35843",
+        "test pull request on all platforms with screenshots"
+      ],
+      "evidence_ids": [
+        "fullstack:case:woocommerce-tweaks",
+        "fullstack:case:e2e-test-suite",
+        "fullstack:proposal:022",
+        "fullstack:repo:api-starter",
+        "fullstack:case:lumen-design-system"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 10614,
+        "output_tokens": 2269,
+        "tokens": 12883,
+        "cost_usd": 0.0022,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 8171.0,
+            "cost_usd": 0.0015
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 2067.0,
+            "cost_usd": 0.0003
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2645.0,
+            "cost_usd": 0.0004
+          }
+        }
+      },
+      "latency_s": 22.721,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~0107c4b5105a0bd833",
+      "persona": "data_analyst",
+      "category": "admin_support",
+      "stratum": "adjacent",
+      "status": "done",
+      "next": [],
+      "decision": "watch",
+      "reasons": [
+        "client's top rate 8.0 is well under your floor 150"
+      ],
+      "fit_score": 0.75,
+      "risk_score": 0.6,
+      "risk_flags": [
+        "scope_budget_mismatch",
+        "unpaid_work"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "clean and standardize records in HubSpot CRM",
+        "verify data accuracy and consistency",
+        "work efficiently in a dynamic environment",
+        "trial engagement with possible future work"
+      ],
+      "evidence_ids": [
+        "data_analyst:proposal:139",
+        "data_analyst:cv:main",
+        "data_analyst:case:hr-attrition-dashboard",
+        "data_analyst:case:sheets-apps-script-crm",
+        "data_analyst:proposal:058",
+        "data_analyst:case:podcast-transcription",
+        "data_analyst:case:fernway-nightly-pipeline",
+        "data_analyst:proposal:036",
+        "data_analyst:case:research-dataset-cleanup"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 9177,
+        "output_tokens": 1492,
+        "tokens": 10669,
+        "cost_usd": 0.0017,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 6546.0,
+            "cost_usd": 0.001
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2307.0,
+            "cost_usd": 0.0004
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1816.0,
+            "cost_usd": 0.0002
+          }
+        }
+      },
+      "latency_s": 30.031,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~01afd93c50cafd1a8a",
+      "persona": "data_analyst",
+      "category": "ml_ai",
+      "stratum": "adjacent",
+      "status": "done",
+      "next": [],
+      "decision": "skip",
+      "reasons": [
+        "fit 0.25 below 0.4: missing Chatbot development, OpenAI API, OpenAI Assistants API, Database indexing"
+      ],
+      "fit_score": 0.25,
+      "risk_score": 0.25,
+      "risk_flags": [
+        "injection",
+        "scope_budget_mismatch"
+      ],
+      "injection_detected": true,
+      "price": null,
+      "requirements": [
+        "build chatbot conversation flow on DeadSimpleChat",
+        "filter messages with OpenAI API against a database",
+        "route matched conversations to team and assign agent",
+        "restrict agent access after conversation is completed",
+        "deliver within two weeks"
+      ],
+      "evidence_ids": [
+        "data_analyst:proposal:041",
+        "data_analyst:proposal:140",
+        "data_analyst:case:restaurant-group-power-bi",
+        "data_analyst:proposal:004",
+        "data_analyst:case:fernway-nightly-pipeline",
+        "data_analyst:case:sql-tutoring",
+        "data_analyst:case:hr-attrition-dashboard",
+        "data_analyst:repo:fernway-loads"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 10221,
+        "output_tokens": 1894,
+        "tokens": 12115,
+        "cost_usd": 0.002,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 7444.0,
+            "cost_usd": 0.0011
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2423.0,
+            "cost_usd": 0.0004
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 2248.0,
+            "cost_usd": 0.0004
+          }
+        }
+      },
+      "latency_s": 27.721,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~017f065a9002e3f0fc",
+      "persona": "data_analyst",
+      "category": "marketing",
+      "stratum": "unrelated",
+      "status": "done",
+      "next": [],
+      "decision": "watch",
+      "reasons": [
+        "fit 0.40 below bid threshold 0.55"
+      ],
+      "fit_score": 0.4,
+      "risk_score": 0.3,
+      "risk_flags": [
+        "weak_client"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "design print collateral (brochures, flyers, posters, business cards)",
+        "build visually appealing websites, microsites, and landing pages",
+        "develop social media marketing strategy",
+        "analyze data for market trends and performance tracking",
+        "segment audiences and send personalized emails",
+        "demonstrate communication and collaboration skills"
+      ],
+      "evidence_ids": [
+        "data_analyst:case:looker-studio-ads-report",
+        "data_analyst:case:fernway-nightly-pipeline",
+        "data_analyst:case:attribution-dbt-models",
+        "data_analyst:case:brightcart-kpi-dashboard",
+        "data_analyst:proposal:055",
+        "data_analyst:proposal:137",
+        "data_analyst:proposal:061",
+        "data_analyst:proposal:017",
+        "data_analyst:proposal:072",
+        "data_analyst:cv:main"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 10190,
+        "output_tokens": 1688,
+        "tokens": 11878,
+        "cost_usd": 0.0019,
+        "by_node": {
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1981.0,
+            "cost_usd": 0.0003
+          },
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 7241.0,
+            "cost_usd": 0.0011
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2656.0,
+            "cost_usd": 0.0005
+          }
+        }
+      },
+      "latency_s": 20.143,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~01019b9705f86e604c",
+      "persona": "data_analyst",
+      "category": "ml_ai",
+      "stratum": "adjacent",
+      "status": "done",
+      "next": [],
+      "decision": "skip",
+      "reasons": [
+        "fit 0.17 below 0.4: missing Machine Learning, Artificial Intelligence, TensorFlow"
+      ],
+      "fit_score": 0.167,
+      "risk_score": 0.3,
+      "risk_flags": [
+        "scope_budget_mismatch",
+        "weak_client"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "train sequence model on name pair data",
+        "reorder name tokens from input to output format",
+        "choose suitable model for small string dataset",
+        "deliver trained Python model without simple scripted rules"
+      ],
+      "evidence_ids": [
+        "data_analyst:cv:main",
+        "data_analyst:proposal:097",
+        "data_analyst:repo:retention-notebooks",
+        "data_analyst:repo:attribution-models"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 8695,
+        "output_tokens": 1035,
+        "tokens": 9730,
+        "cost_usd": 0.0014,
+        "by_node": {
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2298.0,
+            "cost_usd": 0.0004
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1867.0,
+            "cost_usd": 0.0002
+          },
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 5565.0,
+            "cost_usd": 0.0008
+          }
+        }
+      },
+      "latency_s": 17.632,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~01eea41f1160a63380",
+      "persona": "data_analyst",
+      "category": "data_analysis",
+      "stratum": "core",
+      "status": "done",
+      "next": [],
+      "decision": "watch",
+      "reasons": [
+        "client's top rate 25.0 is well under your floor 150"
+      ],
+      "fit_score": 0.625,
+      "risk_score": 0.45,
+      "risk_flags": [
+        "scope_budget_mismatch",
+        "weak_client"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "perform financial analysis on real estate financing questions",
+        "apply accounting principles and practices",
+        "build real estate financial model",
+        "work in Excel",
+        "query data with SQL"
+      ],
+      "evidence_ids": [
+        "data_analyst:proposal:078",
+        "data_analyst:proposal:141",
+        "data_analyst:cv:main",
+        "data_analyst:proposal:061",
+        "data_analyst:proposal:074",
+        "data_analyst:case:market-sizing-model",
+        "data_analyst:proposal:134",
+        "data_analyst:case:accountancy-excel-automation",
+        "data_analyst:proposal:105"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 8514,
+        "output_tokens": 1254,
+        "tokens": 9768,
+        "cost_usd": 0.0015,
+        "by_node": {
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 1988.0,
+            "cost_usd": 0.0003
+          },
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 6232.0,
+            "cost_usd": 0.0009
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1548.0,
+            "cost_usd": 0.0002
+          }
+        }
+      },
+      "latency_s": 17.535,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~011fc0d7923d6997e6",
+      "persona": "data_analyst",
+      "category": "web_fullstack",
+      "stratum": "unrelated",
+      "status": "done",
+      "next": [],
+      "decision": "skip",
+      "reasons": [
+        "fit 0.30 below 0.4: missing Ruby on Rails, Hotwire (Turbo/Stimulus), JavaScript, SCSS"
+      ],
+      "fit_score": 0.3,
+      "risk_score": 0.12,
+      "risk_flags": [],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "build full-stack features in Ruby on Rails",
+        "stream content updates with Turbo frames",
+        "build Stimulus controllers for UI interactions",
+        "develop responsive interfaces that scale down to mobile",
+        "work with Postgres 14",
+        "attention to UI/UX detail"
+      ],
+      "evidence_ids": [
+        "data_analyst:repo:kpi-sql-library",
+        "data_analyst:cv:main",
+        "data_analyst:case:wix-site-update",
+        "data_analyst:case:looker-studio-ads-report",
+        "data_analyst:case:sheets-apps-script-crm"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 10252,
+        "output_tokens": 1515,
+        "tokens": 11767,
+        "cost_usd": 0.0018,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 7212.0,
+            "cost_usd": 0.0011
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2539.0,
+            "cost_usd": 0.0004
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 2016.0,
+            "cost_usd": 0.0003
+          }
+        }
+      },
+      "latency_s": 20.411,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~010d1b7182b7ba4985",
+      "persona": "data_analyst",
+      "category": "data_analysis",
+      "stratum": "core",
+      "status": "done",
+      "next": [],
+      "decision": "skip",
+      "reasons": [
+        "fit 0.33 below 0.4: missing Smartsheet, Smartsheet dashboards, Smartsheet automated workflows, Microsoft Active Directory integration"
+      ],
+      "fit_score": 0.333,
+      "risk_score": 0.2,
+      "risk_flags": [
+        "weak_client"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "proven Smartsheet expertise",
+        "make architectural recommendations for PMO configuration",
+        "design project intake tracker with now/next/later reporting",
+        "build automated project approval workflow",
+        "build project, program, portfolio, and executive dashboards",
+        "integrate Smartsheet with MS AD, JIRA, and time tracking tool",
+        "define Smartsheet permissions and governance",
+        "project management experience"
+      ],
+      "evidence_ids": [
+        "data_analyst:case:brightcart-kpi-dashboard",
+        "data_analyst:case:restaurant-group-power-bi",
+        "data_analyst:case:hr-attrition-dashboard",
+        "data_analyst:case:sheets-apps-script-crm",
+        "data_analyst:review:005",
+        "data_analyst:proposal:005",
+        "data_analyst:cv:main"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 11025,
+        "output_tokens": 2053,
+        "tokens": 13078,
+        "cost_usd": 0.0021,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 8318.0,
+            "cost_usd": 0.0013
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2688.0,
+            "cost_usd": 0.0005
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 2072.0,
+            "cost_usd": 0.0003
+          }
+        }
+      },
+      "latency_s": 20.755,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~010ffb73591d540a7d",
+      "persona": "data_analyst",
+      "category": "data_analysis",
+      "stratum": "core",
+      "status": "done",
+      "next": [],
+      "decision": "skip",
+      "reasons": [
+        "fit 0.38 below 0.4: missing academic research, literature review, UML diagrams, Microsoft Word"
+      ],
+      "fit_score": 0.375,
+      "risk_score": 0.12,
+      "risk_flags": [],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "literature review on HPV awareness",
+        "system requirements description",
+        "system analysis and design with UML diagrams",
+        "parametric, non-parametric and semi-parametric statistical models",
+        "statistical tests for associations between risk factors",
+        "suggestions for applying findings"
+      ],
+      "evidence_ids": [
+        "data_analyst:case:cohort-retention-study",
+        "data_analyst:repo:survey-toolkit",
+        "data_analyst:proposal:016",
+        "data_analyst:cv:main",
+        "data_analyst:case:checkout-ab-test",
+        "data_analyst:repo:attribution-models"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 8919,
+        "output_tokens": 1373,
+        "tokens": 10292,
+        "cost_usd": 0.0016,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 5985.0,
+            "cost_usd": 0.0009
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1882.0,
+            "cost_usd": 0.0002
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2425.0,
+            "cost_usd": 0.0004
+          }
+        }
+      },
+      "latency_s": 14.267,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~015b9d78b397c0ae7b",
+      "persona": "data_analyst",
+      "category": "design_3d",
+      "stratum": "unrelated",
+      "status": "done",
+      "next": [],
+      "decision": "skip",
+      "reasons": [
+        "fit 0.00 below 0.4: missing 3D Rendering, 3D Modeling, Architectural Rendering, Photorealistic Rendering"
+      ],
+      "fit_score": 0.0,
+      "risk_score": 0.15,
+      "risk_flags": [],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "produce 2 photorealistic exterior renderings",
+        "produce 3 photorealistic interior renderings",
+        "match attached reference examples",
+        "real estate related use"
+      ],
+      "evidence_ids": [
+        "data_analyst:proposal:078",
+        "data_analyst:proposal:016",
+        "data_analyst:case:checkout-ab-test",
+        "data_analyst:repo:attribution-models",
+        "data_analyst:case:accountancy-excel-automation"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 8824,
+        "output_tokens": 1427,
+        "tokens": 10251,
+        "cost_usd": 0.0016,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 6460.0,
+            "cost_usd": 0.001
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1653.0,
+            "cost_usd": 0.0002
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2138.0,
+            "cost_usd": 0.0004
+          }
+        }
+      },
+      "latency_s": 13.897,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~012fef5063d0f3564b",
+      "persona": "data_analyst",
+      "category": "data_analysis",
+      "stratum": "core",
+      "status": "done",
+      "next": [],
+      "decision": "watch",
+      "reasons": [
+        "client's top rate 10.0 is well under your floor 28.0"
+      ],
+      "fit_score": 0.8,
+      "risk_score": 0.25,
+      "risk_flags": [
+        "weak_client"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "extract data from PDF documents",
+        "enter data into Google Sheets accurately",
+        "verify data against source documents",
+        "organize and categorize data",
+        "provide progress updates to project manager"
+      ],
+      "evidence_ids": [
+        "data_analyst:proposal:068",
+        "data_analyst:case:hr-attrition-dashboard",
+        "data_analyst:case:sheets-apps-script-crm",
+        "data_analyst:proposal:058",
+        "data_analyst:case:accountancy-excel-automation",
+        "data_analyst:case:podcast-transcription",
+        "data_analyst:case:claims-leakage-analysis",
+        "data_analyst:case:research-dataset-cleanup",
+        "data_analyst:proposal:136"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 9914,
+        "output_tokens": 2307,
+        "tokens": 12221,
+        "cost_usd": 0.0021,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 8239.0,
+            "cost_usd": 0.0016
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1752.0,
+            "cost_usd": 0.0002
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2230.0,
+            "cost_usd": 0.0004
+          }
+        }
+      },
+      "latency_s": 20.196,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~01d3f79fed9b347a90",
+      "persona": "data_analyst",
+      "category": "admin_support",
+      "stratum": "adjacent",
+      "status": "done",
+      "next": [],
+      "decision": "skip",
+      "reasons": [
+        "fit 0.38 below 0.4: missing Project Management, Virtual Assistance, Email Communication"
+      ],
+      "fit_score": 0.375,
+      "risk_score": 0.3,
+      "risk_flags": [
+        "weak_client"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "organize time and schedule",
+        "manage calendar",
+        "handle urgent general assistance",
+        "support early-stage web project management"
+      ],
+      "evidence_ids": [
+        "data_analyst:case:fernway-nightly-pipeline",
+        "data_analyst:case:competitor-price-scrape",
+        "data_analyst:review:006",
+        "data_analyst:repo:fernway-loads",
+        "data_analyst:case:wix-site-update",
+        "data_analyst:review:012"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 8254,
+        "output_tokens": 1212,
+        "tokens": 9466,
+        "cost_usd": 0.0014,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 5845.0,
+            "cost_usd": 0.0009
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2034.0,
+            "cost_usd": 0.0003
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1587.0,
+            "cost_usd": 0.0002
+          }
+        }
+      },
+      "latency_s": 14.926,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~0125a0ef7e920a683e",
+      "persona": "data_analyst",
+      "category": "design_3d",
+      "stratum": "unrelated",
+      "status": "done",
+      "next": [],
+      "decision": "skip",
+      "reasons": [
+        "fit 0.12 below 0.4: missing Graphic Design, Print Design, Brochure design, Brand Identity & Guidelines"
+      ],
+      "fit_score": 0.125,
+      "risk_score": 0.25,
+      "risk_flags": [
+        "scope_budget_mismatch"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "refresh website design to new colour theme",
+        "redesign product catalog/brochure to new colour theme",
+        "maintain consistent brand look across touchpoints",
+        "work within WordPress website",
+        "design print-ready brochure"
+      ],
+      "evidence_ids": [
+        "data_analyst:case:wix-site-update",
+        "data_analyst:case:sheets-apps-script-crm",
+        "data_analyst:repo:kpi-sql-library",
+        "data_analyst:case:nonprofit-survey-analysis"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 10261,
+        "output_tokens": 1284,
+        "tokens": 11545,
+        "cost_usd": 0.0017,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 7169.0,
+            "cost_usd": 0.001
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2396.0,
+            "cost_usd": 0.0004
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1980.0,
+            "cost_usd": 0.0003
+          }
+        }
+      },
+      "latency_s": 22.045,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~0150c75bce04d02179",
+      "persona": "data_analyst",
+      "category": "data_analysis",
+      "stratum": "core",
+      "status": "done",
+      "next": [],
+      "decision": "watch",
+      "reasons": [
+        "client's top rate 20.0 is well under your floor 28.0"
+      ],
+      "fit_score": 0.625,
+      "risk_score": 0.3,
+      "risk_flags": [
+        "weak_client"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "navigate Tableau and build reports, lists and dashboards",
+        "demonstrate Tableau admin settings",
+        "produce 1-3 minute screenshare tutorial videos",
+        "narrate videos with excellent English speaking skills",
+        "no face recording required"
+      ],
+      "evidence_ids": [
+        "data_analyst:proposal:004",
+        "data_analyst:proposal:005",
+        "data_analyst:case:hr-attrition-dashboard",
+        "data_analyst:case:restaurant-group-power-bi",
+        "data_analyst:proposal:139",
+        "data_analyst:cv:main",
+        "data_analyst:proposal:113",
+        "data_analyst:case:podcast-transcription",
+        "data_analyst:case:nonprofit-survey-analysis",
+        "data_analyst:proposal:018"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 9151,
+        "output_tokens": 1451,
+        "tokens": 10602,
+        "cost_usd": 0.0016,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 6671.0,
+            "cost_usd": 0.001
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1692.0,
+            "cost_usd": 0.0002
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2239.0,
+            "cost_usd": 0.0004
+          }
+        }
+      },
+      "latency_s": 23.126,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~01ff65d9d82a33cc5a",
+      "persona": "data_analyst",
+      "category": "data_analysis",
+      "stratum": "core",
+      "status": "done",
+      "next": [],
+      "decision": "watch",
+      "reasons": [
+        "fit 0.50 below bid threshold 0.55"
+      ],
+      "fit_score": 0.5,
+      "risk_score": 0.08,
+      "risk_flags": [],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "format spreadsheet addresses as mailing labels",
+        "produce labels for Avery 18160 template",
+        "deliver print-ready label file"
+      ],
+      "evidence_ids": [
+        "data_analyst:case:accountancy-excel-automation",
+        "data_analyst:case:sheets-apps-script-crm"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 7589,
+        "output_tokens": 1778,
+        "tokens": 9367,
+        "cost_usd": 0.0016,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 5827.0,
+            "cost_usd": 0.0011
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 1966.0,
+            "cost_usd": 0.0003
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1574.0,
+            "cost_usd": 0.0002
+          }
+        }
+      },
+      "latency_s": 20.804,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~0173c790d9cd359c34",
+      "persona": "data_analyst",
+      "category": "admin_support",
+      "stratum": "adjacent",
+      "status": "done",
+      "next": [],
+      "decision": "skip",
+      "reasons": [
+        "risk 0.85 above limit 0.6 (credential_request, scope_budget_mismatch, weak_client)",
+        "fit 0.30 below 0.4: missing Virtual Assistance, Google Docs, Email Communication, Scheduling"
+      ],
+      "fit_score": 0.3,
+      "risk_score": 0.85,
+      "risk_flags": [
+        "credential_request",
+        "scope_budget_mismatch",
+        "weak_client"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "work 8am-5pm US Central Time Monday to Friday",
+        "categorize weekly transactions on Mint.com accurately",
+        "handle Amazon and online order returns and issues",
+        "download and organize monthly statements into shared drive",
+        "schedule meetings and send calendar invites",
+        "format and publish weekly newsletter on Substack",
+        "monitor inbox and respond to consulting requests"
+      ],
+      "evidence_ids": [
+        "data_analyst:repo:kpi-sql-library",
+        "data_analyst:case:sheets-apps-script-crm",
+        "data_analyst:repo:fernway-loads",
+        "data_analyst:case:fernway-nightly-pipeline",
+        "data_analyst:case:brightcart-kpi-dashboard",
+        "data_analyst:proposal:143",
+        "data_analyst:case:wix-site-update",
+        "data_analyst:case:claims-leakage-analysis",
+        "data_analyst:case:competitor-price-scrape",
+        "data_analyst:case:checkout-ab-test"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 10930,
+        "output_tokens": 1980,
+        "tokens": 12910,
+        "cost_usd": 0.0021,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 7792.0,
+            "cost_usd": 0.0012
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2746.0,
+            "cost_usd": 0.0005
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 2372.0,
+            "cost_usd": 0.0004
+          }
+        }
+      },
+      "latency_s": 28.503,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~0164716bca549a85f9",
+      "persona": "data_analyst",
+      "category": "data_analysis",
+      "stratum": "core",
+      "status": "done",
+      "next": [],
+      "decision": "skip",
+      "reasons": [
+        "fit 0.33 below 0.4: missing academic summarization"
+      ],
+      "fit_score": 0.333,
+      "risk_score": 0.2,
+      "risk_flags": [
+        "scope_budget_mismatch"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "summarize completed market research study",
+        "synthesize consumer opinion insights",
+        "hold doctoral degree (PhD or equivalent)",
+        "deliver written summary in about 15 to 25 minutes"
+      ],
+      "evidence_ids": [
+        "data_analyst:case:market-sizing-model",
+        "data_analyst:case:looker-studio-ads-report",
+        "data_analyst:case:cohort-retention-study",
+        "data_analyst:case:nonprofit-survey-analysis"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 7696,
+        "output_tokens": 1013,
+        "tokens": 8709,
+        "cost_usd": 0.0013,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 5118.0,
+            "cost_usd": 0.0007
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2010.0,
+            "cost_usd": 0.0003
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1581.0,
+            "cost_usd": 0.0002
+          }
+        }
+      },
+      "latency_s": 22.044,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~01a67bc92e00e71041",
+      "persona": "data_analyst",
+      "category": "data_analysis",
+      "stratum": "core",
+      "status": "done",
+      "next": [],
+      "decision": "skip",
+      "reasons": [
+        "fit 0.25 below 0.4: missing Development feasibility modelling, Feastudy Professional, Financial analysis, Accounting principles"
+      ],
+      "fit_score": 0.25,
+      "risk_score": 0.38,
+      "risk_flags": [
+        "scope_budget_mismatch",
+        "weak_client"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "produce profit and loss report in feasibility software",
+        "produce cashflow report",
+        "produce GST summary",
+        "produce sensitivity analysis",
+        "produce inputs report",
+        "determine maximum site purchase price",
+        "assess economic viability of 7-unit penthouse and retail project"
+      ],
+      "evidence_ids": [
+        "data_analyst:proposal:105",
+        "data_analyst:case:market-sizing-model",
+        "data_analyst:proposal:081",
+        "data_analyst:case:restaurant-group-power-bi",
+        "data_analyst:proposal:111",
+        "data_analyst:proposal:078",
+        "data_analyst:proposal:146",
+        "data_analyst:proposal:134"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 9472,
+        "output_tokens": 1910,
+        "tokens": 11382,
+        "cost_usd": 0.0019,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 6705.0,
+            "cost_usd": 0.0011
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2544.0,
+            "cost_usd": 0.0005
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 2133.0,
+            "cost_usd": 0.0004
+          }
+        }
+      },
+      "latency_s": 21.418,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~011093fee9183a6957",
+      "persona": "data_analyst",
+      "category": "ml_ai",
+      "stratum": "adjacent",
+      "status": "done",
+      "next": [],
+      "decision": "skip",
+      "reasons": [
+        "risk 0.80 above limit 0.6 (scope_budget_mismatch, unpaid_work, weak_client)",
+        "fit 0.25 below 0.4: missing Machine Learning, NLP, Computer Vision, Deep Learning"
+      ],
+      "fit_score": 0.25,
+      "risk_score": 0.8,
+      "risk_flags": [
+        "scope_budget_mismatch",
+        "unpaid_work",
+        "weak_client"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "build NLP models for text generation, NER, and machine translation",
+        "develop computer vision models for detection and segmentation",
+        "deploy and maintain ML models on AWS",
+        "build scalable data pipelines for training and testing",
+        "3+ years of ML engineering experience with NLP and computer vision",
+        "proficiency in Python with TensorFlow or PyTorch"
+      ],
+      "evidence_ids": [
+        "data_analyst:cv:main",
+        "data_analyst:case:fernway-nightly-pipeline",
+        "data_analyst:proposal:112"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 12026,
+        "output_tokens": 1509,
+        "tokens": 13535,
+        "cost_usd": 0.002,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 7350.0,
+            "cost_usd": 0.001
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 3428.0,
+            "cost_usd": 0.0006
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 2757.0,
+            "cost_usd": 0.0003
+          }
+        }
+      },
+      "latency_s": 20.315,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~0105c379a4d96fd7fa",
+      "persona": "data_analyst",
+      "category": "writing",
+      "stratum": "unrelated",
+      "status": "done",
+      "next": [],
+      "decision": "skip",
+      "reasons": [
+        "fit 0.33 below 0.4: missing English, German, Translation"
+      ],
+      "fit_score": 0.333,
+      "risk_score": 0.45,
+      "risk_flags": [
+        "scope_budget_mismatch",
+        "weak_client"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "translate two English texts into German",
+        "about 3200 words total volume",
+        "text understandable and easy to read for native German speakers"
+      ],
+      "evidence_ids": [
+        "data_analyst:case:podcast-transcription",
+        "data_analyst:case:wix-site-update",
+        "data_analyst:review:012"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 7315,
+        "output_tokens": 962,
+        "tokens": 8277,
+        "cost_usd": 0.0012,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 4795.0,
+            "cost_usd": 0.0007
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 1939.0,
+            "cost_usd": 0.0003
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1543.0,
+            "cost_usd": 0.0002
+          }
+        }
+      },
+      "latency_s": 14.037,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~015ebece31867f5811",
+      "persona": "data_analyst",
+      "category": "admin_support",
+      "stratum": "adjacent",
+      "status": "done",
+      "next": [],
+      "decision": "skip",
+      "reasons": [
+        "fit 0.25 below 0.4: missing Real estate transaction coordination, MLS, DocuSign, Social media marketing"
+      ],
+      "fit_score": 0.25,
+      "risk_score": 0.12,
+      "risk_flags": [
+        "scope_budget_mismatch"
+      ],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "coordinate listing-to-contract transactions for sellers",
+        "coordinate contract-to-closing with title, escrow, lender and appraisal",
+        "maintain MLS listings and open house entries",
+        "manage file compliance in Compass CRM business tracker",
+        "handle e-signatures via Docusign",
+        "perform bookkeeping and data entry in spreadsheets",
+        "manage social media posts"
+      ],
+      "evidence_ids": [
+        "data_analyst:case:looker-studio-ads-report",
+        "data_analyst:case:accountancy-excel-automation",
+        "data_analyst:case:sheets-apps-script-crm",
+        "data_analyst:review:005",
+        "data_analyst:repo:fernway-loads",
+        "data_analyst:proposal:078"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 12284,
+        "output_tokens": 1765,
+        "tokens": 14049,
+        "cost_usd": 0.0021,
+        "by_node": {
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 8545.0,
+            "cost_usd": 0.0013
+          },
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 2421.0,
+            "cost_usd": 0.0003
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 3083.0,
+            "cost_usd": 0.0006
+          }
+        }
+      },
+      "latency_s": 23.427,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    },
+    {
+      "job_id": "~01631c66d3d23842cc",
+      "persona": "data_analyst",
+      "category": "data_analysis",
+      "stratum": "core",
+      "status": "done",
+      "next": [],
+      "decision": "skip",
+      "reasons": [
+        "fit 0.38 below 0.4: missing MySQL, WHM"
+      ],
+      "fit_score": 0.375,
+      "risk_score": 0.12,
+      "risk_flags": [],
+      "injection_detected": false,
+      "price": null,
+      "requirements": [
+        "connect MySQL database to Looker Studio",
+        "connect MySQL database to Power BI as alternative",
+        "work with WHM hosted database",
+        "enable data evaluation in analytics platform"
+      ],
+      "evidence_ids": [
+        "data_analyst:cv:main",
+        "data_analyst:proposal:074",
+        "data_analyst:repo:kpi-sql-library",
+        "data_analyst:case:brightcart-kpi-dashboard",
+        "data_analyst:case:looker-studio-ads-report",
+        "data_analyst:proposal:035"
+      ],
+      "usage": {
+        "calls": 4,
+        "input_tokens": 9013,
+        "output_tokens": 1283,
+        "tokens": 10296,
+        "cost_usd": 0.0015,
+        "by_node": {
+          "risk_assessor": {
+            "calls": 1.0,
+            "tokens": 1694.0,
+            "cost_usd": 0.0002
+          },
+          "fit_matcher": {
+            "calls": 2.0,
+            "tokens": 6490.0,
+            "cost_usd": 0.001
+          },
+          "analyst": {
+            "calls": 1.0,
+            "tokens": 2112.0,
+            "cost_usd": 0.0004
+          }
+        }
+      },
+      "latency_s": 22.421,
+      "llm_cache_hits": 0,
+      "llm_calls_cold": 4
+    }
+  ]
+}
